@@ -2085,19 +2085,6 @@
 "img": false
 },
 {
-"name": "Johnnie Walker Green Label",
-"brand": "Johnnie Walker",
-"shelf": "whisky",
-"type": "Blended Malt",
-"price": 12000,
-"size": "750ml",
-"abv": 43.0,
-"origin": "Scotland",
-"notes": "",
-"slug": "bc-johnnie-walker-green-label-750ml",
-"img": false
-},
-{
 "name": "Jack Daniel's Tennessee Apple",
 "brand": "Jack Daniel's",
 "shelf": "whisky",
@@ -2108,6 +2095,19 @@
 "origin": "USA",
 "notes": "",
 "slug": "bc-jack-daniel-s-tennessee-apple-1l",
+"img": false
+},
+{
+"name": "Johnnie Walker Green Label",
+"brand": "Johnnie Walker",
+"shelf": "whisky",
+"type": "Blended Malt",
+"price": 12000,
+"size": "750ml",
+"abv": 43.0,
+"origin": "Scotland",
+"notes": "",
+"slug": "bc-johnnie-walker-green-label-750ml",
 "img": false
 },
 {
@@ -4746,6 +4746,31 @@
 ]
 },
 {
+"name": "Tusker Draught",
+"brand": "Tusker",
+"shelf": "beer",
+"type": "Lager",
+"price": 900,
+"size": "Jug",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": "",
+"slug": "bc-tusker-draught-jug",
+"img": false,
+"credit": {
+"artist": "Wainuiomartian",
+"licence": "CC0",
+"page": "https://commons.wikimedia.org/wiki/File:Beer_jugs.jpg",
+"file": "File:Beer jugs.jpg",
+"ready": true,
+"note": "A photo for illustration; the lounge’s jug may look different."
+},
+"sp": [
+"beer-0",
+15
+]
+},
+{
 "name": "Pilsner Lager",
 "brand": "Pilsner",
 "shelf": "beer",
@@ -4847,19 +4872,6 @@
 "origin": "Kenya",
 "notes": "",
 "slug": "bc-white-cap-light-bottle",
-"img": false
-},
-{
-"name": "Tusker Draught",
-"brand": "Tusker",
-"shelf": "beer",
-"type": "Lager",
-"price": 900,
-"size": "Jug",
-"abv": 4.2,
-"origin": "Kenya",
-"notes": "",
-"slug": "bc-tusker-draught-jug",
 "img": false
 },
 {

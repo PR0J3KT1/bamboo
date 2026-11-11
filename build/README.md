@@ -57,11 +57,13 @@ A stand-in photo (a plain mug, a glass of white wine, an unbranded water bottle)
 
 Version 29 added Johnnie Walker White (both sizes) with the White Walker edition photo, once the user confirmed that is the lounge's bottle. 242 of the 331 drinks now have a photo.
 
-`build/commons/` keeps a copy of every Commons cut-out (20 files). Copy them into `<image dir>/commons/` before running `bs_sprites.py`. `drink_prep.py` can also remake the 14 newer ones from Commons, but not the six older ones.
+Version 30 added Tusker Draught by the jug. The photo is a plain glass jug of lager, not the lounge's own jug, so the drink sheet says "A photo for illustration". 243 of the 331 drinks now have a photo.
+
+`build/commons/` keeps a copy of every Commons cut-out (21 files). Copy them into `<image dir>/commons/` before running `bs_sprites.py`. `drink_prep.py` can also remake the 15 newer ones from Commons, but not the six older ones.
 
 Left drawn on purpose:
 - **Heineken 0.0:** the only photo is an empty, open bottle against a window.
-- **The rest (88 drinks):** Commons has no free photo of these bottles, or none that matches the brand, flavour and pack. This covers most Kenyan brands, flavoured premixes and generic mixers.
+- **The rest (87 drinks):** Commons has no free photo of these bottles, or none that matches the brand, flavour and pack. This covers most Kenyan brands, flavoured premixes and generic mixers.
 
 ## Dish photos (since version 27)
 

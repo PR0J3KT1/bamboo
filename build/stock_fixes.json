@@ -401,6 +401,14 @@
    "page": "https://commons.wikimedia.org/wiki/File:Johnnie_Walker_-_White_Walker.jpg",
    "file": "File:Johnnie Walker - White Walker.jpg",
    "ready": true
+  },
+  "bc-tusker-draught-jug": {
+   "artist": "Wainuiomartian",
+   "licence": "CC0",
+   "page": "https://commons.wikimedia.org/wiki/File:Beer_jugs.jpg",
+   "file": "File:Beer jugs.jpg",
+   "ready": true,
+   "note": "A photo for illustration; the lounge’s jug may look different."
   }
  }
 }
