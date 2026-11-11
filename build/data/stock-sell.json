@@ -1,0 +1,1863 @@
+{
+"note": "Selling prices from the Bamboo Cask stock list (2026). Buying prices deliberately left out.",
+"bar": [
+{
+"name": "GIN TONIC 58",
+"sell": 350
+},
+{
+"name": "PROSECCO SPARKLING BRUT",
+"sell": 5000
+},
+{
+"name": "44 WHISKEY",
+"sell": 3000
+},
+{
+"name": "4TH STREET 750ML WHITE",
+"sell": 2000
+},
+{
+"name": "4TH STREET RED 750ML",
+"sell": 2000
+},
+{
+"name": "4TH STREET RED GLASS",
+"sell": 500
+},
+{
+"name": "4TH STREET RED SWEET 5LTRS",
+"sell": 6500
+},
+{
+"name": "4TH STREET ROSE 750ML",
+"sell": 2000
+},
+{
+"name": "4TH STREET WHITE 5LTRS",
+"sell": 6000
+},
+{
+"name": "58 CLASSIC GIN 750",
+"sell": 2500
+},
+{
+"name": "ABSOLUT  VODKA 1LTRS",
+"sell": 4000
+},
+{
+"name": "ABSOLUT  VODKA 750ML",
+"sell": 3000
+},
+{
+"name": "ACTAL",
+"sell": 50
+},
+{
+"name": "ALPACA",
+"sell": 2500
+},
+{
+"name": "AMARULA 350ML",
+"sell": 2500
+},
+{
+"name": "AMARULA 750ML",
+"sell": 3500
+},
+{
+"name": "AMARULA ILTR",
+"sell": 4500
+},
+{
+"name": "AMARULA TOT",
+"sell": 200
+},
+{
+"name": "ASCONI ARGOLUX",
+"sell": 3000
+},
+{
+"name": "ASCONI KISS ME NOW 750ML",
+"sell": 3000
+},
+{
+"name": "ASCONI PASTORAL 750ML",
+"sell": 3000
+},
+{
+"name": "BACARDI   750ML",
+"sell": 3500
+},
+{
+"name": "BACARDI  TOT",
+"sell": 200
+},
+{
+"name": "BACARDI 1LTR",
+"sell": 4000
+},
+{
+"name": "BACARDI BLACK",
+"sell": 4500
+},
+{
+"name": "BACARDI CARTA BLANCA 1LTR",
+"sell": 4000
+},
+{
+"name": "BACARDI SPICED 700ML",
+"sell": 3500
+},
+{
+"name": "BAILEYS 1LTR",
+"sell": 4500
+},
+{
+"name": "BAILEYS 350ML",
+"sell": 2500
+},
+{
+"name": "BAILEYS 750ML",
+"sell": 3500
+},
+{
+"name": "BALLANTINES 1LTR",
+"sell": 4500
+},
+{
+"name": "BALLANTINES 750ML",
+"sell": 3500
+},
+{
+"name": "BALOZI",
+"sell": 350
+},
+{
+"name": "BALOZI CAN",
+"sell": 450
+},
+{
+"name": "BEEFEATER CLEAR",
+"sell": 4500
+},
+{
+"name": "BEEFEATER PINK 750ML",
+"sell": 4000
+},
+{
+"name": "BEEFETER 1 LTR",
+"sell": 5500
+},
+{
+"name": "BELAIRE BRUT GOLD",
+"sell": 10000
+},
+{
+"name": "BELAIRE ROSE 750ML",
+"sell": 10000
+},
+{
+"name": "BLACK  &   WHITE 750ML",
+"sell": 2500
+},
+{
+"name": "BLACK & WHITE 1L",
+"sell": 3500
+},
+{
+"name": "BLACK COFFEE",
+"sell": 100
+},
+{
+"name": "BLACK ICE",
+"sell": 350
+},
+{
+"name": "BLACKBIRD RED 750ML",
+"sell": 2500
+},
+{
+"name": "BLACKBIRD WHITE 750ML",
+"sell": 2500
+},
+{
+"name": "BLUE CURACAO 700ML",
+"sell": 2000
+},
+{
+"name": "BOMBAY SAHPIRE 1LTR",
+"sell": 4500
+},
+{
+"name": "BOMBAY SAPHIRE 750ML",
+"sell": 3500
+},
+{
+"name": "BUDWEISER",
+"sell": 350
+},
+{
+"name": "BULLEIT  BOURBON 1LTR",
+"sell": 9000
+},
+{
+"name": "BULLEIT BOURBON 750ML",
+"sell": 7500
+},
+{
+"name": "CAMINO CLEAR",
+"sell": 4000
+},
+{
+"name": "CAMINO GOLD",
+"sell": 4000
+},
+{
+"name": "CAMPARI 700ML",
+"sell": 4500
+},
+{
+"name": "CANNAGIN",
+"sell": 5000
+},
+{
+"name": "CAPRICE WINE",
+"sell": 1500
+},
+{
+"name": "CAPT MORGAN DARK 750ML",
+"sell": 3500
+},
+{
+"name": "PANADOL",
+"sell": 50
+},
+{
+"name": "PET SODA",
+"sell": 150
+},
+{
+"name": "PIERRE MARCELL SPARKLING WHITE",
+"sell": 3500
+},
+{
+"name": "PILSNER LAGER",
+"sell": 350
+},
+{
+"name": "POTATOES WEDGES",
+"sell": 200
+},
+{
+"name": "R15 BLUEBERRY ICE",
+"sell": 2500
+},
+{
+"name": "R15 GRAPE ICE",
+"sell": 2500
+},
+{
+"name": "R15 ICED COLA",
+"sell": 2500
+},
+{
+"name": "R15 KIWANO MELON",
+"sell": 2500
+},
+{
+"name": "R15 MANGOROYALE",
+"sell": 2500
+},
+{
+"name": "R15 MIAMI MINT",
+"sell": 2500
+},
+{
+"name": "R15 ORANGE ICE",
+"sell": 2500
+},
+{
+"name": "R15 PASSION FRUIT",
+"sell": 2500
+},
+{
+"name": "R15 STRAWBERRY ICE",
+"sell": 2500
+},
+{
+"name": "RANGPUR TOT",
+"sell": 300
+},
+{
+"name": "REDBULL",
+"sell": 350
+},
+{
+"name": "REMMY MARTIN 1LTR",
+"sell": 15000
+},
+{
+"name": "REMMY MARTIN VSOP",
+"sell": 12000
+},
+{
+"name": "RICE",
+"sell": 100
+},
+{
+"name": "RICHOT 350ML",
+"sell": 1500
+},
+{
+"name": "RICHOT 750ML",
+"sell": 2500
+},
+{
+"name": "ROBERTSON RED SWEET 750ML",
+"sell": 2500
+},
+{
+"name": "ROBERTSON ROSE 750ML",
+"sell": 2500
+},
+{
+"name": "ROBERTSON WHITE 750ML",
+"sell": 2500
+},
+{
+"name": "CAPT. MORGAN DARK 1 L",
+"sell": 4500
+},
+{
+"name": "CAPTAIN SPICED 1LTR",
+"sell": 4500
+},
+{
+"name": "CAPTAIN SPICED 750ML",
+"sell": 3500
+},
+{
+"name": "CASILLERO CAB. SAUV 750ML",
+"sell": 3500
+},
+{
+"name": "CASILLERO SAUV. BLANC 750ML",
+"sell": 3000
+},
+{
+"name": "CELLAR CASK WHITE 5LTRS",
+"sell": 7500
+},
+{
+"name": "CELLAR RED 5LTRS",
+"sell": 7500
+},
+{
+"name": "CELLAR RED 750ML",
+"sell": 2000
+},
+{
+"name": "CELLAR WHITE 750ML",
+"sell": 2000
+},
+{
+"name": "CHAGUO LANGU",
+"sell": 700
+},
+{
+"name": "CHIVAS 12YRS 1LTRS",
+"sell": 8000
+},
+{
+"name": "CHIVAS 12YRS 4.5 L",
+"sell": 28000
+},
+{
+"name": "CHIVAS 12YRS 750ML",
+"sell": 6500
+},
+{
+"name": "CHIVAS 18YEARS 1LTR",
+"sell": 17500
+},
+{
+"name": "CHIVAS 18YRS 750ML",
+"sell": 14500
+},
+{
+"name": "CHIVAS EXTRA 750ML",
+"sell": 8500
+},
+{
+"name": "CHOCO TOFFEE RED",
+"sell": 3000
+},
+{
+"name": "CIROC 1LTR",
+"sell": 8000
+},
+{
+"name": "CIROC 750ML",
+"sell": 6500
+},
+{
+"name": "CIROC PINEAPLE",
+"sell": 8000
+},
+{
+"name": "CONTREAU 1LTR",
+"sell": 5000
+},
+{
+"name": "CONTREAU 750ML",
+"sell": 4500
+},
+{
+"name": "CORONA EXTRA",
+"sell": 400
+},
+{
+"name": "COURVOISIER VS 700ML",
+"sell": 9000
+},
+{
+"name": "COURVOISIER VSOP 1L",
+"sell": 13500
+},
+{
+"name": "COUVOISIER VS LTR",
+"sell": 11000
+},
+{
+"name": "DELMONTE JUICE",
+"sell": 400
+},
+{
+"name": "DESPERADOS 330ML",
+"sell": 400
+},
+{
+"name": "DOMPO  ROSE",
+"sell": 2500
+},
+{
+"name": "DOMPO SWEET RED",
+"sell": 2500
+},
+{
+"name": "DON JULIO 750ML",
+"sell": 15000
+},
+{
+"name": "DON JULIO ANEJO 750ML",
+"sell": 15000
+},
+{
+"name": "DON JULIO RPSDO 750ML",
+"sell": 12000
+},
+{
+"name": "DOUGLOUS GREEN RED",
+"sell": 3000
+},
+{
+"name": "DROSTY HOFF RED 750ML",
+"sell": 2500
+},
+{
+"name": "DROSTY HOFF WHITE 750ML",
+"sell": 2500
+},
+{
+"name": "DROSTY RED 5LTRS",
+"sell": 6000
+},
+{
+"name": "DROSTY WHITE GLASS",
+"sell": 500
+},
+{
+"name": "DUNHILL DOUBLE SWITCH",
+"sell": 700
+},
+{
+"name": "DUNHILL SWITCH",
+"sell": 700
+},
+{
+"name": "E-VAPE",
+"sell": 2000
+},
+{
+"name": "EMBASSY LIGHT",
+"sell": 700
+},
+{
+"name": "ENO",
+"sell": 50
+},
+{
+"name": "FAMOUS GROUSE 1LTRS",
+"sell": 4500
+},
+{
+"name": "FAMOUS GROUSE 750ML",
+"sell": 3000
+},
+{
+"name": "FAMOUS GROUSE TOT",
+"sell": 200
+},
+{
+"name": "FERNET BRANCA",
+"sell": 5500
+},
+{
+"name": "FIRE WATER 750ML",
+"sell": 6000
+},
+{
+"name": "FOUR COUSINS RED 750ML",
+"sell": 2000
+},
+{
+"name": "FOUR COUSINS WHITE 750ML",
+"sell": 2000
+},
+{
+"name": "FRAGOLINA DUCHESSALIA",
+"sell": 3000
+},
+{
+"name": "FRONTERA CABARNET SAUV. 750ML",
+"sell": 2500
+},
+{
+"name": "FRONTERA CHARDDONAY WHITE 750ML",
+"sell": 2500
+},
+{
+"name": "FRONTERA MERLOT 750ML",
+"sell": 2000
+},
+{
+"name": "FRONTERA SAUVIGNON BLANC 750ML",
+"sell": 3000
+},
+{
+"name": "FRONTERA SPARKLING BRUT",
+"sell": 3000
+},
+{
+"name": "GATO NEGRO CAB. SAUV 750ML",
+"sell": 3000
+},
+{
+"name": "GATO NEGRO SAUV. BLANC 750ML",
+"sell": 2500
+},
+{
+"name": "GENTLEMAN JACK 700ML",
+"sell": 8500
+},
+{
+"name": "GENTLEMAN JACK LTR",
+"sell": 12000
+},
+{
+"name": "GENTLEMAN JACK TOT",
+"sell": 450
+},
+{
+"name": "GILBEYS 350ML",
+"sell": 1500
+},
+{
+"name": "GILBEYS GIN 750ML",
+"sell": 2500
+},
+{
+"name": "GLENFFIDICH 12 YRS 750ML",
+"sell": 9500
+},
+{
+"name": "GLENFIDDICH 12YRS 1LTR",
+"sell": 12000
+},
+{
+"name": "GLENFIDDICH 15YRS 1LTR",
+"sell": 16000
+},
+{
+"name": "GLENFIDDICH 15YRS 700ML",
+"sell": 12500
+},
+{
+"name": "GLENFIDDICH 18YRS 750ML",
+"sell": 20000
+},
+{
+"name": "GLENLIVET 12YR 1LTR",
+"sell": 12000
+},
+{
+"name": "GLENLIVET 12YRS 750ML",
+"sell": 8000
+},
+{
+"name": "GLENLIVET 15YRS 1LTR",
+"sell": 18000
+},
+{
+"name": "GLENLIVET 15YRS 700ML",
+"sell": 15000
+},
+{
+"name": "GLENLIVET 18 700 ML",
+"sell": 22000
+},
+{
+"name": "GLENLIVET FOUNDERS 1LTR",
+"sell": 16500
+},
+{
+"name": "GLENLIVET FOUNDERS RESERVE 700ML",
+"sell": 11000
+},
+{
+"name": "GLENMORANGIE ORIGINAL 700ML",
+"sell": 10000
+},
+{
+"name": "GORDONS GIN 1LTR",
+"sell": 4500
+},
+{
+"name": "GORDONS GIN 750ML",
+"sell": 3500
+},
+{
+"name": "GORDONS PINK GIN 700ML",
+"sell": 3500
+},
+{
+"name": "GORDONS TONIC CAN",
+"sell": 450
+},
+{
+"name": "GRANTS 1LTRS",
+"sell": 4500
+},
+{
+"name": "GRANTS 750ML",
+"sell": 3500
+},
+{
+"name": "GRENADINE SYRUP 750ML",
+"sell": 700
+},
+{
+"name": "GREY GOOSE 1LTR",
+"sell": 7000
+},
+{
+"name": "GROUND NUTS",
+"sell": 100
+},
+{
+"name": "GUARANA",
+"sell": 350
+},
+{
+"name": "GUINESS KUBWA",
+"sell": 400
+},
+{
+"name": "GUINESS SMOOTH",
+"sell": 350
+},
+{
+"name": "GUINNESS CAN",
+"sell": 450
+},
+{
+"name": "GUINNESS SMALL",
+"sell": 350
+},
+{
+"name": "HEDEX TABLETS",
+"sell": 50
+},
+{
+"name": "HEINEKEN",
+"sell": 400
+},
+{
+"name": "HEINEKEN 0.0",
+"sell": 400
+},
+{
+"name": "HEINEKEN CAN",
+"sell": 450
+},
+{
+"name": "HENDRICKS 1LTR",
+"sell": 9500
+},
+{
+"name": "HENNESEY V.S.O.P 1LTR",
+"sell": 17000
+},
+{
+"name": "HENNESSY V.S 1LTR",
+"sell": 12000
+},
+{
+"name": "HENNESSY VS 700ML",
+"sell": 8500
+},
+{
+"name": "HENNESSY VSOP 700ML",
+"sell": 14000
+},
+{
+"name": "HUNTERS CIDER",
+"sell": 350
+},
+{
+"name": "HUNTERS GOLD",
+"sell": 350
+},
+{
+"name": "ICE PINEAPLE PUNCH CAN",
+"sell": 400
+},
+{
+"name": "ICE PINEAPPLE PUNCH",
+"sell": 350
+},
+{
+"name": "J$B RARE 750ML",
+"sell": 3000
+},
+{
+"name": "JABA JUICE",
+"sell": 1000
+},
+{
+"name": "JABA JUICE 250ML",
+"sell": 600
+},
+{
+"name": "JACK DANIEL 1LTRS",
+"sell": 7500
+},
+{
+"name": "JACK DANIEL APPLE 700 ML",
+"sell": 6000
+},
+{
+"name": "JACK DANIEL HONEY 700ML",
+"sell": 6000
+},
+{
+"name": "JACK DANIELS 350ML",
+"sell": 3000
+},
+{
+"name": "JACK DANIELS 3LTR",
+"sell": 25000
+},
+{
+"name": "JACK DANIELS 700ML",
+"sell": 6000
+},
+{
+"name": "JACK DANIELS APPLE 1LTR",
+"sell": 7500
+},
+{
+"name": "JACK DANIELS FIRE 1LTR",
+"sell": 7000
+},
+{
+"name": "JACK DANIELS FIRE 750",
+"sell": 6000
+},
+{
+"name": "JACK DANIELS HONEY 1LTRS",
+"sell": 7500
+},
+{
+"name": "JACK DANIELS SINGLE BARREL 700ML",
+"sell": 11000
+},
+{
+"name": "JAGERMEISTER 1L",
+"sell": 5500
+},
+{
+"name": "JAGERMISTER 700ML",
+"sell": 4500
+},
+{
+"name": "JAMESON 1LTR",
+"sell": 5500
+},
+{
+"name": "JAMESON 375ML",
+"sell": 2500
+},
+{
+"name": "JAMESON 750ML",
+"sell": 4500
+},
+{
+"name": "JAMESON BLACK BARREL 750ML",
+"sell": 7500
+},
+{
+"name": "JOHN BARR BLACK 1LTR",
+"sell": 3500
+},
+{
+"name": "JOHN BARR BLACK 750",
+"sell": 3000
+},
+{
+"name": "JOHN BARR RED",
+"sell": 3000
+},
+{
+"name": "JOHN WALKER BLUE LABEL 700ML",
+"sell": 38500
+},
+{
+"name": "JOHNNIE  WALKER BLACK 3LTR",
+"sell": 25000
+},
+{
+"name": "JOHNNIE WALKER 18YRS 750ML",
+"sell": 12000
+},
+{
+"name": "JOHNNIE WALKER BLACK 1LTRS",
+"sell": 7500
+},
+{
+"name": "JOHNNIE WALKER BLACK 375ML",
+"sell": 3000
+},
+{
+"name": "JOHNNIE WALKER BLACK 750ML",
+"sell": 6500
+},
+{
+"name": "JOHNNIE WALKER DOUBLE BLACK 1LTR",
+"sell": 10000
+},
+{
+"name": "JOHNNIE WALKER DOUBLE BLACK 750ML",
+"sell": 8500
+},
+{
+"name": "JOHNNIE WALKER GOLD 1LTR",
+"sell": 18000
+},
+{
+"name": "JOHNNIE WALKER GOLD RESERVE 750ML",
+"sell": 14000
+},
+{
+"name": "JOHNNIE WALKER GREEN 750ML",
+"sell": 12000
+},
+{
+"name": "JOHNNIE WALKER RED 1LTRS",
+"sell": 4500
+},
+{
+"name": "JOHNNIE WALKER RED 350ML",
+"sell": 2000
+},
+{
+"name": "JOHNNIE WALKER RED 750ML",
+"sell": 3500
+},
+{
+"name": "JOHNNIE WALKER WHITE 1LTR",
+"sell": 14000
+},
+{
+"name": "JOHNNIE WALKER WHITE 750ML",
+"sell": 12000
+},
+{
+"name": "JOHNNY WALKER BLONDE 750",
+"sell": 4000
+},
+{
+"name": "JOSE CUERVO CLEAR 1L",
+"sell": 5500
+},
+{
+"name": "JOSE CUERVO CLEAR 750ML",
+"sell": 4000
+},
+{
+"name": "JOSE CUERVO GOLD 1LTRE",
+"sell": 5500
+},
+{
+"name": "JOSE CUERVO GOLD 750ML",
+"sell": 5000
+},
+{
+"name": "K.O DRY CIDER",
+"sell": 350
+},
+{
+"name": "K.O DRY CIDER CAN",
+"sell": 450
+},
+{
+"name": "K.O MUKHOMBERO",
+"sell": 450
+},
+{
+"name": "KASAPREKO ALAMO GOLD",
+"sell": 3000
+},
+{
+"name": "KASAPREKO ALOMO BITTERS",
+"sell": 3000
+},
+{
+"name": "KASAPREKO BLACK ROCK  WHISKY",
+"sell": 3000
+},
+{
+"name": "KASAPREKO CARNIVAL STRAW BERRY",
+"sell": 3000
+},
+{
+"name": "KASAPREKO KALAHARI BITTERS",
+"sell": 3000
+},
+{
+"name": "KASAPREKO LONDON GIN",
+"sell": 2500
+},
+{
+"name": "KENYA ORIGINALS",
+"sell": 350
+},
+{
+"name": "KETEL ONE 750ML",
+"sell": 4500
+},
+{
+"name": "KHALUA 750ML",
+"sell": 3500
+},
+{
+"name": "KIKAO GIN",
+"sell": 2000
+},
+{
+"name": "KINGFISHER",
+"sell": 300
+},
+{
+"name": "KO CLASSIC GIN 750",
+"sell": 3500
+},
+{
+"name": "KO TAMBUZI GIN 750",
+"sell": 3500
+},
+{
+"name": "LA DELIZIA PROSECCO EXTRA DRY",
+"sell": 4000
+},
+{
+"name": "LEMONADE",
+"sell": 100
+},
+{
+"name": "LIGHTER",
+"sell": 50
+},
+{
+"name": "LIME CODIAL 1.5 LTRS",
+"sell": 700
+},
+{
+"name": "MAJI KUBWA",
+"sell": 250
+},
+{
+"name": "MAJI NDOGO",
+"sell": 150
+},
+{
+"name": "MALFY GIN 750ML",
+"sell": 7500
+},
+{
+"name": "MALIBU 1LTR",
+"sell": 4000
+},
+{
+"name": "MALIBU 700ML",
+"sell": 3500
+},
+{
+"name": "MANYATTA  CAN",
+"sell": 450
+},
+{
+"name": "MANYATTA PINEAPPLE",
+"sell": 400
+},
+{
+"name": "MARA MOJA",
+"sell": 50
+},
+{
+"name": "MARTEL BLUE SWIFT 700ML",
+"sell": 16000
+},
+{
+"name": "MARTEL V.S 700 ML",
+"sell": 9500
+},
+{
+"name": "MARTEL V.S.O.P 1LTR",
+"sell": 16500
+},
+{
+"name": "MARTEL VS 1LTR",
+"sell": 12000
+},
+{
+"name": "MARTEL VSOP 750ML",
+"sell": 12000
+},
+{
+"name": "MARTIN ROSSO 750ML",
+"sell": 3500
+},
+{
+"name": "MATCHBOX",
+"sell": 10
+},
+{
+"name": "MCALLAN 12 700",
+"sell": 18500
+},
+{
+"name": "MOET & CHANDON",
+"sell": 16000
+},
+{
+"name": "MONKEY SHOULDER 1L",
+"sell": 9000
+},
+{
+"name": "MONKEY SHOULDER 750ML",
+"sell": 7000
+},
+{
+"name": "MONSTER",
+"sell": 400
+},
+{
+"name": "MUCHOMAS RED 750ML",
+"sell": 4000
+},
+{
+"name": "MYERS RUM 1LTR",
+"sell": 4000
+},
+{
+"name": "MYERS RUM 750ML",
+"sell": 3000
+},
+{
+"name": "NEDERBURG BLANC",
+"sell": 3500
+},
+{
+"name": "NEDERBURG CABARNET 750ML",
+"sell": 3500
+},
+{
+"name": "NEDERBURG PINOTAGE 750ML",
+"sell": 3500
+},
+{
+"name": "NEDERBURG RED BARONNE 750ML",
+"sell": 3500
+},
+{
+"name": "NEDERBURG RED MERLOT 750ML",
+"sell": 3500
+},
+{
+"name": "NEDERBURG ROSE 750ML",
+"sell": 3500
+},
+{
+"name": "NEDERBURG SHIRAZ",
+"sell": 3500
+},
+{
+"name": "OLENAISHU CHOCOLATA",
+"sell": 2500
+},
+{
+"name": "OLENAISHU SEMI SWEET RED",
+"sell": 2500
+},
+{
+"name": "OLENAISHU SWEET RED",
+"sell": 2500
+},
+{
+"name": "OLENAISHU SWEET WHITE",
+"sell": 2500
+},
+{
+"name": "OLENAISHU WHITE WINE",
+"sell": 2500
+},
+{
+"name": "OLEPASU RED 750",
+"sell": 2000
+},
+{
+"name": "OLEPASU WHITE 750",
+"sell": 2000
+},
+{
+"name": "OLMECA DARK CHOC 700ML",
+"sell": 4500
+},
+{
+"name": "ORANGE WATER",
+"sell": 300
+},
+{
+"name": "ROSSO NOBILE BIANCO 750ML",
+"sell": 3500
+},
+{
+"name": "ROSSO NOBILE CHOCOLATA",
+"sell": 3500
+},
+{
+"name": "SAVANNA 330ML",
+"sell": 400
+},
+{
+"name": "SAVANNAH O.O",
+"sell": 400
+},
+{
+"name": "SHERIDANS 1LTR",
+"sell": 6500
+},
+{
+"name": "SIGNORE GUISEPPE PROSECCO EXTRA DRY",
+"sell": 5000
+},
+{
+"name": "SINGLETON 15 YEARS",
+"sell": 14000
+},
+{
+"name": "SINGLETON 18YRS 700ML",
+"sell": 16000
+},
+{
+"name": "SINGLETON DUFFTON 12YRS 700ML",
+"sell": 8000
+},
+{
+"name": "SMIIRNOFF RASPBERRY CAN",
+"sell": 400
+},
+{
+"name": "SMIRNOFF RASPBERRY",
+"sell": 350
+},
+{
+"name": "SMIRNOFF VODKA 1LTRS",
+"sell": 3500
+},
+{
+"name": "SMIRNOFF VODKA 350ML",
+"sell": 1500
+},
+{
+"name": "SMIRNOFF VODKA 750ML",
+"sell": 2500
+},
+{
+"name": "SNAPP",
+"sell": 350
+},
+{
+"name": "SNAPP CAN",
+"sell": 400
+},
+{
+"name": "SODA",
+"sell": 100
+},
+{
+"name": "SOJU",
+"sell": 600
+},
+{
+"name": "SOUTHERN COMFORT 1LTRS",
+"sell": 4500
+},
+{
+"name": "SOUTHERN COMFORT 700ML",
+"sell": 4000
+},
+{
+"name": "SPARKLINGWATER 1L",
+"sell": 300
+},
+{
+"name": "SPORTSMAN COMMON",
+"sell": 550
+},
+{
+"name": "TALL HORSE",
+"sell": 2500
+},
+{
+"name": "TANQUARAY RANGPUR 700ML",
+"sell": 5000
+},
+{
+"name": "TANQUARAY ROYALE 700",
+"sell": 5000
+},
+{
+"name": "TANQUERAY 10 750ML",
+"sell": 7500
+},
+{
+"name": "TANQUERAY 750ML",
+"sell": 5000
+},
+{
+"name": "TANQUERAY MALLACA 1L",
+"sell": 5500
+},
+{
+"name": "TANQUERAY SEVILLA 1L",
+"sell": 6500
+},
+{
+"name": "TANQUERAY SEVILLA 700ML",
+"sell": 5000
+},
+{
+"name": "TANQUERAY TEN 1L",
+"sell": 8500
+},
+{
+"name": "TANQUERY 1LTR",
+"sell": 6000
+},
+{
+"name": "TANQUERY RANGPUR 1LTR",
+"sell": 6500
+},
+{
+"name": "TEACHERS 1L",
+"sell": 3800
+},
+{
+"name": "TEACHERS 750ML",
+"sell": 2500
+},
+{
+"name": "TEQUILA ROSE BOTTLE",
+"sell": 5500
+},
+{
+"name": "TERRA LINDA SYRAH",
+"sell": 3500
+},
+{
+"name": "TONIC SODA",
+"sell": 150
+},
+{
+"name": "TOUCH M LITCHI ICE",
+"sell": 3000
+},
+{
+"name": "TOUCH M MINT",
+"sell": 3000
+},
+{
+"name": "TOUCH M PINEAPPLE ICE",
+"sell": 3000
+},
+{
+"name": "TOUCH M SAKURA GRAPE",
+"sell": 3000
+},
+{
+"name": "TOUCH M STRAWBERRY",
+"sell": 3000
+},
+{
+"name": "TOUCH M WATERMELON ICE",
+"sell": 3000
+},
+{
+"name": "TOUCH M. BLUEBERRY RASPBERRY",
+"sell": 3000
+},
+{
+"name": "TOUCH M. MANGO ICE",
+"sell": 3000
+},
+{
+"name": "TOUCH M. PASSIONFRUIT GUAVA",
+"sell": 3000
+},
+{
+"name": "TRIPPLE SEC",
+"sell": 3000
+},
+{
+"name": "TRUMPETER",
+"sell": 3500
+},
+{
+"name": "TUBORG",
+"sell": 350
+},
+{
+"name": "TUSKER CAN",
+"sell": 350
+},
+{
+"name": "TUSKER CIDER",
+"sell": 400
+},
+{
+"name": "TUSKER CIDER CAN",
+"sell": 450
+},
+{
+"name": "TUSKER DRAFT JUG",
+"sell": 900
+},
+{
+"name": "TUSKER DRAFT MUG",
+"sell": 300
+},
+{
+"name": "TUSKER LAGER",
+"sell": 350
+},
+{
+"name": "TUSKER LITE",
+"sell": 350
+},
+{
+"name": "TUSKER LITE CAN",
+"sell": 450
+},
+{
+"name": "TUSKER MALT",
+"sell": 350
+},
+{
+"name": "TUSKER MALT CAN",
+"sell": 450
+},
+{
+"name": "TUSKER NDIMU",
+"sell": 350
+},
+{
+"name": "UGALI",
+"sell": 100
+},
+{
+"name": "VAN RIVER RED SHIRAZ PINOTAGE",
+"sell": 2400
+},
+{
+"name": "VAT 69 1LTR",
+"sell": 3000
+},
+{
+"name": "VAT 69 350ML",
+"sell": 1500
+},
+{
+"name": "VAT 69 750ML",
+"sell": 2500
+},
+{
+"name": "VAT 69 TOT",
+"sell": 200
+},
+{
+"name": "VERSUS RED 750ML",
+"sell": 3000
+},
+{
+"name": "VICEROY 350ML",
+"sell": 1500
+},
+{
+"name": "VICEROY 750ML",
+"sell": 3000
+},
+{
+"name": "WHITECAP CAN",
+"sell": 350
+},
+{
+"name": "WHITECAP LAGER",
+"sell": 350
+},
+{
+"name": "WHITECAP LAGER MUG",
+"sell": 300
+},
+{
+"name": "WHITECAP LIGHT",
+"sell": 350
+},
+{
+"name": "WILLIAM LAWSON 1LTR",
+"sell": 3500
+},
+{
+"name": "WILLIAM LAWSON 750ML",
+"sell": 3000
+},
+{
+"name": "WILLIAM LAWSON SPICED 700",
+"sell": 3000
+},
+{
+"name": "WINDHOEK  DRAUGHT",
+"sell": 350
+},
+{
+"name": "WINDHOEK LAGER",
+"sell": 350
+},
+{
+"name": "ZAPPA CLEAR 750ML",
+"sell": 2500
+},
+{
+"name": "ZAPPA GREEN",
+"sell": 2500
+},
+{
+"name": "ZAPPA RED 750ML",
+"sell": 2500
+}
+],
+"kitchen": [
+{
+"name": "ANTITHEFT 1/2 WITH  KACHUMBARI",
+"sell": 900
+},
+{
+"name": "ANTITHEFT 1KG WITH KACHUMBARI",
+"sell": 1800
+},
+{
+"name": "BACON",
+"sell": 450
+},
+{
+"name": "BAMBOO CHIPS",
+"sell": 250
+},
+{
+"name": "BAMBOO KUKU BIRIANI FULL",
+"sell": 2800
+},
+{
+"name": "BAMBOO KUKU BIRIANI HALF",
+"sell": 1400
+},
+{
+"name": "BAMBOO MCHELE NJERI 1/2 BEEF",
+"sell": 1000
+},
+{
+"name": "BAMBOO MCHELE NJERI FULL BEEF",
+"sell": 2000
+},
+{
+"name": "BEEF 1/2KG",
+"sell": 900
+},
+{
+"name": "BEEF 1KG",
+"sell": 1800
+},
+{
+"name": "BEEF CHAPS CHOMA 1/2",
+"sell": 900
+},
+{
+"name": "BEEF CHAPS CHOMA 1KG",
+"sell": 1800
+},
+{
+"name": "BEEF DRY  FRY VIAZI 1KG",
+"sell": 2000
+},
+{
+"name": "BEEF DRY FRY VIAZI 1/2KG",
+"sell": 1000
+},
+{
+"name": "BEEF NDUMA 1 KG",
+"sell": 2000
+},
+{
+"name": "BEEF NDUMA HALF",
+"sell": 1000
+},
+{
+"name": "BEEF SOUP",
+"sell": 600
+},
+{
+"name": "BEEF TUMBUKIZA 1/2 KG",
+"sell": 1000
+},
+{
+"name": "BEEF TUMBUKIZA 1KG",
+"sell": 2000
+},
+{
+"name": "OXTAIL SOUP",
+"sell": 400
+},
+{
+"name": "PLAIN BEANS",
+"sell": 200
+},
+{
+"name": "PLAIN MINJI",
+"sell": 250
+},
+{
+"name": "PLAIN TOAST",
+"sell": 50
+},
+{
+"name": "PLANTAINN",
+"sell": 350
+},
+{
+"name": "PORK  1KG",
+"sell": 1200
+},
+{
+"name": "PORK 1/2",
+"sell": 600
+},
+{
+"name": "PORK 1/2KG",
+"sell": 600
+},
+{
+"name": "CHICKEN BROILER 1/2",
+"sell": 800
+},
+{
+"name": "CHICKEN BROILER FULL",
+"sell": 1500
+},
+{
+"name": "CHICKEN KIENYEJI  TUMBUKIZA FULL",
+"sell": 2800
+},
+{
+"name": "CHICKEN KIENYEJI 1/2",
+"sell": 1300
+},
+{
+"name": "CHICKEN KIENYEJI FULL",
+"sell": 2500
+},
+{
+"name": "CHICKEN KIENYEJI TUMBUKIZA  1/2KG",
+"sell": 1500
+},
+{
+"name": "CHICKEN SAUSAGE",
+"sell": 150
+},
+{
+"name": "CHICKEN SOUP",
+"sell": 700
+},
+{
+"name": "CHICKEN TIKKA GRILL2",
+"sell": 450
+},
+{
+"name": "CHICKEN WINGS",
+"sell": 450
+},
+{
+"name": "CHICKEN WINGS HONEY GLAZED",
+"sell": 500
+},
+{
+"name": "CHIPS",
+"sell": 200
+},
+{
+"name": "FISH SOUP",
+"sell": 600
+},
+{
+"name": "FOOD CONTAINER",
+"sell": 50
+},
+{
+"name": "ROAST POTATOES",
+"sell": 200
+},
+{
+"name": "GREENS",
+"sell": 100
+},
+{
+"name": "CHOMA SAUSAGES",
+"sell": 150
+},
+{
+"name": "CHOMA SUFURIA 1/2KG",
+"sell": 1000
+},
+{
+"name": "CHOMA SUFURIA 1KG",
+"sell": 2000
+},
+{
+"name": "FULL BREAKFAST",
+"sell": 800
+},
+{
+"name": "FULL BREAKFAST WITH CHOCOLATE",
+"sell": 800
+},
+{
+"name": "FULL BREAKFAST WITH COFFEE",
+"sell": 800
+},
+{
+"name": "HONEY",
+"sell": 60
+},
+{
+"name": "HONEY GLAZED  PORK 1/2 KG",
+"sell": 850
+},
+{
+"name": "HONEY GLAZED PORK 1KG",
+"sell": 1700
+},
+{
+"name": "HUMP 1/2KG",
+"sell": 750
+},
+{
+"name": "HUMP 1KG",
+"sell": 1200
+},
+{
+"name": "CREAMED SPINACH",
+"sell": 250
+},
+{
+"name": "EGGS (2PCS)",
+"sell": 100
+},
+{
+"name": "MASALA CHIPS",
+"sell": 300
+},
+{
+"name": "MASHED POTATOES",
+"sell": 200
+},
+{
+"name": "MATUMBO BEEF 1/2KG",
+"sell": 600
+},
+{
+"name": "MATUMBO BEEF 1KG",
+"sell": 1000
+},
+{
+"name": "MATUMBO MBUZI 1/2KG",
+"sell": 600
+},
+{
+"name": "MATUMBO MBUZI 1KG",
+"sell": 1200
+},
+{
+"name": "MBUZI 1/2KG",
+"sell": 900
+},
+{
+"name": "MBUZI 1/4KG",
+"sell": 450
+},
+{
+"name": "MBUZI 1KG",
+"sell": 1800
+},
+{
+"name": "MBUZI 3/4KG",
+"sell": 1500
+},
+{
+"name": "MBUZI FULL",
+"sell": 22000
+},
+{
+"name": "MBUZI HALF",
+"sell": 11000
+},
+{
+"name": "MBUZI RIBS 1 KG",
+"sell": 1800
+},
+{
+"name": "MBUZI RIBS 1/2",
+"sell": 900
+},
+{
+"name": "MBUZI TUMBUKIZA 1/2 KG",
+"sell": 1000
+},
+{
+"name": "MBUZI TUMBUKIZA 1KG",
+"sell": 2000
+},
+{
+"name": "MBUZI TUMBUKIZA 3/4KG",
+"sell": 1700
+},
+{
+"name": "MBUZI VIAZI 1/2",
+"sell": 1000
+},
+{
+"name": "MBUZI VIAZI 1/4",
+"sell": 500
+},
+{
+"name": "MBUZI VIAZI 1KG",
+"sell": 2000
+},
+{
+"name": "MBUZI1/4 TUMBUKIZA",
+"sell": 650
+},
+{
+"name": "MCHELE NJERI FULL MBUZI",
+"sell": 2200
+},
+{
+"name": "MCHELE NJERI HALF MBUZI",
+"sell": 1100
+},
+{
+"name": "MILK MUG",
+"sell": 200
+},
+{
+"name": "NDUMA",
+"sell": 200
+},
+{
+"name": "KIENYEJI GREENS",
+"sell": 150
+},
+{
+"name": "NGWACI",
+"sell": 200
+},
+{
+"name": "OMELETTE",
+"sell": 200
+},
+{
+"name": "LIVER 1/2 KG",
+"sell": 600
+},
+{
+"name": "LIVER 1KG",
+"sell": 1000
+},
+{
+"name": "OSSOBUCCO",
+"sell": 500
+},
+{
+"name": "SAUSAGE (2PC)",
+"sell": 150
+},
+{
+"name": "SAUTE’",
+"sell": 250
+},
+{
+"name": "SAUTTE CHOMA SAUSAGE",
+"sell": 250
+},
+{
+"name": "T-BONE CHOMA",
+"sell": 1800
+},
+{
+"name": "T-BONE CHOMA 1/2",
+"sell": 900
+},
+{
+"name": "WHOLE FISH",
+"sell": 1200
+},
+{
+"name": "DAWA",
+"sell": 200
+},
+{
+"name": "DAWA MUG",
+"sell": 200
+}
+]
+}

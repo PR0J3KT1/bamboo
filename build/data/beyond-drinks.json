@@ -1,0 +1,2751 @@
+[
+{
+"name": "Johnnie Walker Black Label",
+"brand": "Johnnie Walker",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 4200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Smoke",
+"vanilla",
+"dried fruit"
+]
+},
+{
+"name": "Johnnie Walker Red Label",
+"brand": "Johnnie Walker",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 2350,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Spice",
+"cinnamon",
+"green fruit"
+]
+},
+{
+"name": "Johnnie Walker Double Black",
+"brand": "Johnnie Walker",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 6500,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Peat smoke",
+"raisin",
+"chilli"
+]
+},
+{
+"name": "Johnnie Walker Gold Label Reserve",
+"brand": "Johnnie Walker",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 9800,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Honey",
+"orchard fruit",
+"creamy oak"
+]
+},
+{
+"name": "Johnnie Walker Blue Label",
+"brand": "Johnnie Walker",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 28500,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Rose petal",
+"hazelnut",
+"long smoke"
+]
+},
+{
+"name": "Jameson Irish Whiskey",
+"brand": "Jameson",
+"cat": "whisky",
+"type": "Irish Whiskey",
+"price": 3200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Ireland",
+"notes": [
+"Vanilla",
+"toasted wood",
+"light spice"
+]
+},
+{
+"name": "Jameson Black Barrel",
+"brand": "Jameson",
+"cat": "whisky",
+"type": "Irish Whiskey",
+"price": 5900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Ireland",
+"notes": [
+"Butterscotch",
+"cocoa",
+"charred oak"
+]
+},
+{
+"name": "Jameson Caskmates Stout Edition",
+"brand": "Jameson",
+"cat": "whisky",
+"type": "Irish Whiskey",
+"price": 4600,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Ireland",
+"notes": [
+"Cocoa",
+"coffee",
+"hops"
+]
+},
+{
+"name": "Jack Daniel's Old No.7",
+"brand": "Jack Daniel's",
+"cat": "whisky",
+"type": "Tennessee Whiskey",
+"price": 3900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "USA",
+"notes": [
+"Caramel",
+"banana",
+"sweet char"
+]
+},
+{
+"name": "Jack Daniel's Tennessee Honey",
+"brand": "Jack Daniel's",
+"cat": "whisky",
+"type": "Tennessee Whiskey",
+"price": 4300,
+"size": "750ml",
+"abv": 35.0,
+"origin": "USA",
+"notes": [
+"Wild honey",
+"vanilla",
+"warm spice"
+]
+},
+{
+"name": "Jack Daniel's Gentleman Jack",
+"brand": "Jack Daniel's",
+"cat": "whisky",
+"type": "Tennessee Whiskey",
+"price": 5600,
+"size": "750ml",
+"abv": 40.0,
+"origin": "USA",
+"notes": [
+"Soft oak",
+"apricot",
+"silky finish"
+]
+},
+{
+"name": "Glenfiddich 12 Year Old",
+"brand": "Glenfiddich",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 6900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Pear",
+"oak",
+"subtle malt"
+]
+},
+{
+"name": "Glenfiddich 15 Year Old Solera",
+"brand": "Glenfiddich",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 11500,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Marzipan",
+"sherry",
+"honey"
+]
+},
+{
+"name": "The Glenlivet Founder's Reserve",
+"brand": "The Glenlivet",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 6200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Citrus",
+"toffee apple",
+"creamy"
+]
+},
+{
+"name": "Chivas Regal 12 Year Old",
+"brand": "Chivas Regal",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 5400,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Ripe apple",
+"vanilla",
+"hazelnut"
+]
+},
+{
+"name": "Chivas Regal 18 Year Old",
+"brand": "Chivas Regal",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 13500,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Dark chocolate",
+"dried figs",
+"velvet"
+]
+},
+{
+"name": "Ballantine's Finest",
+"brand": "Ballantine's",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 2600,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Milk chocolate",
+"honey",
+"red apple"
+]
+},
+{
+"name": "The Famous Grouse",
+"brand": "The Famous Grouse",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 2400,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Sherry",
+"orange",
+"light smoke"
+]
+},
+{
+"name": "Grant's Triple Wood",
+"brand": "Grant's",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 2300,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Toffee",
+"pear",
+"vanilla oak"
+]
+},
+{
+"name": "J&B Rare",
+"brand": "J&B",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 2500,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Fresh fruit",
+"light grain"
+]
+},
+{
+"name": "Teacher's Highland Cream",
+"brand": "Teacher's",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 2200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Smoky malt",
+"honey",
+"spice"
+]
+},
+{
+"name": "Black & White",
+"brand": "Black & White",
+"cat": "whisky",
+"type": "Blended Scotch",
+"price": 1950,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Light",
+"grainy",
+"easy"
+]
+},
+{
+"name": "The Singleton of Dufftown 12",
+"brand": "The Singleton",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 6400,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Espresso",
+"red berry",
+"sweet malt"
+]
+},
+{
+"name": "Talisker 10 Year Old",
+"brand": "Talisker",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 8900,
+"size": "750ml",
+"abv": 45.8,
+"origin": "Scotland",
+"notes": [
+"Sea salt",
+"pepper",
+"campfire smoke"
+]
+},
+{
+"name": "Monkey Shoulder",
+"brand": "Monkey Shoulder",
+"cat": "whisky",
+"type": "Blended Malt",
+"price": 5600,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Vanilla",
+"zesty orange",
+"malt"
+]
+},
+{
+"name": "The Macallan 12 Double Cask",
+"brand": "The Macallan",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 13900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Butterscotch",
+"ginger",
+"raisin"
+]
+},
+{
+"name": "Highland Park 12 Viking Honour",
+"brand": "Highland Park",
+"cat": "whisky",
+"type": "Single Malt",
+"price": 8600,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Scotland",
+"notes": [
+"Heather honey",
+"smoke",
+"orange"
+]
+},
+{
+"name": "Jim Beam White Label",
+"brand": "Jim Beam",
+"cat": "whisky",
+"type": "Bourbon",
+"price": 2900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "USA",
+"notes": [
+"Corn sweetness",
+"vanilla",
+"oak"
+]
+},
+{
+"name": "Bulleit Bourbon Frontier",
+"brand": "Bulleit",
+"cat": "whisky",
+"type": "Bourbon",
+"price": 5200,
+"size": "750ml",
+"abv": 45.0,
+"origin": "USA",
+"notes": [
+"Rye spice",
+"maple",
+"dry finish"
+]
+},
+{
+"name": "Maker's Mark",
+"brand": "Maker's Mark",
+"cat": "whisky",
+"type": "Bourbon",
+"price": 5800,
+"size": "750ml",
+"abv": 45.0,
+"origin": "USA",
+"notes": [
+"Wheated",
+"caramel",
+"soft vanilla"
+]
+},
+{
+"name": "Wild Turkey 81",
+"brand": "Wild Turkey",
+"cat": "whisky",
+"type": "Bourbon",
+"price": 4100,
+"size": "750ml",
+"abv": 40.5,
+"origin": "USA",
+"notes": [
+"Baking spice",
+"toffee",
+"warmth"
+]
+},
+{
+"name": "Suntory Whisky Toki",
+"brand": "Suntory",
+"cat": "whisky",
+"type": "Japanese Whisky",
+"price": 6800,
+"size": "700ml",
+"abv": 43.0,
+"origin": "Japan",
+"notes": [
+"Green apple",
+"basil",
+"honey"
+]
+},
+{
+"name": "Best Whisky",
+"brand": "Best",
+"cat": "whisky",
+"type": "Kenyan Spirit",
+"price": 900,
+"size": "250ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Grain",
+"caramel",
+"simple"
+]
+},
+{
+"name": "Beyond Sweetness Reserve Blend No.1",
+"brand": "Beyond Sweetness",
+"cat": "whisky",
+"type": "House Exclusive",
+"price": 4950,
+"size": "750ml",
+"abv": 43.0,
+"origin": "Scotland",
+"notes": [
+"Toasted almond",
+"dark honey",
+"cocoa"
+]
+},
+{
+"name": "Smirnoff Red Label",
+"brand": "Smirnoff",
+"cat": "vodka",
+"type": "Plain Vodka",
+"price": 1850,
+"size": "750ml",
+"abv": 37.5,
+"origin": "UK",
+"notes": [
+"Clean",
+"peppery",
+"neutral"
+]
+},
+{
+"name": "Smirnoff Red Label 1 Litre",
+"brand": "Smirnoff",
+"cat": "vodka",
+"type": "Plain Vodka",
+"price": 2350,
+"size": "1L",
+"abv": 37.5,
+"origin": "UK",
+"notes": [
+"Clean",
+"peppery",
+"neutral"
+]
+},
+{
+"name": "Absolut Vodka Blue",
+"brand": "Absolut",
+"cat": "vodka",
+"type": "Plain Vodka",
+"price": 2900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Sweden",
+"notes": [
+"Grain",
+"light citrus"
+]
+},
+{
+"name": "Absolut Citron",
+"brand": "Absolut",
+"cat": "vodka",
+"type": "Flavoured Vodka",
+"price": 3100,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Sweden",
+"notes": [
+"Lemon zest",
+"lime",
+"crisp"
+]
+},
+{
+"name": "Absolut Raspberri",
+"brand": "Absolut",
+"cat": "vodka",
+"type": "Flavoured Vodka",
+"price": 3100,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Sweden",
+"notes": [
+"Ripe raspberry",
+"sweet finish"
+]
+},
+{
+"name": "Grey Goose",
+"brand": "Grey Goose",
+"cat": "vodka",
+"type": "Premium Vodka",
+"price": 7900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Soft wheat",
+"almond",
+"silk"
+]
+},
+{
+"name": "Belvedere Pure",
+"brand": "Belvedere",
+"cat": "vodka",
+"type": "Premium Vodka",
+"price": 7400,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Poland",
+"notes": [
+"Rye bread",
+"cream",
+"vanilla"
+]
+},
+{
+"name": "CIROC Snap Frost",
+"brand": "CIROC",
+"cat": "vodka",
+"type": "Premium Vodka",
+"price": 8900,
+"size": "750ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Grape",
+"citrus",
+"smooth"
+]
+},
+{
+"name": "CIROC Red Berry",
+"brand": "CIROC",
+"cat": "vodka",
+"type": "Flavoured Vodka",
+"price": 9100,
+"size": "750ml",
+"abv": 37.5,
+"origin": "France",
+"notes": [
+"Strawberry",
+"raspberry",
+"soft"
+]
+},
+{
+"name": "Russian Standard Original",
+"brand": "Russian Standard",
+"cat": "vodka",
+"type": "Plain Vodka",
+"price": 2700,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Russia",
+"notes": [
+"Winter wheat",
+"crisp bite"
+]
+},
+{
+"name": "Stolichnaya Premium",
+"brand": "Stolichnaya",
+"cat": "vodka",
+"type": "Plain Vodka",
+"price": 3200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Latvia",
+"notes": [
+"Bread crust",
+"mild spice"
+]
+},
+{
+"name": "SKYY Vodka",
+"brand": "SKYY",
+"cat": "vodka",
+"type": "Plain Vodka",
+"price": 3400,
+"size": "750ml",
+"abv": 40.0,
+"origin": "USA",
+"notes": [
+"Filtered clean",
+"faint citrus"
+]
+},
+{
+"name": "Tito's Handmade Vodka",
+"brand": "Tito's",
+"cat": "vodka",
+"type": "Premium Vodka",
+"price": 5200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "USA",
+"notes": [
+"Corn sweetness",
+"pepper finish"
+]
+},
+{
+"name": "Chrome Vodka",
+"brand": "Chrome",
+"cat": "vodka",
+"type": "Kenyan Vodka",
+"price": 850,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Neutral",
+"mixer friendly"
+]
+},
+{
+"name": "Kibao Vodka",
+"brand": "Kibao",
+"cat": "vodka",
+"type": "Kenyan Vodka",
+"price": 950,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Clean",
+"budget favourite"
+]
+},
+{
+"name": "Blue Moon Vodka",
+"brand": "Blue Moon",
+"cat": "vodka",
+"type": "Kenyan Vodka",
+"price": 780,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Light",
+"straightforward"
+]
+},
+{
+"name": "Gordon's London Dry Gin",
+"brand": "Gordon's",
+"cat": "gin",
+"type": "London Dry",
+"price": 2100,
+"size": "750ml",
+"abv": 37.5,
+"origin": "UK",
+"notes": [
+"Juniper",
+"coriander",
+"citrus peel"
+]
+},
+{
+"name": "Gordon's Pink Gin",
+"brand": "Gordon's",
+"cat": "gin",
+"type": "Flavoured Gin",
+"price": 2400,
+"size": "750ml",
+"abv": 37.5,
+"origin": "UK",
+"notes": [
+"Strawberry",
+"raspberry",
+"redcurrant"
+]
+},
+{
+"name": "Tanqueray London Dry",
+"brand": "Tanqueray",
+"cat": "gin",
+"type": "London Dry",
+"price": 3900,
+"size": "750ml",
+"abv": 43.1,
+"origin": "UK",
+"notes": [
+"Bold juniper",
+"angelica",
+"liquorice"
+]
+},
+{
+"name": "Tanqueray No. TEN",
+"brand": "Tanqueray",
+"cat": "gin",
+"type": "Premium Gin",
+"price": 7200,
+"size": "750ml",
+"abv": 47.3,
+"origin": "UK",
+"notes": [
+"Grapefruit",
+"chamomile",
+"whole citrus"
+]
+},
+{
+"name": "Tanqueray Flor de Sevilla",
+"brand": "Tanqueray",
+"cat": "gin",
+"type": "Flavoured Gin",
+"price": 4600,
+"size": "750ml",
+"abv": 41.3,
+"origin": "UK",
+"notes": [
+"Seville orange",
+"marmalade"
+]
+},
+{
+"name": "Bombay Sapphire",
+"brand": "Bombay Sapphire",
+"cat": "gin",
+"type": "London Dry",
+"price": 4200,
+"size": "750ml",
+"abv": 40.0,
+"origin": "UK",
+"notes": [
+"Lemon peel",
+"almond",
+"grains of paradise"
+]
+},
+{
+"name": "Beefeater London Dry",
+"brand": "Beefeater",
+"cat": "gin",
+"type": "London Dry",
+"price": 3300,
+"size": "750ml",
+"abv": 40.0,
+"origin": "UK",
+"notes": [
+"Sharp juniper",
+"orange",
+"clean"
+]
+},
+{
+"name": "Hendrick's Gin",
+"brand": "Hendrick's",
+"cat": "gin",
+"type": "Premium Gin",
+"price": 6800,
+"size": "750ml",
+"abv": 41.4,
+"origin": "Scotland",
+"notes": [
+"Cucumber",
+"rose",
+"soft juniper"
+]
+},
+{
+"name": "Gilbey's Special Dry Gin",
+"brand": "Gilbey's",
+"cat": "gin",
+"type": "London Dry",
+"price": 1900,
+"size": "750ml",
+"abv": 37.5,
+"origin": "Kenya",
+"notes": [
+"Light juniper",
+"easy mixer"
+]
+},
+{
+"name": "Gilbey's Pink Gin",
+"brand": "Gilbey's",
+"cat": "gin",
+"type": "Flavoured Gin",
+"price": 2050,
+"size": "750ml",
+"abv": 37.5,
+"origin": "Kenya",
+"notes": [
+"Berry sweetness",
+"gentle spice"
+]
+},
+{
+"name": "Procera Blue Dot Gin",
+"brand": "Procera",
+"cat": "gin",
+"type": "African Craft Gin",
+"price": 9500,
+"size": "700ml",
+"abv": 44.0,
+"origin": "Kenya",
+"notes": [
+"Juniperus procera",
+"pepper tree",
+"citrus"
+]
+},
+{
+"name": "Whitley Neill Rhubarb & Ginger",
+"brand": "Whitley Neill",
+"cat": "gin",
+"type": "Flavoured Gin",
+"price": 4800,
+"size": "700ml",
+"abv": 43.0,
+"origin": "UK",
+"notes": [
+"Rhubarb",
+"ginger heat",
+"sweet finish"
+]
+},
+{
+"name": "Malfy Gin Rosa",
+"brand": "Malfy",
+"cat": "gin",
+"type": "Flavoured Gin",
+"price": 5600,
+"size": "700ml",
+"abv": 41.0,
+"origin": "Italy",
+"notes": [
+"Pink grapefruit",
+"rhubarb",
+"sea air"
+]
+},
+{
+"name": "Monkey 47 Schwarzwald Dry",
+"brand": "Monkey 47",
+"cat": "gin",
+"type": "Premium Gin",
+"price": 11500,
+"size": "500ml",
+"abv": 47.0,
+"origin": "Germany",
+"notes": [
+"47 botanicals",
+"cranberry",
+"spice"
+]
+},
+{
+"name": "Sipsmith London Dry",
+"brand": "Sipsmith",
+"cat": "gin",
+"type": "Premium Gin",
+"price": 6200,
+"size": "700ml",
+"abv": 41.6,
+"origin": "UK",
+"notes": [
+"Classic juniper",
+"lemon tart",
+"dry"
+]
+},
+{
+"name": "Captain Morgan Spiced Gold",
+"brand": "Captain Morgan",
+"cat": "rum",
+"type": "Spiced Rum",
+"price": 2800,
+"size": "750ml",
+"abv": 35.0,
+"origin": "Jamaica",
+"notes": [
+"Vanilla",
+"brown sugar",
+"warm spice"
+]
+},
+{
+"name": "Captain Morgan Black Label",
+"brand": "Captain Morgan",
+"cat": "rum",
+"type": "Dark Rum",
+"price": 2600,
+"size": "750ml",
+"abv": 37.5,
+"origin": "Jamaica",
+"notes": [
+"Molasses",
+"treacle",
+"oak"
+]
+},
+{
+"name": "Bacardi Carta Blanca",
+"brand": "Bacardi",
+"cat": "rum",
+"type": "White Rum",
+"price": 2900,
+"size": "750ml",
+"abv": 37.5,
+"origin": "Puerto Rico",
+"notes": [
+"Light vanilla",
+"almond",
+"crisp"
+]
+},
+{
+"name": "Bacardi Carta Oro",
+"brand": "Bacardi",
+"cat": "rum",
+"type": "Gold Rum",
+"price": 3050,
+"size": "750ml",
+"abv": 37.5,
+"origin": "Puerto Rico",
+"notes": [
+"Toasted oak",
+"banana",
+"caramel"
+]
+},
+{
+"name": "Malibu Coconut Rum",
+"brand": "Malibu",
+"cat": "rum",
+"type": "Flavoured Rum",
+"price": 3100,
+"size": "750ml",
+"abv": 21.0,
+"origin": "Barbados",
+"notes": [
+"Coconut cream",
+"sweet",
+"tropical"
+]
+},
+{
+"name": "Havana Club Añejo 7 Años",
+"brand": "Havana Club",
+"cat": "rum",
+"type": "Aged Rum",
+"price": 5400,
+"size": "700ml",
+"abv": 40.0,
+"origin": "Cuba",
+"notes": [
+"Cocoa",
+"tobacco",
+"vanilla"
+]
+},
+{
+"name": "Ron Zacapa 23 Solera",
+"brand": "Zacapa",
+"cat": "rum",
+"type": "Aged Rum",
+"price": 12500,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Guatemala",
+"notes": [
+"Honey",
+"butterscotch",
+"dried fruit"
+]
+},
+{
+"name": "Old Monk 7 Year Rum",
+"brand": "Old Monk",
+"cat": "rum",
+"type": "Dark Rum",
+"price": 2400,
+"size": "750ml",
+"abv": 42.8,
+"origin": "India",
+"notes": [
+"Caramel",
+"vanilla",
+"spiced depth"
+]
+},
+{
+"name": "Kenya Cane Original",
+"brand": "Kenya Cane",
+"cat": "rum",
+"type": "Cane Spirit",
+"price": 950,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Sugar cane",
+"clean",
+"local classic"
+]
+},
+{
+"name": "Kenya Cane Coconut",
+"brand": "Kenya Cane",
+"cat": "rum",
+"type": "Cane Spirit",
+"price": 1000,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Coconut",
+"cane sweetness"
+]
+},
+{
+"name": "Kenya Cane Pineapple",
+"brand": "Kenya Cane",
+"cat": "rum",
+"type": "Cane Spirit",
+"price": 1000,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Kenya",
+"notes": [
+"Ripe pineapple",
+"easy sipping"
+]
+},
+{
+"name": "Jose Cuervo Especial Silver",
+"brand": "Jose Cuervo",
+"cat": "tequila",
+"type": "Blanco",
+"price": 3600,
+"size": "750ml",
+"abv": 38.0,
+"origin": "Mexico",
+"notes": [
+"Agave",
+"pepper",
+"citrus"
+]
+},
+{
+"name": "Jose Cuervo Especial Gold",
+"brand": "Jose Cuervo",
+"cat": "tequila",
+"type": "Reposado",
+"price": 3600,
+"size": "750ml",
+"abv": 38.0,
+"origin": "Mexico",
+"notes": [
+"Caramel",
+"agave",
+"soft oak"
+]
+},
+{
+"name": "Olmeca Silver",
+"brand": "Olmeca",
+"cat": "tequila",
+"type": "Blanco",
+"price": 3200,
+"size": "750ml",
+"abv": 38.0,
+"origin": "Mexico",
+"notes": [
+"Herbal agave",
+"lime",
+"crisp"
+]
+},
+{
+"name": "Olmeca Altos Plata",
+"brand": "Olmeca",
+"cat": "tequila",
+"type": "Blanco",
+"price": 4900,
+"size": "750ml",
+"abv": 38.0,
+"origin": "Mexico",
+"notes": [
+"Cooked agave",
+"sweet citrus"
+]
+},
+{
+"name": "Camino Real Gold",
+"brand": "Camino Real",
+"cat": "tequila",
+"type": "Reposado",
+"price": 2600,
+"size": "750ml",
+"abv": 35.0,
+"origin": "Mexico",
+"notes": [
+"Light agave",
+"vanilla"
+]
+},
+{
+"name": "Patrón Silver",
+"brand": "Patrón",
+"cat": "tequila",
+"type": "Blanco",
+"price": 9800,
+"size": "750ml",
+"abv": 40.0,
+"origin": "Mexico",
+"notes": [
+"Fresh agave",
+"black pepper",
+"smooth"
+]
+},
+{
+"name": "Don Julio Blanco",
+"brand": "Don Julio",
+"cat": "tequila",
+"type": "Blanco",
+"price": 10500,
+"size": "750ml",
+"abv": 38.0,
+"origin": "Mexico",
+"notes": [
+"Grapefruit",
+"agave",
+"clean heat"
+]
+},
+{
+"name": "Don Julio 1942",
+"brand": "Don Julio",
+"cat": "tequila",
+"type": "Añejo",
+"price": 38000,
+"size": "750ml",
+"abv": 38.0,
+"origin": "Mexico",
+"notes": [
+"Vanilla",
+"roasted agave",
+"warm oak"
+]
+},
+{
+"name": "Hennessy Very Special",
+"brand": "Hennessy",
+"cat": "brandy",
+"type": "Cognac VS",
+"price": 6900,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Toasted almond",
+"grape",
+"oak"
+]
+},
+{
+"name": "Hennessy VSOP Privilège",
+"brand": "Hennessy",
+"cat": "brandy",
+"type": "Cognac VSOP",
+"price": 12500,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Clove",
+"vanilla",
+"candied fruit"
+]
+},
+{
+"name": "Hennessy XO",
+"brand": "Hennessy",
+"cat": "brandy",
+"type": "Cognac XO",
+"price": 38000,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Chocolate",
+"pepper",
+"long finish"
+]
+},
+{
+"name": "Rémy Martin VSOP",
+"brand": "Rémy Martin",
+"cat": "brandy",
+"type": "Cognac VSOP",
+"price": 9800,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Stone fruit",
+"liquorice",
+"vanilla"
+]
+},
+{
+"name": "Martell VS Single Distillery",
+"brand": "Martell",
+"cat": "brandy",
+"type": "Cognac VS",
+"price": 6500,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Ripe plum",
+"toasted wood"
+]
+},
+{
+"name": "Courvoisier VS",
+"brand": "Courvoisier",
+"cat": "brandy",
+"type": "Cognac VS",
+"price": 6200,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Apricot",
+"oak",
+"gentle spice"
+]
+},
+{
+"name": "Viceroy 5 Year Brandy",
+"brand": "Viceroy",
+"cat": "brandy",
+"type": "Brandy",
+"price": 1900,
+"size": "750ml",
+"abv": 43.0,
+"origin": "South Africa",
+"notes": [
+"Raisin",
+"caramel",
+"warm"
+]
+},
+{
+"name": "Richot Napoleon Brandy",
+"brand": "Richot",
+"cat": "brandy",
+"type": "Brandy",
+"price": 1600,
+"size": "750ml",
+"abv": 43.0,
+"origin": "South Africa",
+"notes": [
+"Sweet grape",
+"easy mixer"
+]
+},
+{
+"name": "Klipdrift Export",
+"brand": "Klipdrift",
+"cat": "brandy",
+"type": "Brandy",
+"price": 2100,
+"size": "750ml",
+"abv": 43.0,
+"origin": "South Africa",
+"notes": [
+"Nutty",
+"oaked",
+"smooth"
+]
+},
+{
+"name": "Three Ships Select Brandy",
+"brand": "Three Ships",
+"cat": "brandy",
+"type": "Brandy",
+"price": 2450,
+"size": "750ml",
+"abv": 43.0,
+"origin": "South Africa",
+"notes": [
+"Dried fruit",
+"honey",
+"oak"
+]
+},
+{
+"name": "Baileys Irish Cream",
+"brand": "Baileys",
+"cat": "liqueur",
+"type": "Cream Liqueur",
+"price": 3200,
+"size": "750ml",
+"abv": 17.0,
+"origin": "Ireland",
+"notes": [
+"Chocolate",
+"cream",
+"Irish whiskey"
+]
+},
+{
+"name": "Baileys Salted Caramel",
+"brand": "Baileys",
+"cat": "liqueur",
+"type": "Cream Liqueur",
+"price": 3400,
+"size": "750ml",
+"abv": 17.0,
+"origin": "Ireland",
+"notes": [
+"Salted caramel",
+"cream",
+"cocoa"
+]
+},
+{
+"name": "Amarula Cream",
+"brand": "Amarula",
+"cat": "liqueur",
+"type": "Cream Liqueur",
+"price": 2400,
+"size": "750ml",
+"abv": 17.0,
+"origin": "South Africa",
+"notes": [
+"Marula fruit",
+"caramel",
+"cream"
+]
+},
+{
+"name": "Jägermeister",
+"brand": "Jägermeister",
+"cat": "liqueur",
+"type": "Herbal Liqueur",
+"price": 3600,
+"size": "700ml",
+"abv": 35.0,
+"origin": "Germany",
+"notes": [
+"56 herbs",
+"liquorice",
+"bittersweet"
+]
+},
+{
+"name": "Kahlúa Coffee Liqueur",
+"brand": "Kahlúa",
+"cat": "liqueur",
+"type": "Coffee Liqueur",
+"price": 3400,
+"size": "700ml",
+"abv": 16.0,
+"origin": "Mexico",
+"notes": [
+"Arabica coffee",
+"rum",
+"vanilla"
+]
+},
+{
+"name": "Cointreau",
+"brand": "Cointreau",
+"cat": "liqueur",
+"type": "Triple Sec",
+"price": 4600,
+"size": "700ml",
+"abv": 40.0,
+"origin": "France",
+"notes": [
+"Bitter and sweet orange peel"
+]
+},
+{
+"name": "Southern Comfort",
+"brand": "Southern Comfort",
+"cat": "liqueur",
+"type": "Whiskey Liqueur",
+"price": 3100,
+"size": "750ml",
+"abv": 35.0,
+"origin": "USA",
+"notes": [
+"Peach",
+"spice",
+"vanilla"
+]
+},
+{
+"name": "Luxardo Sambuca",
+"brand": "Luxardo",
+"cat": "liqueur",
+"type": "Anise Liqueur",
+"price": 3800,
+"size": "700ml",
+"abv": 38.0,
+"origin": "Italy",
+"notes": [
+"Star anise",
+"elderflower"
+]
+},
+{
+"name": "Disaronno Originale",
+"brand": "Disaronno",
+"cat": "liqueur",
+"type": "Amaretto",
+"price": 4200,
+"size": "700ml",
+"abv": 28.0,
+"origin": "Italy",
+"notes": [
+"Marzipan",
+"apricot kernel"
+]
+},
+{
+"name": "Campari",
+"brand": "Campari",
+"cat": "liqueur",
+"type": "Bitters",
+"price": 3900,
+"size": "700ml",
+"abv": 25.0,
+"origin": "Italy",
+"notes": [
+"Bitter orange",
+"rhubarb",
+"herbs"
+]
+},
+{
+"name": "Aperol",
+"brand": "Aperol",
+"cat": "liqueur",
+"type": "Aperitif",
+"price": 3500,
+"size": "700ml",
+"abv": 11.0,
+"origin": "Italy",
+"notes": [
+"Rhubarb",
+"orange",
+"gentian"
+]
+},
+{
+"name": "De Kuyper Triple Sec",
+"brand": "De Kuyper",
+"cat": "liqueur",
+"type": "Triple Sec",
+"price": 1800,
+"size": "700ml",
+"abv": 24.0,
+"origin": "Netherlands",
+"notes": [
+"Orange peel",
+"clean sweetness"
+]
+},
+{
+"name": "4th Street Sweet Red",
+"brand": "4th Street",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1200,
+"size": "750ml",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Berry jam",
+"soft",
+"very sweet"
+]
+},
+{
+"name": "4th Street Sweet Red 2 Litre",
+"brand": "4th Street",
+"cat": "wine",
+"type": "Red Wine",
+"price": 2600,
+"size": "2L",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Berry jam",
+"soft",
+"very sweet"
+]
+},
+{
+"name": "4th Street Sweet Rosé",
+"brand": "4th Street",
+"cat": "wine",
+"type": "Rosé Wine",
+"price": 1250,
+"size": "750ml",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Strawberry",
+"watermelon",
+"sweet"
+]
+},
+{
+"name": "4th Street Sweet White",
+"brand": "4th Street",
+"cat": "wine",
+"type": "White Wine",
+"price": 1200,
+"size": "750ml",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Tropical fruit",
+"sweet finish"
+]
+},
+{
+"name": "Nederburg Cabernet Sauvignon",
+"brand": "Nederburg",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1900,
+"size": "750ml",
+"abv": 13.5,
+"origin": "South Africa",
+"notes": [
+"Blackcurrant",
+"cedar",
+"firm tannin"
+]
+},
+{
+"name": "Nederburg Sauvignon Blanc",
+"brand": "Nederburg",
+"cat": "wine",
+"type": "White Wine",
+"price": 1900,
+"size": "750ml",
+"abv": 12.5,
+"origin": "South Africa",
+"notes": [
+"Gooseberry",
+"lime",
+"fresh"
+]
+},
+{
+"name": "Nederburg Baronne Red Blend",
+"brand": "Nederburg",
+"cat": "wine",
+"type": "Red Wine",
+"price": 2100,
+"size": "750ml",
+"abv": 14.0,
+"origin": "South Africa",
+"notes": [
+"Plum",
+"spice",
+"smooth"
+]
+},
+{
+"name": "Drostdy-Hof Merlot",
+"brand": "Drostdy-Hof",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1450,
+"size": "750ml",
+"abv": 13.0,
+"origin": "South Africa",
+"notes": [
+"Red plum",
+"mocha",
+"easy"
+]
+},
+{
+"name": "Drostdy-Hof Extra Light White",
+"brand": "Drostdy-Hof",
+"cat": "wine",
+"type": "White Wine",
+"price": 1400,
+"size": "750ml",
+"abv": 8.5,
+"origin": "South Africa",
+"notes": [
+"Melon",
+"light",
+"gently sweet"
+]
+},
+{
+"name": "Robertson Winery Sweet Red",
+"brand": "Robertson Winery",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1350,
+"size": "750ml",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Cherry",
+"sweet",
+"low alcohol"
+]
+},
+{
+"name": "Robertson Winery Natural Sweet White",
+"brand": "Robertson Winery",
+"cat": "wine",
+"type": "White Wine",
+"price": 1350,
+"size": "750ml",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Peach",
+"honeysuckle",
+"sweet"
+]
+},
+{
+"name": "Two Oceans Shiraz",
+"brand": "Two Oceans",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1600,
+"size": "750ml",
+"abv": 13.5,
+"origin": "South Africa",
+"notes": [
+"Black pepper",
+"dark berry"
+]
+},
+{
+"name": "Two Oceans Sauvignon Blanc",
+"brand": "Two Oceans",
+"cat": "wine",
+"type": "White Wine",
+"price": 1600,
+"size": "750ml",
+"abv": 12.0,
+"origin": "South Africa",
+"notes": [
+"Citrus",
+"cut grass",
+"crisp"
+]
+},
+{
+"name": "KWV Classic Pinotage",
+"brand": "KWV",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1750,
+"size": "750ml",
+"abv": 14.0,
+"origin": "South Africa",
+"notes": [
+"Smoky plum",
+"banana note"
+]
+},
+{
+"name": "Casillero del Diablo Cabernet Sauvignon",
+"brand": "Casillero del Diablo",
+"cat": "wine",
+"type": "Red Wine",
+"price": 2900,
+"size": "750ml",
+"abv": 13.5,
+"origin": "Chile",
+"notes": [
+"Blackberry",
+"vanilla",
+"coffee"
+]
+},
+{
+"name": "Casillero del Diablo Sauvignon Blanc",
+"brand": "Casillero del Diablo",
+"cat": "wine",
+"type": "White Wine",
+"price": 2900,
+"size": "750ml",
+"abv": 12.5,
+"origin": "Chile",
+"notes": [
+"Grapefruit",
+"mineral",
+"zippy"
+]
+},
+{
+"name": "19 Crimes Red Blend",
+"brand": "19 Crimes",
+"cat": "wine",
+"type": "Red Wine",
+"price": 3200,
+"size": "750ml",
+"abv": 14.0,
+"origin": "Australia",
+"notes": [
+"Dark fruit",
+"mocha",
+"bold"
+]
+},
+{
+"name": "Jacob's Creek Shiraz Cabernet",
+"brand": "Jacob's Creek",
+"cat": "wine",
+"type": "Red Wine",
+"price": 2200,
+"size": "750ml",
+"abv": 14.0,
+"origin": "Australia",
+"notes": [
+"Ripe berry",
+"spice",
+"soft oak"
+]
+},
+{
+"name": "Frontera Merlot",
+"brand": "Frontera",
+"cat": "wine",
+"type": "Red Wine",
+"price": 1700,
+"size": "750ml",
+"abv": 12.5,
+"origin": "Chile",
+"notes": [
+"Cherry",
+"plum",
+"easy drinking"
+]
+},
+{
+"name": "Whispering Angel Rosé",
+"brand": "Whispering Angel",
+"cat": "wine",
+"type": "Rosé Wine",
+"price": 6800,
+"size": "750ml",
+"abv": 13.0,
+"origin": "France",
+"notes": [
+"Pale",
+"red berry",
+"dry elegance"
+]
+},
+{
+"name": "JC Le Roux Le Domaine",
+"brand": "JC Le Roux",
+"cat": "wine",
+"type": "Sparkling Wine",
+"price": 2300,
+"size": "750ml",
+"abv": 8.0,
+"origin": "South Africa",
+"notes": [
+"Muscat",
+"apple",
+"gently fizzy"
+]
+},
+{
+"name": "Martini Asti Spumante",
+"brand": "Martini",
+"cat": "wine",
+"type": "Sparkling Wine",
+"price": 2900,
+"size": "750ml",
+"abv": 7.5,
+"origin": "Italy",
+"notes": [
+"Grape",
+"peach",
+"sweet sparkle"
+]
+},
+{
+"name": "Martini Rosso Vermouth",
+"brand": "Martini",
+"cat": "wine",
+"type": "Vermouth",
+"price": 2600,
+"size": "1L",
+"abv": 15.0,
+"origin": "Italy",
+"notes": [
+"Herbs",
+"caramel",
+"bittersweet"
+]
+},
+{
+"name": "Cinzano Rosso",
+"brand": "Cinzano",
+"cat": "wine",
+"type": "Vermouth",
+"price": 2100,
+"size": "1L",
+"abv": 15.0,
+"origin": "Italy",
+"notes": [
+"Vanilla",
+"herbal",
+"sweet red"
+]
+},
+{
+"name": "Moët & Chandon Brut Impérial",
+"brand": "Moët & Chandon",
+"cat": "champagne",
+"type": "Brut",
+"price": 12500,
+"size": "750ml",
+"abv": 12.0,
+"origin": "France",
+"notes": [
+"Green apple",
+"brioche",
+"fine bead"
+]
+},
+{
+"name": "Moët & Chandon Rosé Impérial",
+"brand": "Moët & Chandon",
+"cat": "champagne",
+"type": "Rosé Champagne",
+"price": 15500,
+"size": "750ml",
+"abv": 12.0,
+"origin": "France",
+"notes": [
+"Wild strawberry",
+"rose",
+"pepper"
+]
+},
+{
+"name": "Veuve Clicquot Yellow Label",
+"brand": "Veuve Clicquot",
+"cat": "champagne",
+"type": "Brut",
+"price": 14500,
+"size": "750ml",
+"abv": 12.0,
+"origin": "France",
+"notes": [
+"Toast",
+"citrus",
+"creamy depth"
+]
+},
+{
+"name": "Dom Pérignon Vintage",
+"brand": "Dom Pérignon",
+"cat": "champagne",
+"type": "Vintage",
+"price": 42000,
+"size": "750ml",
+"abv": 12.5,
+"origin": "France",
+"notes": [
+"Almond",
+"white flower",
+"endless finish"
+]
+},
+{
+"name": "Luc Belaire Rare Rosé",
+"brand": "Belaire",
+"cat": "champagne",
+"type": "Sparkling Rosé",
+"price": 9500,
+"size": "750ml",
+"abv": 12.5,
+"origin": "France",
+"notes": [
+"Strawberry",
+"cherry",
+"silky"
+]
+},
+{
+"name": "Nicolas Feuillatte Réserve Exclusive",
+"brand": "Nicolas Feuillatte",
+"cat": "champagne",
+"type": "Brut",
+"price": 8500,
+"size": "750ml",
+"abv": 12.0,
+"origin": "France",
+"notes": [
+"Pear",
+"hazelnut",
+"fresh"
+]
+},
+{
+"name": "Laurent-Perrier La Cuvée",
+"brand": "Laurent-Perrier",
+"cat": "champagne",
+"type": "Brut",
+"price": 13200,
+"size": "750ml",
+"abv": 12.0,
+"origin": "France",
+"notes": [
+"Citrus",
+"white peach",
+"delicate"
+]
+},
+{
+"name": "Tusker Lager 500ml Can",
+"brand": "Tusker",
+"cat": "beer",
+"type": "Lager",
+"price": 250,
+"size": "500ml",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": [
+"Crisp malt",
+"clean bitterness"
+]
+},
+{
+"name": "Tusker Lager Crate 24 x 500ml",
+"brand": "Tusker",
+"cat": "beer",
+"type": "Crate",
+"price": 5400,
+"size": "24 x 500ml",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": [
+"Crisp malt",
+"clean bitterness"
+]
+},
+{
+"name": "Tusker Lite 500ml Can",
+"brand": "Tusker",
+"cat": "beer",
+"type": "Lager",
+"price": 260,
+"size": "500ml",
+"abv": 4.0,
+"origin": "Kenya",
+"notes": [
+"Light body",
+"dry finish"
+]
+},
+{
+"name": "Tusker Malt Lager 500ml",
+"brand": "Tusker",
+"cat": "beer",
+"type": "Lager",
+"price": 280,
+"size": "500ml",
+"abv": 5.0,
+"origin": "Kenya",
+"notes": [
+"Rich malt",
+"caramel",
+"full"
+]
+},
+{
+"name": "Tusker Cider 500ml",
+"brand": "Tusker",
+"cat": "beer",
+"type": "Cider",
+"price": 300,
+"size": "500ml",
+"abv": 4.5,
+"origin": "Kenya",
+"notes": [
+"Green apple",
+"sweet",
+"sparkling"
+]
+},
+{
+"name": "White Cap Lager 500ml",
+"brand": "White Cap",
+"cat": "beer",
+"type": "Lager",
+"price": 250,
+"size": "500ml",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": [
+"Smooth",
+"mellow hops"
+]
+},
+{
+"name": "White Cap Crisp 500ml",
+"brand": "White Cap",
+"cat": "beer",
+"type": "Lager",
+"price": 260,
+"size": "500ml",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": [
+"Extra crisp",
+"light"
+]
+},
+{
+"name": "Balozi Lager 500ml",
+"brand": "Balozi",
+"cat": "beer",
+"type": "Lager",
+"price": 240,
+"size": "500ml",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": [
+"Easy malt",
+"everyday lager"
+]
+},
+{
+"name": "Pilsner Ice 500ml",
+"brand": "Pilsner",
+"cat": "beer",
+"type": "Lager",
+"price": 240,
+"size": "500ml",
+"abv": 4.2,
+"origin": "Kenya",
+"notes": [
+"Cold-crisp",
+"refreshing"
+]
+},
+{
+"name": "Summit Lager 500ml",
+"brand": "Summit",
+"cat": "beer",
+"type": "Craft Lager",
+"price": 280,
+"size": "500ml",
+"abv": 4.5,
+"origin": "Kenya",
+"notes": [
+"Craft malt",
+"floral hops"
+]
+},
+{
+"name": "Guinness Foreign Extra Stout 500ml",
+"brand": "Guinness",
+"cat": "beer",
+"type": "Stout",
+"price": 330,
+"size": "500ml",
+"abv": 7.5,
+"origin": "Kenya",
+"notes": [
+"Roasted barley",
+"coffee",
+"bitter"
+]
+},
+{
+"name": "Guinness Smooth 500ml",
+"brand": "Guinness",
+"cat": "beer",
+"type": "Stout",
+"price": 320,
+"size": "500ml",
+"abv": 5.0,
+"origin": "Kenya",
+"notes": [
+"Creamy",
+"mild roast"
+]
+},
+{
+"name": "Heineken 500ml Can",
+"brand": "Heineken",
+"cat": "beer",
+"type": "Lager",
+"price": 350,
+"size": "500ml",
+"abv": 5.0,
+"origin": "Netherlands",
+"notes": [
+"Balanced hop",
+"clean finish"
+]
+},
+{
+"name": "Heineken 6 Pack 330ml",
+"brand": "Heineken",
+"cat": "beer",
+"type": "Multipack",
+"price": 1950,
+"size": "6 x 330ml",
+"abv": 5.0,
+"origin": "Netherlands",
+"notes": [
+"Balanced hop",
+"clean finish"
+]
+},
+{
+"name": "Corona Extra 355ml",
+"brand": "Corona",
+"cat": "beer",
+"type": "Lager",
+"price": 420,
+"size": "355ml",
+"abv": 4.5,
+"origin": "Mexico",
+"notes": [
+"Light",
+"citrus",
+"best with lime"
+]
+},
+{
+"name": "Budweiser 500ml",
+"brand": "Budweiser",
+"cat": "beer",
+"type": "Lager",
+"price": 320,
+"size": "500ml",
+"abv": 5.0,
+"origin": "USA",
+"notes": [
+"Crisp rice malt",
+"smooth"
+]
+},
+{
+"name": "Desperados Tequila Lager 500ml",
+"brand": "Desperados",
+"cat": "beer",
+"type": "Flavoured Beer",
+"price": 400,
+"size": "500ml",
+"abv": 5.9,
+"origin": "France",
+"notes": [
+"Tequila aroma",
+"lime",
+"sweet"
+]
+},
+{
+"name": "Savanna Dry Cider 330ml",
+"brand": "Savanna",
+"cat": "beer",
+"type": "Cider",
+"price": 350,
+"size": "330ml",
+"abv": 6.0,
+"origin": "South Africa",
+"notes": [
+"Dry apple",
+"clean",
+"crisp"
+]
+},
+{
+"name": "Hunter's Gold Cider 330ml",
+"brand": "Hunter's",
+"cat": "beer",
+"type": "Cider",
+"price": 350,
+"size": "330ml",
+"abv": 5.0,
+"origin": "South Africa",
+"notes": [
+"Sweet apple",
+"fizzy"
+]
+},
+{
+"name": "Snapp Apple Cider 330ml",
+"brand": "Snapp",
+"cat": "beer",
+"type": "Cider",
+"price": 300,
+"size": "330ml",
+"abv": 5.0,
+"origin": "Kenya",
+"notes": [
+"Green apple",
+"light sweetness"
+]
+},
+{
+"name": "Smirnoff Ice 300ml",
+"brand": "Smirnoff",
+"cat": "rtd",
+"type": "Cooler",
+"price": 300,
+"size": "300ml",
+"abv": 5.0,
+"origin": "Kenya",
+"notes": [
+"Citrus",
+"sweet",
+"sparkling"
+]
+},
+{
+"name": "Smirnoff Ice Double Black Guarana",
+"brand": "Smirnoff",
+"cat": "rtd",
+"type": "Cooler",
+"price": 320,
+"size": "300ml",
+"abv": 5.0,
+"origin": "Kenya",
+"notes": [
+"Guarana",
+"citrus",
+"energy kick"
+]
+},
+{
+"name": "Jack Daniel's & Cola Can 330ml",
+"brand": "Jack Daniel's",
+"cat": "rtd",
+"type": "Premix",
+"price": 500,
+"size": "330ml",
+"abv": 5.0,
+"origin": "USA",
+"notes": [
+"Whiskey",
+"cola",
+"caramel"
+]
+},
+{
+"name": "Captain Morgan & Cola Can 330ml",
+"brand": "Captain Morgan",
+"cat": "rtd",
+"type": "Premix",
+"price": 420,
+"size": "330ml",
+"abv": 5.0,
+"origin": "Jamaica",
+"notes": [
+"Spiced rum",
+"cola"
+]
+},
+{
+"name": "Gilbey's Gin & Tonic Can 330ml",
+"brand": "Gilbey's",
+"cat": "rtd",
+"type": "Premix",
+"price": 350,
+"size": "330ml",
+"abv": 5.0,
+"origin": "Kenya",
+"notes": [
+"Juniper",
+"quinine",
+"crisp"
+]
+},
+{
+"name": "Hunter's Extreme 275ml",
+"brand": "Hunter's",
+"cat": "rtd",
+"type": "Cooler",
+"price": 360,
+"size": "275ml",
+"abv": 7.0,
+"origin": "South Africa",
+"notes": [
+"Strong apple",
+"sharp"
+]
+},
+{
+"name": "Brutal Fruit Ruby Apple 275ml",
+"brand": "Brutal Fruit",
+"cat": "rtd",
+"type": "Cooler",
+"price": 350,
+"size": "275ml",
+"abv": 5.0,
+"origin": "South Africa",
+"notes": [
+"Ruby apple",
+"floral",
+"sweet"
+]
+},
+{
+"name": "Bacardi Breezer Orange 275ml",
+"brand": "Bacardi",
+"cat": "rtd",
+"type": "Cooler",
+"price": 380,
+"size": "275ml",
+"abv": 4.0,
+"origin": "Puerto Rico",
+"notes": [
+"Orange",
+"rum",
+"light"
+]
+},
+{
+"name": "Schweppes Tonic Water 4 x 300ml",
+"brand": "Schweppes",
+"cat": "mixers",
+"type": "Tonic",
+"price": 480,
+"size": "4 x 300ml",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Quinine",
+"dry",
+"classic G and T"
+]
+},
+{
+"name": "Schweppes Ginger Ale 330ml",
+"brand": "Schweppes",
+"cat": "mixers",
+"type": "Soft Drink",
+"price": 120,
+"size": "330ml",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Ginger spice",
+"sweet fizz"
+]
+},
+{
+"name": "Fever-Tree Indian Tonic 4 x 200ml",
+"brand": "Fever-Tree",
+"cat": "mixers",
+"type": "Tonic",
+"price": 850,
+"size": "4 x 200ml",
+"abv": 0.0,
+"origin": "UK",
+"notes": [
+"Natural quinine",
+"botanical"
+]
+},
+{
+"name": "Coca-Cola 2 Litre",
+"brand": "Coca-Cola",
+"cat": "mixers",
+"type": "Soft Drink",
+"price": 220,
+"size": "2L",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Classic cola"
+]
+},
+{
+"name": "Sprite 2 Litre",
+"brand": "Sprite",
+"cat": "mixers",
+"type": "Soft Drink",
+"price": 220,
+"size": "2L",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Lemon lime",
+"crisp"
+]
+},
+{
+"name": "Red Bull Energy 250ml",
+"brand": "Red Bull",
+"cat": "mixers",
+"type": "Energy Drink",
+"price": 250,
+"size": "250ml",
+"abv": 0.0,
+"origin": "Austria",
+"notes": [
+"Classic energy",
+"taurine"
+]
+},
+{
+"name": "Monster Energy 500ml",
+"brand": "Monster",
+"cat": "mixers",
+"type": "Energy Drink",
+"price": 300,
+"size": "500ml",
+"abv": 0.0,
+"origin": "USA",
+"notes": [
+"Big energy",
+"sweet"
+]
+},
+{
+"name": "Minute Maid Orange 1 Litre",
+"brand": "Minute Maid",
+"cat": "mixers",
+"type": "Juice",
+"price": 250,
+"size": "1L",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Orange juice mixer"
+]
+},
+{
+"name": "Dasani Still Water 1 Litre",
+"brand": "Dasani",
+"cat": "mixers",
+"type": "Water",
+"price": 100,
+"size": "1L",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Pure still water"
+]
+},
+{
+"name": "Party Ice Cubes 2kg Bag",
+"brand": "Beyond Sweetness",
+"cat": "mixers",
+"type": "Ice",
+"price": 250,
+"size": "2kg",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Delivered frozen in a cooler bag"
+]
+},
+{
+"name": "Roasted Salted Peanuts 400g",
+"brand": "Njugu Co",
+"cat": "mixers",
+"type": "Snacks",
+"price": 350,
+"size": "400g",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Crunchy",
+"salted",
+"moreish"
+]
+},
+{
+"name": "Beef Biltong 200g",
+"brand": "Savanna Bites",
+"cat": "mixers",
+"type": "Snacks",
+"price": 750,
+"size": "200g",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Air dried",
+"peppered beef"
+]
+},
+{
+"name": "Pringles Original 165g",
+"brand": "Pringles",
+"cat": "mixers",
+"type": "Snacks",
+"price": 450,
+"size": "165g",
+"abv": 0.0,
+"origin": "USA",
+"notes": [
+"Salty",
+"crisp",
+"stackable"
+]
+},
+{
+"name": "The Celebration Hamper",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Gift Hamper",
+"price": 8500,
+"size": "Hamper",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Moët",
+"chocolates",
+"two flutes",
+"gift box"
+]
+},
+{
+"name": "Whisky Lover's Hamper",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Gift Hamper",
+"price": 7900,
+"size": "Hamper",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Glenfiddich 12",
+"two tumblers",
+"stones",
+"biltong"
+]
+},
+{
+"name": "Sundowner Gift Box",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Gift Hamper",
+"price": 4500,
+"size": "Hamper",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Gordon's Pink",
+"tonics",
+"glasses",
+"nuts"
+]
+},
+{
+"name": "Crystal Whisky Tumbler Set of 6",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Glassware",
+"price": 2900,
+"size": "Set of 6",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Heavy base",
+"dishwasher safe"
+]
+},
+{
+"name": "Wine Glass Set of 6",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Glassware",
+"price": 2400,
+"size": "Set of 6",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Long stem",
+"universal bowl"
+]
+},
+{
+"name": "Stainless Cocktail Shaker Kit",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Barware",
+"price": 3200,
+"size": "8 pieces",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Shaker",
+"jigger",
+"strainer",
+"spoon",
+"tongs"
+]
+},
+{
+"name": "Insulated Ice Bucket 4L",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Barware",
+"price": 2200,
+"size": "4L",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Double wall",
+"keeps ice six hours"
+]
+},
+{
+"name": "Waiter's Corkscrew & Opener",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Barware",
+"price": 750,
+"size": "1 piece",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Foil cutter",
+"worm",
+"bottle opener"
+]
+},
+{
+"name": "Beyond Sweetness Gift Card",
+"brand": "Beyond Sweetness",
+"cat": "gifts",
+"type": "Gift Card",
+"price": 5000,
+"size": "Digital",
+"abv": 0.0,
+"origin": "Kenya",
+"notes": [
+"Emailed instantly",
+"valid 12 months"
+]
+}
+]
