@@ -4249,11 +4249,11 @@ var PLAY = (function(){
                 : 'Score high on a solo game with a <b>'+R.percent+'%</b> badge and win '+R.percent+'% off the food in your next order.';
   }
   /* ---------- the deck: the game cards as a stack. The top card is tossed off with a twirl and slides in at
-     the back, and the next comes forward with a little overshoot, on the timing the lounge picked: a 14-second
-     loop for the whole deck, a 46° twirl, a toss 1.3 card-widths out. Hover or focus holds it, the arrows step
+     the back, and the next comes forward with a little overshoot, on the timing the lounge picked: a 46° twirl,
+     a toss 1.3 card-widths out, the deck going round in 14 seconds but never faster than 2.2 seconds a card. Hover or focus holds it, the arrows step
      through, Pause stops it, a swipe on the cards steps too. With reduced motion the cards change without the
      toss and nothing moves by itself. ---------- */
-  var SK = {loopSec:14, size:.5, slip:.025, toss:1.3, twirl:46, swap:.78, arrive:.55, depart:.75, radius:.12};
+  var SK = {loopSec:14, minStep:2.2, size:.5, slip:.025, toss:1.3, twirl:46, swap:.78, arrive:.55, depart:.75, radius:.12};
   var SK_EASE = bez(.34,1.56,.64,1), SK_RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var DK = {list:[], cards:[], n:0, T:1, t:0, goal:null, playing:!SK_RM, hold:false, vis:false, raf:0, last:0, io:null, ro:null, top:-1, W:0, cw:0, ch:0, dx:0, dy:0};
   function deckList(){ return D.games.filter(can).filter(function(x){ return hubKind==="all" || x.kind===hubKind; }); }
@@ -4373,7 +4373,7 @@ var PLAY = (function(){
     if(!d || !st){ DK.list=[]; DK.cards=[]; DK.n=0; return; }
     deckWire(d);
     DK.list=deckList(); DK.cards=[].slice.call(st.children); DK.n=DK.cards.length; if(!DK.n) return;
-    DK.T=SK.loopSec/DK.n;
+    DK.T=Math.max(SK.loopSec/DK.n, SK.minStep);
     var at=0; if(keepId) DK.list.some(function(x,i){ if(x.id===keepId){ at=i; return true; } return false; });
     DK.t=at*DK.T; DK.goal=null;
     deckMeasure(); deckDraw();

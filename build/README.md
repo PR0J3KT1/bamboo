@@ -132,7 +132,7 @@ These three live in `bamboo-cask.html` itself, not in a build script.
   - Hover or keyboard focus holds a row, a drag slides it, and Pause stops them all. Reduced motion turns off the burst and the drift.
   - Tapping a bottle opens its sheet, and "See the shelf" opens the full shelf with its filters. The lounge's own bottles follow as before.
 - **The game stack:** the games are a stack of cards. The top card is tossed off with a twirl and slides in at the back.
-  - It runs on the timing the user gave: a 14-second loop for the whole deck, a 46° twirl, a toss 1.3 card widths out, and the overshoot curve `cubic-bezier(.34,1.56,.64,1)`. The settings are `SK` in the page.
+  - It runs on the timing the user gave: a 14-second loop for the whole deck (slowed in version 32 to at least 2.2 seconds a card), a 46° twirl, a toss 1.3 card widths out, and the overshoot curve `cubic-bezier(.34,1.56,.64,1)`. The settings are `SK` in the page.
   - The details and the Play button follow the front card.
   - Arrows, a swipe, the game names and Pause control it. Hover or keyboard focus holds it.
   - Both motions are written in the page's own code. No outside motion script is loaded.
