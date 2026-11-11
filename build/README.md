@@ -114,3 +114,25 @@ The games and the party planner live in `src/` and go into the page between mark
 - **Adults only:** Guess the Bottle, Perfect Pour, Bar Trivia and Spin the Bottle are hidden for under-18s. Bei Gani and Kumbukumbu use food only for them, and the planner builds food, sodas and water.
 - **Planner sums:** about 47 ml a spirit drink, 150 ml a glass of wine, 125 ml a glass of bubbles, about 30 ml a shot, 0.3 to 0.4 kg of meat a head, and a large water for every four guests.
 - Code comments in `src/` end up in the page, so don't name other sites in them.
+
+## Sign-in for the bar, the shelf wall and the game stack (since version 31)
+
+These three live in `bamboo-cask.html` itself, not in a build script.
+
+- **Sign-in:** the old "Are you 18 or older?" button is gone. The Cask Room opens only for a signed-in account aged 18 or over. Signing in has three steps:
+  - a Kenyan mobile number, confirmed with a 6-digit code (valid 10 minutes, 5 tries, a new code after 30 seconds);
+  - for a new number, a name and a date of birth, set once;
+  - a tick that the date of birth is real.
+
+  Guests and accounts under 18 get food, soft drinks and the non-drinks games, and alcohol is taken out of their order. An account under 18 is told the date of its 18th birthday. The rider still checks ID at handover, and that is the real age check.
+- **Demo only:** no text message is sent. The code appears on screen as a pretend message, and accounts are kept in the browser (`bc-accounts`, `bc-me`, `bc-seen`). A live version needs a real SMS sender and a server that keeps the accounts.
+- **The shelf wall:** the overview of every shelf is now a curved wall, one row per shelf.
+  - Only bottles with a photo go on it, at most 24 a row. A short shelf repeats its bottles.
+  - Rows drift one way, then the other, and burst out from the middle the first time they come into view.
+  - Hover or keyboard focus holds a row, a drag slides it, and Pause stops them all. Reduced motion turns off the burst and the drift.
+  - Tapping a bottle opens its sheet, and "See the shelf" opens the full shelf with its filters. The lounge's own bottles follow as before.
+- **The game stack:** the games are a stack of cards. The top card is tossed off with a twirl and slides in at the back.
+  - It runs on the timing the user gave: a 14-second loop for the whole deck, a 46° twirl, a toss 1.3 card widths out, and the overshoot curve `cubic-bezier(.34,1.56,.64,1)`. The settings are `SK` in the page.
+  - The details and the Play button follow the front card.
+  - Arrows, a swipe, the game names and Pause control it. Hover or keyboard focus holds it.
+  - Both motions are written in the page's own code. No outside motion script is loaded.

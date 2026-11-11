@@ -601,6 +601,45 @@ textarea.in{min-height:72px;resize:vertical}
 .gate .in{background:rgba(243,234,219,.06);border-color:var(--hero-line);color:var(--hero-ink)}
 .gate .hint{color:var(--hero-ink-2);text-align:left}
 .gate .btn--amber{background:var(--hero-amber);color:#1C1206}
+/* sign-in on the welcome screen: a phone number confirmed by a code, then a date of birth set once */
+.gate .su{text-align:left;margin-top:20px}
+.gate .su .btn{margin-top:16px}
+.gate label.f,.gate .su legend{color:var(--hero-ink)}
+.gate .su fieldset{border:0;margin:0;padding:0;min-width:0}
+.gate .su legend{display:block;font-weight:600;font-size:14px;margin-top:14px;padding:0}
+.gate .dob{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.45fr) minmax(0,1fr);gap:8px;margin-top:6px}
+.gate .dob .in{margin-top:0;padding-inline:10px}
+.gate select.in option{background:var(--hero-bg);color:var(--hero-ink)}
+.gate .in.is-bad{border-color:var(--hero-amber)}
+.gate .in--code{font-size:26px;font-weight:700;letter-spacing:.4em;text-indent:.4em;text-align:center;font-variant-numeric:tabular-nums}
+.gate .check{margin-top:16px;border-color:var(--hero-line);background:var(--hero-panel);text-align:left}
+.gate .check input{accent-color:var(--hero-amber)}
+.su__to{font-style:normal;font-weight:700;color:var(--hero-ink);white-space:nowrap}
+.su__alt{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 18px;margin-top:12px}
+.gate .su__alt .textbtn:disabled{color:var(--hero-ink-2);font-weight:600;cursor:default}
+/* the demo's "text message": shown on screen instead of sent, like a notification on the phone */
+.sms{display:block;width:100%;margin-top:20px;padding:12px 15px 13px;border:0;border-radius:16px;text-align:left;background:#F4ECDD;color:#1C1206;box-shadow:0 12px 32px rgba(0,0,0,.4);animation:sms-in .35s ease-out}
+.sms__h{display:flex;justify-content:space-between;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6E5C45}
+.sms__b{display:block;font-size:15px;line-height:1.4;margin-top:5px}
+.sms__b b{font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.sms__d{display:block;font-size:12px;color:#6E5C45;margin-top:7px}
+@keyframes sms-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sms{animation:none}}
+.acct-st{display:flex;gap:14px;align-items:center;text-align:left;padding:13px 15px;border-radius:14px;border:1px solid var(--hero-line);background:var(--hero-panel)}
+.acct-st+.acct-st{margin-top:10px}
+.acct-st i{flex:none;min-width:44px;height:44px;padding:0 7px;border-radius:22px;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:15px;background:var(--hero-amber);color:#1C1206}
+.acct-st.is-who i,.acct-st.is-u18 i{background:transparent;border:2px solid var(--hero-line);color:var(--hero-ink)}
+.acct-st span{min-width:0}
+.acct-st b{display:block;font-weight:700;overflow-wrap:anywhere}
+.acct-st small{display:block;color:var(--hero-ink-2);font-size:13px;margin-top:2px;line-height:1.4}
+/* the account button in the header: a dot once signed in */
+.acct-btn{position:relative}
+.acct-btn.is-in{border-color:var(--amber);color:var(--amber-text)}
+.acct-btn__ok{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:var(--amber);border:2px solid var(--bg);display:none}
+.acct-btn.is-in .acct-btn__ok{display:block}
+/* a guest sees the Cask Room's door, not its bottles */
+.sigc--cask.is-shut .sigc__t{max-width:none}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + var(--head-h) + 12px);transform:translateX(-50%);z-index:80;width:max-content;max-width:calc(100% - 32px);padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:600;line-height:1.4;text-align:center;box-shadow:var(--shadow)}
 .gate .btn--hero-ghost{min-height:46px}
 
 .sheet{padding:24px 20px 22px}
@@ -1751,6 +1790,49 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
 
 /*</play-css>*/
 
+/* ---- the Cask Room wall: one row a shelf, on the inside of a cylinder, drifting one way then the other ---- */
+.bw{position:relative;overflow:hidden;margin-top:26px;padding-bottom:8px}
+.bw__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px}
+.bw__k{margin:0;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-text)}
+.bw__hint{margin:4px 0 0;font-size:13px;color:var(--ink-3)}
+.bw__pause{min-height:36px;padding:6px 14px;font-size:13px}
+.bw__row{position:relative;margin-top:18px}
+.bw__lab{position:relative;z-index:3;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px}
+.bw__h{margin:0;font-family:var(--stencil);font-weight:900;font-size:clamp(22px,3.2vw,32px);line-height:.9;letter-spacing:.02em;text-transform:uppercase}
+.bw__m{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.bw__lab .seeall{margin-left:auto}
+.bw__lane{position:relative;height:var(--lh,220px);margin-top:4px;perspective:var(--pp,1100px);perspective-origin:50% 45%;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.bw__lane.is-drag{cursor:grabbing}
+.bw__lane.is-pre .bw__c{opacity:0}
+.bw__c{position:absolute;left:50%;top:12px;width:var(--cw,116px);margin:0;padding:0;border:0;background:none;color:inherit;text-align:left;font:inherit;backface-visibility:hidden;will-change:transform}
+.bw__c.is-off{visibility:hidden}
+.bw__c .bw__p{position:relative;inset:auto;display:block;width:100%;aspect-ratio:5/6;max-width:100%;border-radius:12px;overflow:hidden;box-shadow:0 12px 26px rgba(0,0,0,.32)}
+.bw__cap{display:block;margin-top:7px;font-size:12.5px;line-height:1.25}
+.bw__cap b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bw__cap small{display:block;margin-top:1px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.bw__c:focus-visible{outline:none}
+.bw__c:focus-visible .bw__p{outline:3px solid var(--amber);outline-offset:3px}
+.bw__house{margin-top:30px}
+/* ---- the games as a stack of cards: the top one is tossed off and slides in at the back ---- */
+.gdeck{display:grid;gap:14px;overflow-x:clip}
+.gdeck__stage{position:relative;height:var(--sh,260px);touch-action:pan-y}
+.gdk{position:absolute;left:50%;top:50%;width:var(--cw,280px);will-change:transform;pointer-events:none}
+.gdk.is-top{pointer-events:auto}
+.gdeck .gdk__art{width:100%;aspect-ratio:16/9;border-radius:var(--cr,18px);box-shadow:0 18px 40px rgba(0,0,0,.36),0 0 0 1px rgba(255,255,255,.08) inset}
+.gdk__cap{position:absolute;left:56px;right:12px;bottom:11px;z-index:3;display:block;text-align:left;color:#F6F1E4;text-shadow:0 1px 8px rgba(0,0,0,.55)}
+.gdk__cap small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.gdk__cap b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(17px,2.4vw,22px);line-height:1.02;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gdeck__ctl{display:flex;align-items:center;justify-content:center;gap:10px}
+.gdeck__b{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:22px;line-height:1}
+.gdeck__pp{min-height:38px}
+.gdeck__info{display:flex;flex-direction:column;gap:5px;min-height:12.5em;min-width:0}
+.gdeck__ix{display:flex;flex-wrap:wrap;gap:6px}
+.gdeck__pick{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.gdeck__pick.is-on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+@media (min-width:900px){
+  .gdeck{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-areas:"stage info" "ctl info" "ix ix";column-gap:28px;align-items:center}
+  .gdeck__stage{grid-area:stage}.gdeck__ctl{grid-area:ctl}.gdeck__info{grid-area:info}.gdeck__ix{grid-area:ix}
+}
 </style>
 
 <header class="top">
@@ -1771,6 +1853,7 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
       <svg class="where__edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>
     </button>
     <div class="top__r">
+      <button type="button" class="icon-btn acct-btn" id="acct" aria-label="Sign in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg><i class="acct-btn__ok" aria-hidden="true"></i></button>
       <div class="tpw">
         <button type="button" class="icon-btn" id="theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="tpick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
         <div class="tpick" id="tpick" role="group" aria-label="Theme" hidden>
@@ -1996,7 +2079,7 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
   <footer class="foot">
     <div class="wrap foot__in">
       <p><span class="drink">Not for sale to anyone under 18. Drink responsibly.</span> Delivery by <span class="tb"><i>Tuma</i><u>Boda</u></span>.</p>
-      <p><a href="#kitchen">Kitchen screen</a> · <a href="#track">Track an order</a> · <button type="button" class="linkish" id="age-change">Change age setting</button><span class="foot__theme" id="foot-looks"> · Theme: <button type="button" class="linkish" data-look-pick="dark" aria-pressed="false">Dark</button>, <button type="button" class="linkish" data-look-pick="light" aria-pressed="false">Light</button> or <button type="button" class="linkish" data-look-pick="bamboo" aria-pressed="false">Bamboo</button></span></p>
+      <p><a href="#kitchen">Kitchen screen</a> · <a href="#track">Track an order</a> · <button type="button" class="linkish" id="age-change">Sign in</button><span class="foot__theme" id="foot-looks"> · Theme: <button type="button" class="linkish" data-look-pick="dark" aria-pressed="false">Dark</button>, <button type="button" class="linkish" data-look-pick="light" aria-pressed="false">Light</button> or <button type="button" class="linkish" data-look-pick="bamboo" aria-pressed="false">Bamboo</button></span></p>
       <p>A <span class="tb"><i>Tuma</i><u>Boda</u></span> ordering demo for Bamboo Cask Lounge. Payments on this page are simulated. Food and lounge photos by Bamboo Cask Lounge. Dishes it hasn't photographed yet show a free-licensed photo from Wikimedia Commons, for illustration, with the credit on the dish. A few bottle photos come from Wikimedia Commons, with the credit on each bottle. Some game and party photos come from Pexels, credited under each section.</p>
     </div>
   </footer>
@@ -2031,8 +2114,9 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
       <p class="hint" style="margin-top:0">Bamboo Cask Lounge, Keiyo Road, off Kolobot Road, Ngara West. Show your order number at the counter.</p>
     </div>
     <div class="card" id="co-age-card" hidden>
-      <label class="check" for="co-age"><input type="checkbox" id="co-age"><span id="co-age-t">I am 18 or older.</span></label>
-      <p class="err" id="e-age" hidden>Confirm you are 18 or older to order from the cask room.</p>
+      <h3>From the Cask Room</h3>
+      <div class="check" id="co-age" tabindex="-1"><span id="co-age-t"></span></div>
+      <p class="err" id="e-age" hidden>Sign in with your phone number and date of birth to order from the Cask Room. <button type="button" class="linkish" data-signin>Sign in</button></p>
     </div>
     <div class="card">
       <h3>Payment</h3>
@@ -2105,13 +2189,68 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
     </svg>
     <div id="g-age">
       <h1 id="gate-h">Welcome to Bamboo Cask</h1>
-      <p class="gate__lede">Grill, bar and lounge on Keiyo Road, Ngara. Everyone is welcome at the grill. The cask room is for adults.</p>
-      <p class="gate__q">Are you 18 or older?</p>
-      <div class="stack">
-        <button type="button" class="btn btn--amber btn--block" id="age-yes">Yes, I’m 18 or older</button>
-        <button type="button" class="btn btn--hero-ghost btn--block" id="age-no">No, show me the food</button>
+      <p class="gate__lede">Grill, bar and lounge on Keiyo Road, Ngara. Everyone is welcome at the grill. The Cask Room is for adults with an account.</p>
+      <div class="stack" style="margin-top:26px">
+        <button type="button" class="btn btn--amber btn--block" id="age-yes">Sign in with my phone number</button>
+        <button type="button" class="btn btn--hero-ghost btn--block" id="age-no">Just the food for now</button>
       </div>
-      <p class="gate__fine">Alcohol is sold only to adults. The rider checks ID at handover and cannot leave alcohol with anyone under 18.</p>
+      <p class="gate__fine">By Kenyan law, alcohol is sold only to people aged 18 and over. To see the bar, confirm your phone number with a code and add your date of birth. The rider checks ID at handover and cannot leave alcohol with anyone under 18.</p>
+    </div>
+    <div id="g-phone" hidden>
+      <h1 id="gh-phone">Sign in</h1>
+      <p class="gate__lede">Your phone number is your account. We text you a code to check that it is yours.</p>
+      <div class="su">
+        <label class="f" for="su-phone">Phone number</label>
+        <input class="in" id="su-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0712 345 678">
+        <p class="err" id="su-phone-e" hidden>Enter a Kenyan mobile number, like 0712 345 678.</p>
+        <button type="button" class="btn btn--amber btn--block" id="su-send">Text me a code</button>
+      </div>
+      <div class="su__alt"><button type="button" class="textbtn" data-gskip>Not now, show me the food</button></div>
+      <p class="gate__fine">Demo: no text message is sent. The code appears on the next screen.</p>
+    </div>
+    <div id="g-code" hidden>
+      <h1 id="gh-code">Your code</h1>
+      <p class="gate__lede">We sent a 6-digit code to <span class="su__to" id="su-to"></span>.</p>
+      <button type="button" class="sms" id="su-sms" hidden><span class="sms__h"><span>Messages · BAMBOOCASK</span><span>now</span></span><span class="sms__b"><b id="su-sms-c"></b> is your Bamboo Cask code. It expires in 10 minutes. Do not share it.</span><span class="sms__d">Demo text, shown here instead of sent. Tap it to use the code.</span></button>
+      <div class="su">
+        <label class="f" for="su-code">6-digit code</label>
+        <input class="in in--code" id="su-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+        <p class="err" id="su-code-e" hidden></p>
+        <button type="button" class="btn btn--amber btn--block" id="su-check">Confirm</button>
+      </div>
+      <div class="su__alt"><button type="button" class="textbtn" id="su-resend" disabled>Send a new code</button><button type="button" class="textbtn" id="su-edit">Use another number</button></div>
+      <div class="su__alt"><button type="button" class="textbtn" data-gskip>Not now, show me the food</button></div>
+    </div>
+    <div id="g-dob" hidden>
+      <h1 id="gh-dob">Your details</h1>
+      <p class="gate__lede"><span class="su__to" id="su-ok-to"></span> is confirmed. Add your name and date of birth to open your account.</p>
+      <div class="su">
+        <label class="f" for="su-name">Your name</label>
+        <input class="in" id="su-name" autocomplete="name" placeholder="Jane Wanjiru">
+        <p class="err" id="su-name-e" hidden>Type your name as it is on your ID.</p>
+        <fieldset><legend>Date of birth</legend>
+          <div class="dob"><select class="in" id="su-d" aria-label="Day of birth" autocomplete="bday-day"></select><select class="in" id="su-m" aria-label="Month of birth" autocomplete="bday-month"></select><select class="in" id="su-y" aria-label="Year of birth" autocomplete="bday-year"></select></div>
+        </fieldset>
+        <p class="err" id="su-dob-e" hidden></p>
+        <label class="check" for="su-true"><input type="checkbox" id="su-true"><span>This is my real date of birth. I will show my ID or passport when alcohol is handed over.</span></label>
+        <p class="err" id="su-true-e" hidden>Tick the box to confirm your date of birth.</p>
+        <button type="button" class="btn btn--amber btn--block" id="su-make">Open my account</button>
+      </div>
+      <p class="gate__fine">Your date of birth is saved once and cannot be changed here. To correct it, call the lounge on <span class="num" style="color:inherit">0754 346 559</span>.</p>
+      <div class="su__alt"><button type="button" class="textbtn" data-gskip>Not now, show me the food</button></div>
+    </div>
+    <div id="g-acct" hidden>
+      <h1 id="gh-acct">Your account</h1>
+      <div class="su">
+        <div class="acct-st is-who" id="ac-who"></div>
+        <div class="acct-st" id="ac-st"></div>
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <button type="button" class="btn btn--amber btn--block" id="ac-go">Continue</button>
+        <button type="button" class="btn btn--hero-ghost btn--block" id="ac-out">Sign out</button>
+      </div>
+      <p class="gate__fine" id="ac-dob"></p>
+      <p class="gate__fine">This demo keeps your account in this browser only.</p>
     </div>
     <div id="g-mode" hidden>
       <h1 id="gate-h2">How would you like your order?</h1>
@@ -2127,6 +2266,8 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
     </div>
   </div>
 </div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <!-- room photos, full screen -->
 <div class="lb lux lux--claret" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-room" hidden>
@@ -2771,7 +2912,26 @@ var areaId = store.get("bc-area", null);
 if(!placeById(areaId)) areaId = null;
 var note = store.get("bc-note", "");
 var order = store.get("bc-order", null);
-var adult = store.get("bc-adult", null);
+/* Kenyan law sells alcohol only to people aged 18 and over, so the Cask Room opens only for a signed-in
+   account: a phone number confirmed with a one-time code, and a date of birth that is set once. In this demo
+   no text message is sent (the code shows on screen) and accounts are kept in this browser only. */
+store.del("bc-adult");                          /* the old "are you 18?" button no longer opens the bar */
+var accounts = store.get("bc-accounts", {});   /* "2547XXXXXXXX": {name, dob "YYYY-MM-DD"} */
+var me = store.get("bc-me", null);             /* the signed-in phone number */
+if(me && !accounts[me]){ me=null; store.del("bc-me"); }
+var seen = store.get("bc-seen", false), pending = null;
+var DOB_M = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+function normPhone(p){ var t=String(p).replace(/[\s\-().]/g,""); if(/^\+?254[17]\d{8}$/.test(t)) return t.replace("+",""); if(/^0[17]\d{8}$/.test(t)) return "254"+t.slice(1); return null; }
+function showPhone(n){ var l="0"+n.slice(3); return l.slice(0,4)+" "+l.slice(4,7)+" "+l.slice(7); }
+function dobDate(dob){ var d=dob.split("-").map(Number); return new Date(d[0], d[1]-1, d[2]); }
+function day18(dob){ var d=dob.split("-").map(Number); return new Date(d[0]+18, d[1]-1, d[2]); }   /* 29 February rolls on to 1 March */
+function ageOn(dob){ return new Date() >= day18(dob) ? 18 : 0; }
+function longDate(dt){ return dt.getDate()+" "+DOB_M[dt.getMonth()]+" "+dt.getFullYear(); }
+function acct(){ return me ? accounts[me] : null; }
+function isAdult(){ var a=acct(); return !!a && ageOn(a.dob)>=18; }
+var adult = isAdult();
+if(!adult){ Object.keys(basket).forEach(function(k){ var it=ITEMS[basket[k].id]; if(it && it.alcohol) delete basket[k]; }); store.set("bc-basket", basket); }
+function noBarText(){ return me ? "The Cask Room is closed, because your account says you are under 18." : "The Cask Room opens when you sign in with your phone number."; }
 var current = "menu", drawerOpen = false, query = "";
 
 function $(id){ return document.getElementById(id); }
@@ -2940,7 +3100,14 @@ function luxOpen(k){
 }
 function renderSig(){
   var cask=$("sig-cask"); if(!cask) return;
-  cask.hidden = adult===false;
+  cask.hidden = !!me && !adult;   /* an account under 18 sees no bar at all */
+  /* a guest sees the door, not the bottles: no photo, no prices, and the button asks them to sign in */
+  var go=cask.querySelector(".sigc__go"), lede=cask.querySelector(".sigc__lede");
+  if(!lede.getAttribute("data-full")) lede.setAttribute("data-full", lede.textContent);
+  cask.querySelector(".sigc__ph").hidden=!adult; cask.querySelector(".sigc__facts").hidden=!adult; cask.classList.toggle("is-shut", !adult);
+  lede.textContent = adult ? lede.getAttribute("data-full") : "Whisky, wine and beer for adults. Sign in with your phone number and date of birth to open it.";
+  if(adult){ go.setAttribute("data-goto","bar"); go.removeAttribute("data-signin"); } else { go.removeAttribute("data-goto"); go.setAttribute("data-signin",""); }
+  go.firstChild.nodeValue = adult ? "Enter the Cask Room" : "Sign in to enter";
   if(BAR.length){
     var lo=Infinity; BAR.forEach(function(id){ if(ITEMS[id].price<lo) lo=ITEMS[id].price; });
     $("sig-n").textContent=BAR.length.toLocaleString("en-KE"); $("sig-sh").textContent=SHELVES.length; $("sig-lo").textContent=KES(lo);
@@ -2977,8 +3144,8 @@ function renderMenu(){
   if(inL) out+="</div>";
   menu.innerHTML=out;
   renderKStrip(); renderToday(); renderSig();
-  $("side-note").innerHTML = adult===true ? "Prices in Kenyan shillings, from Bamboo Cask’s own 2026 price list." : "The Cask Room is hidden because you said you are under 18. Soft drinks are still on the menu.";
-  renderBarBody(); refreshMenuControls(); applySearch(); observeCats(); fillPhotos($("menu-list")); wireStay(); watchCane();
+  $("side-note").innerHTML = adult===true ? "Prices in Kenyan shillings, from Bamboo Cask’s own 2026 price list." : noBarText()+" Soft drinks are still on the menu."+(me?"":' <button type="button" class="linkish" data-signin>Sign in</button>');
+  renderBarBody(); PLAY.mountDeck(); refreshMenuControls(); applySearch(); observeCats(); fillPhotos($("menu-list")); wireStay(); watchCane();
 }
 
 /* the cask room: one lit shelf per spirit to scroll sideways. Pick a shelf, a strength or a price and the
@@ -3278,8 +3445,7 @@ function renderBarBody(){
   var rails = shelf==="all" && barF.str==="all" && barF.band==="all" && type==="all" && !q;
   var h="";
   if(rails){
-    h+=shelfRail("house", HOUSE);
-    SHELVES.forEach(function(s){ var ids=BAR.filter(function(id){ return id.indexOf("dr")===0 && ITEMS[id].shelf===s.id; }); if(ids.length) h+=shelfRail(s.id, ids); });
+    h+=BURST.html()+'<div class="bw__house">'+shelfRail("house", HOUSE)+"</div>";
     barList=[]; barShown=0; if(moreIO) moreIO.disconnect();
     bb.innerHTML=h;
   } else {
@@ -3300,6 +3466,7 @@ function renderBarBody(){
     bb.innerHTML=h;
     barList=ids; barShown=0; moreBar();
   }
+  BURST.mount();
   refreshMenuControls(bb); watchShots(); alignCane();
 }
 function sortIds(ids){
@@ -3340,6 +3507,148 @@ function shelfRail(sid, ids){
     (sid!=="house"?'<button type="button" class="seeall" data-bshelf="'+sid+'">See all '+all+" ›</button>":"")+"</div></div>"+
     '<div class="track">'+show.map(cardHtml).join("")+end+"</div></section>";
 }
+/* a cubic-bezier easing, the same curve CSS would draw; and a remainder that is never negative */
+function bez(x1,y1,x2,y2){
+  function A(a,b){ return 1-3*b+3*a; } function B(a,b){ return 3*b-6*a; } function C(a){ return 3*a; }
+  function at(t,a,b){ return ((A(a,b)*t+B(a,b))*t+C(a))*t; }
+  function slope(t,a,b){ return 3*A(a,b)*t*t+2*B(a,b)*t+C(a); }
+  return function(x){
+    if(x<=0) return 0; if(x>=1) return 1;
+    var t=x; for(var i=0;i<8;i++){ var d=slope(t,x1,x2); if(Math.abs(d)<1e-6) break; t-=(at(t,x1,x2)-x)/d; }
+    return at(Math.max(0,Math.min(1,t)),y1,y2);
+  };
+}
+function mod(a,n){ return ((a%n)+n)%n; }
+/* focus that came from the keyboard holds a moving row or deck; a tap or click does not */
+function kbd(el){ try{ return el.matches(":focus-visible"); }catch(e){ return true; } }
+
+/* ===================== the Cask Room wall ===================== */
+/* The shelves as one curved wall, a row a shelf: each bottle sits on the inside of a cylinder, turned to face
+   the middle, and the rows drift one way and then the other. The first time rows come into view their bottles
+   burst out from the middle of what is on screen. Hover or focus holds a row, a drag slides it, Pause stops
+   them all; with reduced motion there is no burst and no drift. Only bottles with a photo go on the wall, and
+   "See the shelf" opens the whole shelf with its filters. */
+var BURST = (function(){
+  var RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var EASE = bez(.34,1.56,.64,1), MAXN = 24, SPEED = 26;
+  var root=null, rows=[], W=0, CW=0, P=0, R=0, PP=1100, raf=0, last=0, io=null, ro=null, paused=RM;
+  function html(){
+    var h='<div class="bw" id="bw"><div class="bw__top"><div><p class="bw__k">Every shelf, lit</p><p class="bw__hint">Tap a bottle for its price and notes, or drag a shelf to look along it.</p></div>'+
+      '<button type="button" class="chip bw__pause" id="bw-pause"'+(RM?" hidden":"")+">"+(paused?"Play":"Pause")+"</button></div>";
+    SHELVES.forEach(function(sh, ri){
+      var all=BAR.filter(function(id){ return ITEMS[id].shelf===sh.id; }), pics=all.filter(function(id){ return ITEMS[id].sp; });
+      if(!pics.length) return;
+      h+='<section class="bw__row" aria-label="'+esc(sh.name)+'"><div class="bw__lab"><h3 class="bw__h">'+esc(sh.name)+'</h3><span class="bw__m">'+all.length+(all.length===1?" bottle":" bottles")+" · "+priceRange(all)+"</span>"+
+        '<button type="button" class="seeall" data-bshelf="'+sh.id+'">See the shelf ›</button></div><div class="bw__lane'+(RM?"":" is-pre")+'">'+pics.slice(0,MAXN).map(card).join("")+"</div></section>";
+    });
+    return h+"</div>";
+  }
+  function card(id){
+    var it=ITEMS[id], p=it.sp.split(":"), c=+p[1];
+    return '<button type="button" class="bw__c" data-open="'+id+'" aria-label="'+esc(it.name)+", "+KES(it.price)+'"><span class="bw__p plate plate--shelf"><span class="shot" data-sp="'+esc(p[0])+'" style="--x:'+(c%6)+";--y:"+Math.floor(c/6)+'" data-id="'+id+'" aria-hidden="true"></span></span>'+
+      '<span class="bw__cap"><b>'+esc(it.name)+"</b><small>"+KES(it.price)+"</small></span></button>";
+  }
+  /* a short shelf repeats its bottles so the row still goes all the way round; the copies are hidden from screen readers */
+  function fill(r){
+    Array.prototype.forEach.call(r.lane.querySelectorAll("[data-dup]"),function(c){ c.remove(); });
+    r.cards=r.base.slice();
+    var need=Math.ceil((W+3*P)/P), k=0;
+    while(r.cards.length<need){ var c=r.base[k%r.base.length].cloneNode(true); c.setAttribute("data-dup",""); c.setAttribute("tabindex","-1"); c.setAttribute("aria-hidden","true"); c.removeAttribute("aria-label");
+      r.lane.appendChild(c); r.cards.push(c); k++; }
+    r.L=r.cards.length*P;
+    Array.prototype.forEach.call(r.lane.querySelectorAll(".shot"), lightShot);
+  }
+  function measure(){
+    W=root.clientWidth; CW=Math.round(Math.min(124, Math.max(84, W/7.4))); P=Math.round(CW*1.17); R=W*.6; PP=Math.max(720, Math.round(W*1.05));
+    root.style.setProperty("--cw", CW+"px"); root.style.setProperty("--pp", PP+"px"); root.style.setProperty("--lh", Math.round(CW*1.2+70)+"px");
+    rows.forEach(fill);
+  }
+  function sOf(r,k){ return mod(k*P+r.off+r.L/2, r.L)-r.L/2; }
+  function kick(){ if(!raf && rows.some(function(r){ return r.vis; }) && !document.hidden){ last=0; raf=requestAnimationFrame(frame); } }
+  function frame(now){
+    raf=0;
+    var dt=last ? Math.min(.05,(now-last)/1000) : 0, busy=false; last=now;
+    rows.forEach(function(r){
+      var want=(paused||r.hold||r.drag) ? 0 : r.dir*SPEED;
+      r.v+=(want-r.v)*Math.min(1, dt*3); if(Math.abs(r.v)<.05) r.v=0;
+      if(!r.drag){ r.off+=(r.v+r.fling)*dt; r.fling*=Math.pow(.03, dt); if(Math.abs(r.fling)<2) r.fling=0; }
+      if(r.v || r.fling || r.drag) busy=true;
+      if(!r.vis) return;
+      var ip = r.t0>0 ? (now-r.t0)/1000 : 99;
+      if(ip<r.end) busy=true;
+      for(var k=0;k<r.cards.length;k++){
+        var c=r.cards[k], s=sOf(r,k), off=Math.abs(s)>W/2+P;
+        if(off!==c._off){ c._off=off; c.classList.toggle("is-off", off); }
+        if(off) continue;
+        var th=s/R, x=R*Math.sin(th), z=R*(1-Math.cos(th)), ry=-th*57.3, tf=null, op="";
+        if(ip<r.end){
+          if(c._d==null) c._d=Math.min(.5, Math.abs(s)/(W/2)*.32+r.lag);
+          var q=(ip-c._d)/.95;
+          if(q<1){
+            q=Math.max(0,q); var e=EASE(q), z0=-1500, f=(PP-z0)/PP;
+            if(c._rz==null) c._rz=(Math.random()*2-1)*28;
+            tf="translate3d("+(x*e-CW/2).toFixed(1)+"px,"+(r.dy*f*(1-e)).toFixed(1)+"px,"+(z0+(z-z0)*e).toFixed(1)+"px) rotateY("+(ry*e).toFixed(2)+"deg) rotateZ("+(c._rz*(1-e)).toFixed(2)+"deg) scale("+(.4+.6*e).toFixed(3)+")";
+            op=String(Math.min(1,q*3));
+          }
+        }
+        if(!tf) tf="translate3d("+(x-CW/2).toFixed(1)+"px,0,"+z.toFixed(1)+"px) rotateY("+ry.toFixed(2)+"deg)";
+        c.style.transform=tf; c.style.opacity=op;
+      }
+    });
+    /* keep going while something moves and a row is in view; kick() starts the loop again from rest */
+    if(busy && rows.some(function(r){ return r.vis; }) && !document.hidden) raf=requestAnimationFrame(frame);
+  }
+  function wire(r){
+    var L=r.lane;
+    L.addEventListener("pointerenter",function(e){ if(e.pointerType==="mouse"){ r.hold=true; kick(); } });
+    L.addEventListener("pointerleave",function(e){ if(e.pointerType==="mouse"){ r.hold=false; kick(); } });
+    /* a bottle reached with the keyboard comes round to the middle of its row */
+    L.addEventListener("focusin",function(e){ if(!kbd(e.target)) return; var c=e.target.closest(".bw__c"); r.hold=true; if(c){ var k=r.cards.indexOf(c); if(k>=0){ r.off-=sOf(r,k); r.fling=0; } } kick(); });
+    L.addEventListener("focusout",function(e){ if(!L.contains(e.relatedTarget)){ r.hold=false; kick(); } });
+    L.addEventListener("pointerdown",function(e){ if(e.button) return; r.drag={x:e.clientX, x0:e.clientX, t:e.timeStamp, moved:false, vel:0, id:e.pointerId}; r.fling=0; });
+    L.addEventListener("pointermove",function(e){
+      var d=r.drag; if(!d || e.pointerId!==d.id) return;
+      if(!d.moved){ if(Math.abs(e.clientX-d.x0)<7) return; d.moved=true; try{ L.setPointerCapture(e.pointerId); }catch(err){} L.classList.add("is-drag"); }
+      var dx=e.clientX-d.x, dt=Math.max(1, e.timeStamp-d.t);
+      r.off+=dx; d.vel=dx/dt*1000*.6+d.vel*.4; d.x=e.clientX; d.t=e.timeStamp; kick();
+    });
+    function up(e){ var d=r.drag; if(!d || e.pointerId!==d.id) return; r.drag=null; L.classList.remove("is-drag");
+      if(d.moved){ r.fling=Math.max(-1600, Math.min(1600, d.vel)); r.dragged=true; setTimeout(function(){ r.dragged=false; }, 60); } kick(); }
+    L.addEventListener("pointerup", up); L.addEventListener("pointercancel", up);
+    /* the click at the end of a drag does not open a bottle */
+    L.addEventListener("click",function(e){ if(r.dragged){ e.stopPropagation(); e.preventDefault(); r.dragged=false; } }, true);
+  }
+  function stop(){ cancelAnimationFrame(raf); raf=0; if(io) io.disconnect(); if(ro) ro.disconnect(); }
+  function mount(){
+    stop(); rows=[]; root=$("bw"); if(!root) return;
+    Array.prototype.forEach.call(root.querySelectorAll(".bw__lane"),function(L, ri){
+      var r={lane:L, base:[].slice.call(L.children), cards:[], dir:ri%2?1:-1, off:(ri*173)%331, v:0, fling:0, hold:false, drag:null, vis:false, t0:RM?-1:0, dy:0, lag:0, end:0, L:0};
+      if(!r.base.length) return;
+      wire(r); rows.push(r);
+    });
+    var pb=$("bw-pause");
+    if(pb) pb.addEventListener("click",function(){ paused=!paused; pb.textContent=paused?"Play":"Pause"; kick(); });
+    measure();
+    if("ResizeObserver" in window){ ro=new ResizeObserver(function(){ if(root.clientWidth!==W){ measure(); rows.forEach(function(r){ r.cards.forEach(function(c){ c._off=null; }); }); kick(); } }); ro.observe(root); }
+    if(!("IntersectionObserver" in window)){ rows.forEach(function(r){ r.vis=true; r.t0=-1; r.lane.classList.remove("is-pre"); }); kick(); return; }
+    /* rows that come into view together burst from one point, the middle of the group */
+    io=new IntersectionObserver(function(es){
+      var fresh=[], now=performance.now();
+      es.forEach(function(e){ var r=rows.filter(function(x){ return x.lane===e.target; })[0]; if(!r) return;
+        r.vis=e.isIntersecting; if(r.vis && r.t0===0 && e.intersectionRatio>=.3) fresh.push(r); });
+      if(fresh.length){
+        var mid=function(r){ var b=r.lane.getBoundingClientRect(); return b.top+b.height/2; }, cy=0;
+        fresh.forEach(function(r){ cy+=mid(r); }); cy/=fresh.length;
+        fresh.forEach(function(r){ var m=mid(r); r.t0=now; r.dy=cy-m; r.lag=Math.min(.25, Math.abs(cy-m)/900); r.end=r.lag+.5+.95+.05; r.lane.classList.remove("is-pre");
+          r.cards.forEach(function(c){ c._d=null; c._rz=null; }); });
+      }
+      kick();
+    },{threshold:[0,.3]});
+    rows.forEach(function(r){ io.observe(r.lane); });
+  }
+  document.addEventListener("visibilitychange",function(){ if(document.hidden){ cancelAnimationFrame(raf); raf=0; } else kick(); });
+  return {html:html, mount:mount};
+})();
 function plusSvg(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>'; }
 function cardHtml(id){
   var it=ITEMS[id], btl=!!(it.sp||it.bottle);
@@ -3931,32 +4240,156 @@ var PLAY = (function(){
     h+='<p class="gtop__win" id="g-win">'+winHtml(code)+"</p></div>";
     h+='<div class="gfilter" role="group" aria-label="Show games">'+[["all","All "+vis.length],["quiz","Quizzes"],["party","Party games"],["skill","Skill games"]].map(function(k){
       return '<button type="button" class="chip'+(hubKind===k[0]?" is-on":"")+'" data-gkind="'+k[0]+'" aria-pressed="'+(hubKind===k[0])+'">'+k[1]+"</button>"; }).join("")+"</div>";
-    h+='<div class="games" id="g-list">'+vis.map(cardHtml).join("")+"</div>";
-    h+='<p class="gfoot">Rewards are for a solo score, one code per order, and come off the food only. Team games are for bragging rights.'+(adult===true?"":" Games about drinks are hidden, because you said you are under 18.")+'</p><p class="gfoot gfoot--credit">'+creditHtml()+"</p></div>";
+    h+='<div class="gdeck" id="g-deck">'+deckInner()+"</div>";
+    h+='<p class="gfoot">Rewards are for a solo score, one code per order, and come off the food only. Team games are for bragging rights.'+(adult===true?"":me?" Games about drinks are hidden, because your account says you are under 18.":" Games about drinks open when you sign in.")+'</p><p class="gfoot gfoot--credit">'+creditHtml()+"</p></div>";
     return h;
   }
   function winHtml(code){
     return code ? '<b>Your code '+esc(code.code)+' is saved.</b> '+R.percent+'% comes off the food in your next order, automatically.'
                 : 'Score high on a solo game with a <b>'+R.percent+'%</b> badge and win '+R.percent+'% off the food in your next order.';
   }
-  function cardHtml(x){
-    var b=best(x.id), on=hubKind==="all"||hubKind===x.kind;
-    return '<article class="gcard"'+(on?"":" hidden")+' data-gk="'+x.kind+'" style="--g:'+GLOW[x.kind]+'">'+
-      '<button type="button" class="gcard__art" data-play="'+x.id+'" aria-label="Play '+esc(x.name)+'">'+artHtml(x)+'<span class="gcard__ico">'+glyph(x.art)+"</span>"+(x.adult?'<span class="age-pill">18+</span>':"")+"</button>"+
-      '<div class="gcard__b"><p class="gcard__k">'+KIND[x.kind]+" · "+x.minutes+" min"+(x.players?" · "+esc(x.players):"")+"</p>"+
-      '<h3 class="gcard__n">'+esc(x.name)+'</h3><p class="gcard__sw">'+esc(x.sw)+'</p><p class="gcard__l">'+esc(x.line)+"</p>"+
-      '<div class="gcard__f">'+(x.rewarded?'<span class="gbadge">'+R.percent+"% off the food</span>":'<span class="gbadge gbadge--fun">For fun</span>')+
-      (b!=null?'<span class="gbest">Best '+b+"</span>":"")+'<button type="button" class="btn btn--amber gcard__go" data-play="'+x.id+'">Play</button></div></div></article>';
+  /* ---------- the deck: the game cards as a stack. The top card is tossed off with a twirl and slides in at
+     the back, and the next comes forward with a little overshoot, on the timing the lounge picked: a 14-second
+     loop for the whole deck, a 46° twirl, a toss 1.3 card-widths out. Hover or focus holds it, the arrows step
+     through, Pause stops it, a swipe on the cards steps too. With reduced motion the cards change without the
+     toss and nothing moves by itself. ---------- */
+  var SK = {loopSec:14, size:.5, slip:.025, toss:1.3, twirl:46, swap:.78, arrive:.55, depart:.75, radius:.12};
+  var SK_EASE = bez(.34,1.56,.64,1), SK_RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DK = {list:[], cards:[], n:0, T:1, t:0, goal:null, playing:!SK_RM, hold:false, vis:false, raf:0, last:0, io:null, ro:null, top:-1, W:0, cw:0, ch:0, dx:0, dy:0};
+  function deckList(){ return D.games.filter(can).filter(function(x){ return hubKind==="all" || x.kind===hubKind; }); }
+  function deckInner(){
+    var list=deckList();
+    return '<div class="gdeck__stage" id="g-stage" role="group" aria-roledescription="carousel" aria-label="Games, one card at a time">'+list.map(function(x,i){
+        return '<div class="gdk" data-i="'+i+'" style="--g:'+GLOW[x.kind]+'"><button type="button" class="gcard__art gdk__art" data-play="'+x.id+'" aria-label="Play '+esc(x.name)+'" tabindex="-1" aria-hidden="true">'+artHtml(x)+
+          '<span class="gcard__ico">'+glyph(x.art)+"</span>"+(x.adult?'<span class="age-pill">18+</span>':"")+'<span class="gdk__cap"><small>'+KIND[x.kind]+"</small><b>"+esc(x.name)+"</b></span></button></div>"; }).join("")+"</div>"+
+      '<div class="gdeck__ctl"><button type="button" class="gdeck__b" data-gdk="-1" aria-label="Previous game">‹</button>'+
+      '<button type="button" class="chip gdeck__pp" data-gdk="pp"'+(SK_RM?" hidden":"")+">"+(DK.playing?"Pause":"Play")+"</button>"+
+      '<button type="button" class="gdeck__b" data-gdk="1" aria-label="Next game">›</button></div>'+
+      '<div class="gdeck__info" id="g-info"></div>'+
+      '<div class="gdeck__ix" role="group" aria-label="Pick a game">'+list.map(function(x,i){ return '<button type="button" class="gdeck__pick" data-gpick="'+i+'" aria-pressed="false">'+esc(x.name)+"</button>"; }).join("")+"</div>";
   }
+  function infoHtml(x){
+    var b=best(x.id);
+    return '<p class="gcard__k">'+KIND[x.kind]+" · "+x.minutes+" min"+(x.players?" · "+esc(x.players):"")+'</p><h3 class="gcard__n">'+esc(x.name)+'</h3><p class="gcard__sw">'+esc(x.sw)+'</p><p class="gcard__l">'+esc(x.line)+"</p>"+
+      '<div class="gcard__f">'+(x.rewarded?'<span class="gbadge">'+R.percent+"% off the food</span>":'<span class="gbadge gbadge--fun">For fun</span>')+
+      (b!=null?'<span class="gbest">Best '+b+"</span>":"")+'<button type="button" class="btn btn--amber gcard__go" data-play="'+x.id+'">Play</button></div>';
+  }
+  function deckRebuild(){
+    var d=$("g-deck"); if(!d) return;
+    var keep=DK.list[DK.top] ? DK.list[DK.top].id : null;
+    d.innerHTML=deckInner(); Array.prototype.forEach.call(d.querySelectorAll(".shot"), lightShot);
+    deckMount(keep);
+  }
+  function deckMeasure(){
+    var st=$("g-stage"); if(!st) return;
+    var W=st.clientWidth, cw=W<600 ? W*.82 : Math.min(440, Math.max(290, W*SK.size*1.3)), ch=cw*9/16;
+    DK.W=W; DK.cw=cw; DK.ch=ch; DK.dx=SK.slip*cw*1.5; DK.dy=SK.slip*cw*1.7;
+    st.style.setProperty("--cw", Math.round(cw)+"px"); st.style.setProperty("--cr", Math.round(SK.radius*ch*.75)+"px");
+    st.style.setProperty("--sh", Math.round(ch+4*DK.dy+56)+"px");
+  }
+  /* where a card sits at depth d in the stack: each one a little lower, to the right, smaller and turned */
+  function pose(d){ var v=Math.min(d,4); return {x:(v-1.5)*DK.dx, y:(v-1.5)*DK.dy+10, r:v ? (v%2?1.8:-1.3)*(.6+.1*v) : 0, s:1-v*.035, o:Math.max(0,Math.min(1,5-d))}; }
+  function tossTo(s){ var dir=mod(s,2) ? -1 : 1; return {x:dir*SK.toss*DK.cw-1.5*DK.dx, y:-.24*DK.ch, r:dir*SK.twirl, s:1.02, o:1}; }
+  function mix(a,b,e){ return {x:a.x+(b.x-a.x)*e, y:a.y+(b.y-a.y)*e, r:a.r+(b.r-a.r)*e, s:a.s+(b.s-a.s)*e, o:a.o+(b.o-a.o)*Math.max(0,Math.min(1,e))}; }
+  function deckDraw(){
+    var N=DK.n; if(!N) return;
+    var f=DK.t/DK.T, st=Math.floor(f+1e-9), u=f-st, h=1-SK.depart, k=u>h ? (u-h)/(1-h) : 0;
+    var a0=h+(1-h)*.12, ea=SK_EASE(Math.max(0,Math.min(1,(u-a0)/((1-h)*SK.arrive))));
+    for(var i=0;i<N;i++){
+      var d=mod(i-st,N), p, z;
+      if(d===0){
+        if(k<=0){ p=pose(0); z=N+1; }
+        else if(k<SK.swap){ var e1=1-Math.pow(1-k/SK.swap,3); p=mix(pose(0), tossTo(st), e1); z=N+2; }
+        else { p=mix(tossTo(st), pose(N-1), SK_EASE((k-SK.swap)/(1-SK.swap))); z=0; }
+      } else { p=mix(pose(d), pose(d-1), ea); z=N-d+(ea>.5?1:0); }
+      var c=DK.cards[i];
+      c.style.transform="translate(-50%,-50%) translate("+p.x.toFixed(1)+"px,"+p.y.toFixed(1)+"px) rotate("+p.r.toFixed(2)+"deg) scale("+p.s.toFixed(3)+")";
+      c.style.opacity=p.o>=.999 ? "" : p.o.toFixed(3); c.style.zIndex=z;
+    }
+    /* the card that has come halfway forward is the one the details describe */
+    var top=mod(st+(ea>=.5?1:0), N); if(top!==DK.top) setTop(top);
+  }
+  function setTop(i){
+    DK.top=i; var x=DK.list[i]; if(!x) return;
+    var inf=$("g-info"); if(inf){ inf.setAttribute("aria-live", DK.playing && !DK.hold ? "off" : "polite"); inf.innerHTML=infoHtml(x); }
+    DK.cards.forEach(function(c,j){ var b=c.firstChild, on=j===i; c.classList.toggle("is-top",on); b.tabIndex=on?0:-1; if(on) b.removeAttribute("aria-hidden"); else b.setAttribute("aria-hidden","true"); });
+    Array.prototype.forEach.call(document.querySelectorAll("#g-deck [data-gpick]"),function(b){ var on=+b.getAttribute("data-gpick")===i; b.classList.toggle("is-on",on); b.setAttribute("aria-pressed",String(on)); });
+  }
+  function deckKick(){ if(!DK.raf && DK.vis && DK.n && !document.hidden){ DK.last=0; DK.raf=requestAnimationFrame(deckFrame); } }
+  function deckFrame(now){
+    DK.raf=0; var dt=DK.last ? Math.min(.05,(now-DK.last)/1000) : 0, go=false; DK.last=now;
+    if(DK.goal!=null){
+      var dir=DK.goal>DK.t ? 1 : -1, nt=DK.t+dir*dt*1.5;
+      if((dir>0 && nt>=DK.goal) || (dir<0 && nt<=DK.goal)){ nt=DK.goal; DK.goal=null; }
+      DK.t=nt; go=true;
+    } else if(DK.playing && !DK.hold){ DK.t+=dt; go=true; }
+    deckDraw();
+    if(go && DK.vis && !document.hidden) DK.raf=requestAnimationFrame(deckFrame);
+  }
+  /* a card caught mid-toss finishes the toss before the deck stops */
+  function settle(){ var f=DK.t/DK.T, st=Math.floor(f+1e-9); if(DK.goal==null && f-st>1-SK.depart+1e-6) DK.goal=(st+1)*DK.T; }
+  function deckHold(on){ DK.hold=on; if(on) settle(); deckKick(); }
+  function deckPlay(on){
+    DK.playing=on && !SK_RM; DK.goal=null; if(!DK.playing) settle();
+    var b=document.querySelector("#g-deck [data-gdk=pp]"); if(b) b.textContent=DK.playing?"Pause":"Play";
+    deckKick();
+  }
+  function deckStep(n){
+    if(!DK.n) return; deckPlay(false);
+    var T=DK.T, h=1-SK.depart, base=DK.goal!=null ? DK.goal : DK.t, st=Math.floor(base/T+1e-9), u=base/T-st, g;
+    if(n>0){ if(DK.goal==null && u<h) DK.t=(st+h)*T; g=(st+1)*T; }
+    else { if(u>h+1e-6) g=(st+h)*T; else { if(DK.goal==null) DK.t=st*T; g=(st-1+h)*T; } }
+    if(SK_RM){ DK.t=g; DK.goal=null; deckDraw(); return; }
+    DK.goal=g; deckKick();
+  }
+  function deckPick(i){
+    if(!DK.n || i===DK.top) return;
+    if(i===mod(DK.top+1, DK.n)){ deckStep(1); return; }
+    if(i===mod(DK.top-1, DK.n)){ deckStep(-1); return; }
+    deckPlay(false); DK.goal=null;
+    var st=Math.floor(DK.t/DK.T+1e-9); DK.t=(st+mod(i-mod(st,DK.n),DK.n)+(1-SK.depart)*.5)*DK.T; deckDraw();
+  }
+  function deckWire(d){
+    if(d._wired) return; d._wired=true;
+    d.addEventListener("click",function(e){
+      if(DK.swiped){ var a=e.target.closest(".gdeck__stage"); if(a){ e.stopPropagation(); e.preventDefault(); DK.swiped=false; return; } }
+      var b=e.target.closest("[data-gdk],[data-gpick]"); if(!b) return;
+      var k=b.getAttribute("data-gdk");
+      if(k==="pp") deckPlay(!DK.playing); else if(k) deckStep(+k); else deckPick(+b.getAttribute("data-gpick"));
+    }, true);
+    d.addEventListener("pointerenter",function(e){ if(e.pointerType==="mouse") deckHold(true); });
+    d.addEventListener("pointerleave",function(e){ if(e.pointerType==="mouse") deckHold(false); });
+    d.addEventListener("focusin",function(e){ if(kbd(e.target)) deckHold(true); });
+    d.addEventListener("focusout",function(e){ if(!d.contains(e.relatedTarget)) deckHold(false); });
+    var sw=null;
+    d.addEventListener("pointerdown",function(e){ if(e.target.closest(".gdeck__stage")) sw={x:e.clientX, y:e.clientY, id:e.pointerId}; });
+    d.addEventListener("pointerup",function(e){ if(!sw || e.pointerId!==sw.id) return; var dx=e.clientX-sw.x, dy=e.clientY-sw.y; sw=null;
+      if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)*1.3){ DK.swiped=true; setTimeout(function(){ DK.swiped=false; }, 60); deckStep(dx<0 ? 1 : -1); } });
+    d.addEventListener("pointercancel",function(){ sw=null; });
+  }
+  function deckMount(keepId){
+    cancelAnimationFrame(DK.raf); DK.raf=0; if(DK.io) DK.io.disconnect(); if(DK.ro) DK.ro.disconnect();
+    var d=$("g-deck"), st=$("g-stage"); DK.top=-1;
+    if(!d || !st){ DK.list=[]; DK.cards=[]; DK.n=0; return; }
+    deckWire(d);
+    DK.list=deckList(); DK.cards=[].slice.call(st.children); DK.n=DK.cards.length; if(!DK.n) return;
+    DK.T=SK.loopSec/DK.n;
+    var at=0; if(keepId) DK.list.some(function(x,i){ if(x.id===keepId){ at=i; return true; } return false; });
+    DK.t=at*DK.T; DK.goal=null;
+    deckMeasure(); deckDraw();
+    if("ResizeObserver" in window){ DK.ro=new ResizeObserver(function(){ if(st.clientWidth!==DK.W){ deckMeasure(); deckDraw(); } }); DK.ro.observe(st); }
+    if("IntersectionObserver" in window){ DK.io=new IntersectionObserver(function(es){ DK.vis=es[0].isIntersecting; deckKick(); }); DK.io.observe(st); }
+    else { DK.vis=true; deckKick(); }
+  }
+  document.addEventListener("visibilitychange",function(){ if(document.hidden){ cancelAnimationFrame(DK.raf); DK.raf=0; } else deckKick(); });
   function refreshHub(){
     var w=$("g-win"); if(w) w.innerHTML=winHtml(store.get("bc-code",null));
-    var l=$("g-list"); if(l){ var fk=document.activeElement && l.contains(document.activeElement) ? document.activeElement.getAttribute("data-play") : null;
-      l.innerHTML=D.games.filter(can).map(cardHtml).join(""); Array.prototype.forEach.call(l.querySelectorAll(".shot"), lightShot); if(fk){ var b=l.querySelector('.gcard__go[data-play="'+fk+'"]'); if(b) b.focus(); } }
+    deckRebuild();
   }
   function setKind(k){
     hubKind=k;
     Array.prototype.forEach.call(document.querySelectorAll("[data-gkind]"),function(b){ var on=b.getAttribute("data-gkind")===k; b.classList.toggle("is-on",on); b.setAttribute("aria-pressed",String(on)); });
-    Array.prototype.forEach.call(document.querySelectorAll(".gcard"),function(c){ c.hidden = !(k==="all" || c.getAttribute("data-gk")===k); });
+    deckRebuild();
   }
 
   /* ---------- the stage ---------- */
@@ -4541,7 +4974,7 @@ var PLAY = (function(){
   /* the end of Ungependa has its own screen */
   var _html=GAME.wyr.html; GAME.wyr.html=function(){ return S.phase==="wyr-end" ? wyrEnd+againHtml(false)+"</div>" : _html.call(this); };
 
-  return {open:open, close:close, hubHtml:hubHtml, refreshHub:refreshHub, setKind:setKind, onClick:onClick, onSubmit:onSubmit, onInput:onInput, onKey:onKey, isOpen:function(){ return !$("play").hidden; }, count:function(){ return D.games.filter(can).length; }};
+  return {open:open, close:close, hubHtml:hubHtml, refreshHub:refreshHub, setKind:setKind, mountDeck:function(){ deckMount(DK.list[DK.top] ? DK.list[DK.top].id : null); }, onClick:onClick, onSubmit:onSubmit, onInput:onInput, onKey:onKey, isOpen:function(){ return !$("play").hidden; }, count:function(){ return D.games.filter(can).length; }};
 })();
 
 /* ===================== party packages ===================== */
@@ -4764,7 +5197,7 @@ var PLAN = (function(){
           return '<button type="button" class="pl-cr'+(on?" is-on":"")+'" data-lcrowd="'+k+'" aria-pressed="'+on+'"><b>'+esc(c.name)+"</b><small>"+esc(c.sw)+"</small><span>"+Math.round(c.split.beer*100)+"% beer · "+Math.round(c.split.wine*100)+"% wine · "+Math.round(c.split.spirits*100)+"% spirits</span></button>"; }).join("")+"</div>";
         h+='<h4 class="pl-sub">The spirits <small>pick as many as you like</small></h4>'+chips("data-lspirit", SPIRITS, I.spirits, "Spirits");
         h+='<h4 class="pl-sub">Extras</h4>'+chips("data-lextra", Object.keys(EXTRAS).map(function(k){ return [k, EXTRAS[k][0]]; }), I.extras, "Extras");
-      } else h+='<p class="pl-note">Sodas and water for everyone. The Cask Room is hidden because you said you are under 18.</p>';
+      } else h+='<p class="pl-note">Sodas and water for everyone. '+noBarText()+'</p>';
       return h;
     },
     function(){
@@ -4982,20 +5415,31 @@ $("drawer-body").addEventListener("click",function(e){
 $("drawer-close").addEventListener("click",function(){ location.hash="menu"; });
 $("scrim").addEventListener("click",function(){ location.hash="menu"; });
 
-/* ===================== gate: age + order type ===================== */
+/* ===================== gate: welcome, sign-in and order type ===================== */
 var gateMode=mode, gateArea=areaId, gatePicker=null;
+var GATE_H={age:"gate-h", phone:"gh-phone", code:"gh-code", dob:"gh-dob", acct:"gh-acct", mode:"gate-h2"};
+function showStep(step){
+  Object.keys(GATE_H).forEach(function(k){ $("g-"+k).hidden = k!==step; });
+  $("gate").setAttribute("aria-labelledby", GATE_H[step]);
+  /* the first visit has to answer; a visitor who comes back to change something can just close it */
+  $("gate-x").hidden = !(seen && (step!=="mode" || modeSet));
+  if(step!=="code") otpTick(false);
+  $("gate").scrollTop=0;
+}
 function openGate(step, findPlace){
   gateMode=mode; gateArea=areaId;
-  $("g-age").hidden = step!=="age"; $("g-mode").hidden = step!=="mode";
   if($("gate").hidden) rememberFocus("gate");
-  $("gate").hidden=false; $("gate").setAttribute("aria-labelledby", step==="age" ? "gate-h" : "gate-h2");
-  /* the first visit has to answer; a visitor who comes back to change something can just close it */
-  $("gate-x").hidden = !(adult!==null && (step==="age" || modeSet));
+  $("gate").hidden=false;
+  if(step==="acct") renderAcct(false);
+  showStep(step);
   syncLayers();
   renderGateMode(step==="mode" && findPlace);
-  if(step==="age") $("age-yes").focus(); else if(!(findPlace && gateMode==="delivery")) $("gate-go").focus();
+  if(step==="age") $("age-yes").focus();
+  else if(step==="phone") phoneStep();
+  else if(step==="acct") $("ac-go").focus();
+  else if(!(findPlace && gateMode==="delivery")) $("gate-go").focus();
 }
-function closeGate(){ if($("gate").hidden) return; $("gate").hidden=true; syncLayers(); returnFocus("gate", "#d-change"); }
+function closeGate(){ if($("gate").hidden) return; otpTick(false); $("gate").hidden=true; syncLayers(); returnFocus("gate", "#d-change"); }
 $("gate-x").addEventListener("click", closeGate);
 function renderGateMode(findPlace){
   Array.prototype.forEach.call(document.querySelectorAll("#gate .opt"),function(b){ b.classList.toggle("is-on", b.getAttribute("data-gmode")===gateMode); b.setAttribute("aria-pressed", String(b.getAttribute("data-gmode")===gateMode)); });
@@ -5007,21 +5451,136 @@ function renderGateMode(findPlace){
   } else { unbindPicker(ga); gatePicker=null; }
   $("gate-go").textContent = gateMode==="delivery" ? "Start your order" : "Start your order for collection";
 }
-function setAdult(v){
-  adult=v; store.set("bc-adult",v);
-  if(!v){ Object.keys(basket).forEach(function(k){ if(ITEMS[basket[k].id] && ITEMS[basket[k].id].alcohol) delete basket[k]; }); save(); }
-  renderMenu(); refreshBar(); if(drawerOpen) renderDrawer();
+/* after the welcome or a sign-in, a first visit goes on to choose delivery or collection */
+function afterAuth(){
+  if(!seen){ seen=true; store.set("bc-seen",true); }
+  if(!modeSet){ showStep("mode"); renderGateMode(); $("gate-go").focus(); } else closeGate();
 }
-function afterAge(){ if(!modeSet){ $("g-age").hidden=true; $("g-mode").hidden=false; $("gate").setAttribute("aria-labelledby","gate-h2"); renderGateMode(); $("gate-go").focus(); } else closeGate(); }
-$("age-yes").addEventListener("click",function(){ setAdult(true); afterAge(); });
-$("age-no").addEventListener("click",function(){ setAdult(false); afterAge(); });
+/* signing in or out changes what the menu, the order and checkout may show */
+function applyAccount(){
+  adult=isAdult();
+  if(!adult){ var gone=false; Object.keys(basket).forEach(function(k){ if(ITEMS[basket[k].id] && ITEMS[basket[k].id].alcohol){ delete basket[k]; gone=true; } }); if(gone) save(); }
+  renderMenu(); refreshBar(); renderAcctBtn(); if(drawerOpen) renderDrawer(); if(current==="checkout") renderCheckout();
+}
+function renderAcctBtn(){
+  var a=acct(), b=$("acct");
+  b.classList.toggle("is-in", !!a);
+  b.setAttribute("aria-label", a ? "Your account, "+a.name+(adult?", 18+":", under 18") : "Sign in");
+  $("age-change").textContent = a ? "Your account" : "Sign in";
+}
+var toastT=null;
+function toast(msg){ var t=$("toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){ t.hidden=true; }, 4500); }
+
+/* ---- sign-in: a phone number confirmed with a one-time code, then a name and a date of birth set once.
+   Demo only: the "text message" appears on screen, and nothing leaves this browser. ---- */
+var otp=null, otpTimer=null, otpShow=null;
+function suFlag(inp, errId, isBad, msg){
+  var e=$(errId); if(msg) e.textContent=msg; e.hidden=!isBad;
+  if(inp){ inp.classList.toggle("is-bad",isBad); inp.setAttribute("aria-invalid",String(isBad));
+    if(isBad) inp.setAttribute("aria-describedby",errId); else inp.removeAttribute("aria-describedby"); }
+  return isBad;
+}
+function phoneStep(){ otp=null; suFlag($("su-phone"),"su-phone-e",false); showStep("phone"); $("su-phone").focus(); }
+function sendCode(){
+  var p=normPhone($("su-phone").value);
+  if(suFlag($("su-phone"),"su-phone-e",!p)){ if($("g-phone").hidden) showStep("phone"); $("su-phone").focus(); return; }
+  otp={phone:p, code:String(100000+Math.floor(Math.random()*900000)), exp:Date.now()+600000, tries:0, sent:Date.now()};
+  $("su-to").textContent=showPhone(p);
+  $("su-code").value=""; suFlag($("su-code"),"su-code-e",false); $("su-check").disabled=false;
+  $("su-sms").hidden=true;
+  showStep("code"); $("su-code").focus();
+  otpTick(true);
+  otpShow=setTimeout(function(){ if(!otp) return; $("su-sms-c").textContent=otp.code; $("su-sms").hidden=false; }, 900);
+}
+/* a new code can be sent 30 seconds after the last one */
+function otpTick(on){
+  clearInterval(otpTimer); clearTimeout(otpShow); otpTimer=null;
+  if(!on) return;
+  var b=$("su-resend");
+  var f=function(){ var t=otp ? Math.max(0, 30-Math.floor((Date.now()-otp.sent)/1000)) : 0;
+    b.disabled=t>0; b.textContent = t>0 ? "Send a new code in "+t+" s" : "Send a new code";
+    if(!t){ clearInterval(otpTimer); otpTimer=null; } };
+  f(); otpTimer=setInterval(f,1000);
+}
+function checkCode(){
+  if(!otp) return;
+  var v=$("su-code").value.replace(/\D/g,""), msg="";
+  if(Date.now()>otp.exp) msg="This code has expired. Send a new one.";
+  else if(otp.tries>=5) msg="Too many tries. Send a new code.";
+  else if(v.length!==6) msg="Type the 6 digits from the text message.";
+  else if(v!==otp.code){ otp.tries++; var left=5-otp.tries;
+    msg = left ? "That code is not right. "+left+(left===1?" try":" tries")+" left." : "That code is not right, and that was the last try. Send a new code."; }
+  if(msg){ suFlag($("su-code"),"su-code-e",true,msg); $("su-check").disabled = otp.tries>=5 || Date.now()>otp.exp; $("su-code").focus(); $("su-code").select(); return; }
+  var p=otp.phone; otp=null; otpTick(false);
+  if(accounts[p]){ signIn(p, false); return; }
+  pending=p; $("su-ok-to").textContent=showPhone(p);
+  $("su-name").value=""; $("su-true").checked=false; fillDob();
+  suFlag($("su-name"),"su-name-e",false); suFlag(null,"su-dob-e",false); suFlag(null,"su-true-e",false);
+  showStep("dob"); $("su-name").focus();
+}
+function fillDob(){
+  var now=new Date().getFullYear(), d='<option value="">Day</option>', m='<option value="">Month</option>', y='<option value="">Year</option>';
+  for(var i=1;i<=31;i++) d+='<option value="'+i+'">'+i+"</option>";
+  DOB_M.forEach(function(n,i){ m+='<option value="'+(i+1)+'">'+n+"</option>"; });
+  for(var j=now;j>=now-100;j--) y+='<option value="'+j+'">'+j+"</option>";
+  $("su-d").innerHTML=d; $("su-m").innerHTML=m; $("su-y").innerHTML=y;
+}
+function makeAccount(){
+  if(!pending) return;
+  var name=$("su-name").value.trim().replace(/\s+/g," "), d=+$("su-d").value, m=+$("su-m").value, y=+$("su-y").value, dt=new Date(y, m-1, d);
+  var dmsg = !(d&&m&&y) ? "Pick the day, month and year you were born." : dt.getMonth()!==m-1 ? "That date does not exist. Check the day and the month." : dt>new Date() ? "That date is still to come. Check the year." : "";
+  var b1=suFlag($("su-name"),"su-name-e",name.length<2), b2=suFlag(null,"su-dob-e",!!dmsg,dmsg), b3=suFlag(null,"su-true-e",!$("su-true").checked);
+  if(b1||b2||b3){ (b1?$("su-name"):b2?$("su-d"):$("su-true")).focus(); return; }
+  accounts[pending]={name:name, dob:y+"-"+(m<10?"0":"")+m+"-"+(d<10?"0":"")+d};
+  store.set("bc-accounts",accounts);
+  var p=pending; pending=null; signIn(p, true);
+}
+function signIn(p, isNew){
+  me=p; store.set("bc-me",me);
+  applyAccount();
+  /* a returning adult goes straight on; a new account, or one under 18, first sees what it can order */
+  if(adult && !isNew){ afterAuth(); toast("Signed in as "+showPhone(me)+". The Cask Room is open."); }
+  else { renderAcct(isNew); showStep("acct"); $("ac-go").focus(); }
+}
+function renderAcct(isNew){
+  var a=acct(); if(!a) return;
+  var ok=ageOn(a.dob)>=18;
+  $("gh-acct").textContent = isNew ? "Account open" : "Your account";
+  $("ac-who").innerHTML='<i aria-hidden="true">'+esc(a.name.charAt(0).toUpperCase())+"</i><span><b>"+esc(a.name)+"</b><small>"+showPhone(me)+", phone confirmed</small></span>";
+  $("ac-st").className="acct-st"+(ok?"":" is-u18");
+  $("ac-st").innerHTML = ok ? '<i aria-hidden="true">18+</i><span><b>The Cask Room is open</b><small>Show your ID when alcohol is handed over.</small></span>'
+    : '<i aria-hidden="true">U18</i><span><b>The Cask Room is closed</b><small>It opens on '+longDate(day18(a.dob))+", your 18th birthday. Until then the grill, the sodas and the games are all yours.</small></span>";
+  $("ac-dob").textContent="Date of birth: "+longDate(dobDate(a.dob))+". To correct it, call the lounge on 0754 346 559.";
+  $("ac-go").textContent = seen && modeSet ? "Done" : "Continue";
+}
+$("age-yes").addEventListener("click", phoneStep);
+$("age-no").addEventListener("click", afterAuth);
+Array.prototype.forEach.call(document.querySelectorAll("[data-gskip]"),function(b){ b.addEventListener("click",function(){ otp=null; pending=null; otpTick(false); afterAuth(); }); });
+$("su-send").addEventListener("click", sendCode);
+$("su-phone").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); sendCode(); } });
+$("su-phone").addEventListener("input",function(){ if(!$("su-phone-e").hidden) suFlag(this,"su-phone-e",false); });
+$("su-code").addEventListener("input",function(){
+  var v=this.value.replace(/\D/g,"").slice(0,6); if(v!==this.value) this.value=v;
+  if(otp && otp.tries<5 && Date.now()<=otp.exp && !$("su-code-e").hidden) suFlag(this,"su-code-e",false);
+  if(v.length===6) checkCode();
+});
+$("su-code").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); checkCode(); } });
+$("su-check").addEventListener("click", checkCode);
+$("su-sms").addEventListener("click",function(){ if(!otp) return; $("su-code").value=otp.code; checkCode(); });
+$("su-resend").addEventListener("click", sendCode);
+$("su-edit").addEventListener("click", phoneStep);
+$("su-make").addEventListener("click", makeAccount);
+$("ac-go").addEventListener("click", afterAuth);
+$("ac-out").addEventListener("click",function(){ var was=showPhone(me); me=null; store.del("bc-me"); applyAccount(); afterAuth(); toast("Signed out of "+was+". The Cask Room stays closed until you sign in again."); });
+$("acct").addEventListener("click",function(){ openGate(me?"acct":"phone"); });
+document.addEventListener("click",function(e){ if(e.target.closest("[data-signin]")){ e.preventDefault(); openGate(me?"acct":"phone"); } });
 $("gate").addEventListener("click",function(e){ var o=e.target.closest(".opt"); if(o){ gateMode=o.getAttribute("data-gmode"); renderGateMode(); } });
 $("gate-go").addEventListener("click",function(){
   if(gateMode==="delivery" && !placeById(gateArea)){ $("gate-err").hidden=false; if(gatePicker) gatePicker.focus(); return; }
   setMode(gateMode, gateArea); closeGate();
 });
 $("where").addEventListener("click",function(){ openGate("mode", true); });
-$("age-change").addEventListener("click",function(){ openGate("age"); });
+$("age-change").addEventListener("click",function(){ openGate(me?"acct":"phone"); });
 
 function setMode(m,a){
   mode=m; if(a) areaId=a; modeSet=true;
@@ -5099,7 +5658,10 @@ function renderCheckout(){
     set:function(id){ areaId=id; store.set("bc-area",areaId); $("e-place").hidden=true; renderContext(); renderCoInfo(); }});
   else unbindPicker($("co-where"));
   $("co-age-card").hidden = !hasAlcohol();
-  $("co-age-t").innerHTML = "I am 18 or older. The "+TB+" rider checks ID at handover and cannot leave alcohol with anyone under 18.";
+  var ac=acct();
+  $("co-age-t").innerHTML = (ac && adult ? "Ordered on "+esc(ac.name)+"’s account, "+showPhone(me)+": 18+, phone confirmed. " : "")+
+    (mode==="delivery" ? "The "+TB+" rider checks ID at handover and cannot leave alcohol with anyone under 18." : "Show your ID at the counter when you collect.");
+  if(ac){ if(!$("co-name").value.trim()) $("co-name").value=ac.name; if(!$("co-phone").value.trim()) $("co-phone").value=showPhone(me); }
   $("pay-pod-l").hidden = mode!=="delivery";
   if(mode!=="delivery" && $("pay-pod").checked) $("pay-mpesa").checked=true;
   $("co-terms").innerHTML = "By ordering you agree to Bamboo Cask Lounge’s terms."+(mode==="delivery"?" Delivery is handled by "+TB+".":"");
@@ -5117,7 +5679,7 @@ function reviewOrder(){
   var badP=!validPhone(phone); $("co-phone").classList.toggle("is-bad",badP); $("e-phone").hidden=!badP; if(badP) ok=false;
   if(mode==="delivery"){ var badL=!placeById(areaId); $("e-place").hidden=!badL; if(badL) ok=false; } else $("e-place").hidden=true;
   if(mode==="delivery"){ var badA=addr.length<4; $("co-addr").classList.toggle("is-bad",badA); $("e-addr").hidden=!badA; if(badA) ok=false; } else $("e-addr").hidden=true;
-  if(hasAlcohol()){ var badAge=!$("co-age").checked; $("e-age").hidden=!badAge; if(badAge) ok=false; }
+  if(hasAlcohol()){ var badAge=!adult; $("e-age").hidden=!badAge; if(badAge) ok=false; }
   var FIELD={"e-phone":"#co-phone","e-place":"#co-where input","e-addr":"#co-addr","e-age":"#co-age"};
   Object.keys(FIELD).forEach(function(e){ var f=document.querySelector(FIELD[e]); if(!f) return; var b=!$(e).hidden;
     f.setAttribute("aria-invalid",String(b)); if(b) f.setAttribute("aria-describedby",e); else f.removeAttribute("aria-describedby"); });
@@ -5323,7 +5885,7 @@ function alignCaneNow(){
     if(!host.offsetWidth) return;
     Array.prototype.forEach.call(host.querySelectorAll(".track:not(.reel),.plate--shelf"),function(el){
       var tr=el.classList.contains("track");
-      if(!tr && el.closest(".track:not(.reel)")) return;
+      if(!tr && el.closest(".track:not(.reel),.bw")) return;
       var o=offIn(el, host); if(!o) return;
       el.style.setProperty("--wx", -(o.x+el.clientLeft)+"px");
       el.style.setProperty("--wy", -(o.y+el.clientTop)+"px");
@@ -5508,7 +6070,8 @@ fillPhotos(document);
 renderMenu();
 renderContext();
 route();
-if(adult===null) openGate("age"); else if(!modeSet) openGate("mode");
+renderAcctBtn();
+if(!seen) openGate("age"); else if(!modeSet) openGate("mode");
 booted=true;
 setInterval(function(){ if(!order) return; if(current==="track") renderTrack(); if(current==="kitchen") renderKitchen(); }, 1000);
 })();
