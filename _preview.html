@@ -953,7 +953,7 @@ button,a,select,label{touch-action:manipulation;-webkit-tap-highlight-color:tran
 /* the rooms sit in the claret panel (see "premium" below), which gives them --pad and the background */
 .from-pill{font-size:11px;font-weight:800;letter-spacing:.03em;color:var(--amber-text);border:1px solid currentColor;border-radius:999px;padding:0 7px;line-height:16px;white-space:nowrap}
 .cat__h .from-pill{font-family:var(--body);font-size:12px;text-transform:none;line-height:20px;padding:0 9px}
-.stay{--reel-h:clamp(260px,58vh,540px);position:relative;color:var(--hero-ink);overflow:hidden;padding-top:10px}
+.stay{position:relative;color:var(--hero-ink);overflow:hidden;padding-top:10px}
 .stay .eyebrow{color:var(--hero-amber)}
 .stay__top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;padding-inline:var(--pad)}
 .stay__lede{flex:1 1 280px;min-width:0;font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.2vw,23px);line-height:1.3;color:var(--hero-ink-2);max-width:34ch}
@@ -965,33 +965,49 @@ button,a,select,label{touch-action:manipulation;-webkit-tap-highlight-color:tran
 .stay__tab[aria-pressed="true"]{background:var(--hero-amber);border-color:var(--hero-amber);color:var(--on-amber)}
 .stay__tab[aria-pressed="true"] small{color:var(--on-amber)}
 
-/* the photo reel: a title card, then the room photo by photo; the one in the middle is lit */
-.track.reel{gap:12px;margin-inline:0;padding:22px var(--pad) 4px;scroll-padding-inline:var(--pad);scrollbar-width:none;position:relative}
-.track.reel::-webkit-scrollbar{display:none}
-.track.reel > *{flex:none;scroll-snap-align:center}
-.track.reel > .reel__card{scroll-snap-align:start}
-.reel__card{width:min(72vw,320px);height:var(--reel-h);display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:22px;border-radius:18px;border:1px solid var(--hero-line);background:linear-gradient(165deg,var(--stay-wood),var(--stay-bg))}
-.reel__k{font-family:var(--stencil);font-weight:900;font-size:clamp(46px,6vw,68px);line-height:.85;text-transform:uppercase;color:var(--hero-amber)}
-.reel__rate{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:.03em;line-height:1;font-variant-numeric:tabular-nums}
-.reel__rate small{display:block;font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:0;color:var(--hero-ink-2);margin-top:6px}
-.reel__sum{font-size:14px;line-height:1.45;color:var(--hero-ink-2)}
-.reel__ph{position:relative;height:var(--reel-h);max-width:calc(100vw - 72px);padding:0;border:0;border-radius:18px;overflow:hidden;background:var(--stay-wood);cursor:zoom-in;opacity:.42;transform:scale(.965);transition:opacity .45s ease,transform .45s ease}
-.reel__ph.is-on,.reel__ph:focus-visible{opacity:1;transform:none}
-.reel__ph:focus-visible{outline:3px solid var(--hero-amber);outline-offset:3px}
-.reel__ph img{display:block;width:100%;height:100%;max-width:none;object-fit:cover}
-.reel__ph::after{content:"";position:absolute;inset:auto 0 0;height:32%;background:linear-gradient(to top,rgba(8,6,4,.5),transparent);opacity:0;transition:opacity .3s ease}
-.reel__zoom{position:absolute;right:12px;bottom:12px;z-index:1;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--hero-tile);color:var(--hero-ink);opacity:0;transition:opacity .3s ease}
-.reel__zoom svg{width:18px;height:18px}
-.reel__ph.is-on::after,.reel__ph.is-on .reel__zoom{opacity:1}
+/* the photo wall: the room's photos as prints on a sheet of paper, toured by a camera (PW in the script).
+   The paper is light in every theme, like a print table under the lamp. */
+.pw{--paper:#ECE2CC;--paper-grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34 0 0 0 0 .25 0 0 0 0 .13 0 0 0 -.7 .44'/></filter><rect width='180' height='180' filter='url(%23g)'/></svg>");
+  position:relative;margin:22px var(--pad) 0;aspect-ratio:16/9;max-height:min(640px,76vh);max-width:100%;overflow:hidden;border-radius:18px;
+  background:radial-gradient(90% 70% at 28% 18%,rgba(255,252,240,.55),transparent 70%),radial-gradient(80% 80% at 82% 92%,rgba(150,118,70,.14),transparent 70%),var(--paper-grain),var(--paper);
+  box-shadow:inset 0 0 0 1px rgba(110,80,40,.2),var(--shadow);touch-action:pan-y;-webkit-user-select:none;user-select:none;isolation:isolate}
+.cane .pw{--paper:#F6EFDC}
+.pw::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;background:radial-gradient(125% 100% at 50% 45%,transparent 58%,rgba(70,46,18,.2))}
+.pw__world{position:absolute;inset:0;z-index:1;transform-origin:50% 50%}
+.pw__c{position:absolute;left:0;top:0;display:block;padding:0;border:0;background:none;transform-origin:50% 50%;will-change:transform;cursor:zoom-in}
+.pw__p{position:relative;display:block;width:100%;height:100%;border-radius:7px;overflow:hidden;background:#D8CBAE;opacity:var(--o,1);transform:rotate(var(--r,0deg));
+  box-shadow:0 2px 4px rgba(54,36,14,.18),0 14px 26px -12px rgba(54,36,14,.45);transition:transform .6s cubic-bezier(.4,0,.2,1),box-shadow .6s ease,opacity .6s ease}
+.pw__p img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transition:opacity .6s ease;pointer-events:none;-webkit-user-drag:none}
+.pw__p img.is-in{opacity:1}
+.pw__c.is-on{z-index:200!important}
+.pw__c.is-on .pw__p{opacity:1;transform:scale(1.1);box-shadow:0 0 0 3px #FFFCF2,0 26px 50px -14px rgba(40,24,8,.6)}
+.pw__c .reel__zoom{right:8px;bottom:8px;width:32px;height:32px}
+.pw__c .reel__zoom svg{width:16px;height:16px}
+.pw__c.is-on .reel__zoom,.pw__c:hover .reel__zoom{opacity:1}
+.pw__c:focus-visible{outline:none}
+.pw__c:focus-visible .pw__p{box-shadow:0 0 0 3px #FFFCF2,0 0 0 6px var(--focus),0 26px 50px -14px rgba(40,24,8,.6)}
+/* the room's name and rate, pinned to the corner of the paper */
+.pw__tag{position:absolute;left:12px;top:12px;z-index:3;display:grid;gap:3px;max-width:min(250px,58%);padding:11px 14px 12px;border-radius:14px;background:var(--hero-tile);color:#F6EFD8;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 24px rgba(30,16,6,.28);pointer-events:none}
+.pw__tag small{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#D9CFAE}
+.pw__tag b{font-family:var(--stencil);font-weight:900;font-size:clamp(26px,3vw,36px);line-height:.9;text-transform:uppercase;color:#EBE0A6}
+.pw__tag span{font-family:var(--display);font-weight:800;font-size:16px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.pw__tag em{font-style:normal;font-size:12.5px;line-height:1.35;color:#D9CFAE}
+.reel-cap{padding:8px var(--pad) 0;font-size:14px;line-height:1.45;color:var(--hero-ink-2);min-height:calc(1.45em + 8px)}
+@media (max-width:640px){
+  .pw{aspect-ratio:1/1;border-radius:16px}
+  .pw__tag{padding:8px 11px 9px;border-radius:12px}
+  .pw__tag small,.pw__tag em{display:none}
+  .pw__tag b{font-size:24px}
+}
 .reel-ctl{display:flex;align-items:center;gap:10px;padding:14px var(--pad) 0}
 .reel-ctl__n{flex:none;min-width:66px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.08em;font-variant-numeric:tabular-nums}
 .reel-ctl__n i{font-style:normal;color:var(--hero-ink-2)}
 .reel-ctl__bar{flex:1;min-width:40px;height:2px;border-radius:2px;background:var(--hero-line);overflow:hidden}
 .reel-ctl__bar span{display:block;height:100%;width:0;background:var(--hero-amber);transition:width .25s ease}
-.sbtn{flex:none;display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--hero-line);background:var(--hero-panel);color:var(--hero-ink)}
-.sbtn:hover{border-color:var(--hero-amber)}
-.sbtn svg{width:18px;height:18px}
-.sbtn--txt{width:auto;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:999px;font-weight:700;font-size:14px}
+.reel-ctl .sbtn,.lb .sbtn{flex:none;display:inline-grid;place-items:center;gap:0;width:42px;height:42px;min-height:0;padding:0;border-radius:50%;border:1px solid var(--hero-line);background:var(--hero-panel);color:var(--hero-ink);font-size:14px;font-weight:700}
+.reel-ctl .sbtn:hover,.lb .sbtn:hover{border-color:var(--hero-amber)}
+.reel-ctl .sbtn svg,.lb .sbtn svg{flex:none;width:18px;height:18px}
+.reel-ctl .sbtn--txt{width:auto;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:999px}
 
 /* the room, and booking it */
 .stay__body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:24px clamp(20px,3vw,36px);align-items:start;padding:28px var(--pad) 0}
@@ -1027,15 +1043,15 @@ button,a,select,label{touch-action:manipulation;-webkit-tap-highlight-color:tran
 .stay .num{color:var(--hero-ink)}
 .stay .copy{border-color:var(--hero-line);background:transparent;color:var(--hero-ink)}
 .book__fine{font-size:12.5px;line-height:1.45;color:var(--hero-ink-2)}
-.stay.is-swap .reel,.stay.is-swap .stay__body{animation:stayIn .45s ease both}
+.stay.is-swap .pw,.stay.is-swap .reel-cap,.stay.is-swap .stay__body{animation:stayIn .45s ease both}
 @keyframes stayIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (max-width:860px){.stay__body{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){
-  .stay{--reel-h:clamp(230px,72vw,400px);border-radius:20px}
+  .stay{border-radius:20px}
   .stay__pick{width:100%}
   .stay__tab{flex:1 1 0;min-width:0;padding:10px 12px}
-  .sbtn--txt{width:42px;padding:0;border-radius:50%}
-  .sbtn--txt span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .reel-ctl .sbtn--txt{width:42px;padding:0;border-radius:50%}
+  .reel-ctl .sbtn--txt span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 }
 @media (max-height:520px) and (orientation:landscape){.stay{--reel-h:clamp(200px,64vh,300px)}}
 
@@ -1209,7 +1225,6 @@ button,a,select,label{touch-action:manipulation;-webkit-tap-highlight-color:tran
   --hero-ink:var(--ink); --hero-ink-2:var(--ink-2); --hero-line:var(--gold-line); --hero-panel:rgba(255,252,238,.72);
   --hero-amber:var(--gold-hi); --on-amber:var(--on-gold); --stay-bg:var(--panel-2); --stay-wood:#CDBB7C;
 }
-.lux.cane .reel__card{background:linear-gradient(150deg,rgba(255,253,243,.66),rgba(250,244,224,.42));-webkit-backdrop-filter:blur(7px) saturate(1.15);backdrop-filter:blur(7px) saturate(1.15);border-color:rgba(255,255,255,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 14px 34px rgba(60,48,14,.16)}
 .lux.cane .book{background:var(--panel);box-shadow:0 14px 34px rgba(60,48,14,.12)}
 .cane .book input[type="date"]{color-scheme:light}
 .lux.cane .stay__tab[aria-pressed="true"]{box-shadow:inset 0 0 0 1px rgba(110,92,30,.6)}
@@ -1218,7 +1233,6 @@ button,a,select,label{touch-action:manipulation;-webkit-tap-highlight-color:tran
 /* the rooms inside theirs */
 .lux .stay__tab[aria-pressed="true"]{background:var(--gold-btn);border-color:var(--gold);color:var(--on-gold)}
 .lux .stay__tab[aria-pressed="true"] small{color:var(--on-gold)}
-.lux .reel__card{background:radial-gradient(120% 70% at 0% 100%,var(--claret-glow),transparent 70%),linear-gradient(165deg,var(--claret-wood),var(--claret-bg));border-color:var(--gold-line)}
 .lux .book{background:linear-gradient(160deg,rgba(243,236,221,.07),rgba(243,236,221,.025))}
 
 /* the menu's side list and rail mark the two */
@@ -3207,7 +3221,7 @@ var ROOMS = [
    has:[["bed","Four-poster bed with a canopy net"],["sofa","Lounge corner with an L-shaped sofa, in the largest room"],["desk","Work desk and chair"],["tv","Wall TV"],["cup","Vanity with a mirror, mini fridge and kettle"],["wifi","En-suite bathroom, Wi-Fi and daily housekeeping"]],
    photos:[["dlx-1",570,"The lounge corner, with an L-shaped sofa and a wall TV"],["dlx-2",570,"A four-poster bed under its canopy net"],["dlx-3",1013,"The bed, the desk and the timber ceiling"],["dlx-4",570,"A bed by the window, with a wall TV and a dresser"],["dlx-5",570,"The bed beside a slatted room divider"],["dlx-6",1013,"A work desk by the door"],["dlx-7",570,"A four-poster bed and the wardrobe"],["dlx-8",570,"The vanity, with a mini fridge, a kettle and drinking water"]]}
 ];
-var stay = {room:"std", day:"", nights:1, guests:1, cur:0}, reelRaf = 0, lbI = 0, lbRoom = null;
+var stay = {room:"std", day:"", nights:1, guests:1, cur:0}, lbI = 0, lbRoom = null;
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], MO=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var RICON = {
   bed:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M6 10V7.5A1.5 1.5 0 0 1 7.5 6h3A1.5 1.5 0 0 1 12 7.5V10"/>',
@@ -3217,6 +3231,7 @@ var RICON = {
   door:'<path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17M4 21h16M14.5 12h.01"/>',
   wifi:'<path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01"/>',
   desk:'<path d="M3 8h18M5 8v12M19 8v12M5 13h6v7"/>',
+  pause:'<path d="M9 5.5v13M15 5.5v13"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>',
   prev:'<path d="M15 6l-6 6 6 6"/>', next:'<path d="M9 6l6 6-6 6"/>', zoom:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'
 };
 function rIco(k,w){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.7)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(RICON[k]||"")+"</svg>"; }
@@ -3244,19 +3259,15 @@ function roomsHtml(){
 }
 function stayRoomHtml(){
   var r=roomById(stay.room), n=r.photos.length;
-  var h='<div class="track reel" id="stay-reel" role="region" tabindex="0" aria-label="Photos of the '+esc(r.name)+'">'+
-    '<div class="reel__card"><p class="eyebrow">Stay at Keiyo Road</p><p class="reel__k foil">'+esc(r.short)+"</p>"+
-    '<p class="reel__rate">'+(r.rate?KES(r.rate):"Ask the lounge")+"<small>"+(r.rate?"a night, for the room":"for the Deluxe rate, on WhatsApp")+"</small></p>"+
-    '<p class="reel__sum">'+esc(r.lede)+" "+n+" photos to scroll through.</p></div>";
-  r.photos.forEach(function(p,i){
-    h+='<button type="button" class="reel__ph" data-lb="'+i+'" style="aspect-ratio:'+p[1]+'/760" aria-label="'+esc(p[2])+". Photo "+(i+1)+" of "+n+', opens full screen">'+
-      '<img src="rooms/'+p[0]+'.webp" alt="" width="'+p[1]+'" height="760" decoding="async"'+(i>1?' loading="lazy"':"")+'><span class="reel__zoom">'+rIco("zoom",2)+"</span></button>";
-  });
-  h+="</div>";
+  var h='<div class="pw" id="stay-reel" role="region" aria-label="Photos of the '+esc(r.name)+", "+n+' photos. Pick one to see it full screen.">'+
+    '<div class="pw__world">'+PW.html(r)+"</div>"+
+    '<div class="pw__tag" aria-hidden="true"><small>Stay at Keiyo Road</small><b>'+esc(r.short)+"</b><span>"+(r.rate?KES(r.rate)+" a night":"Rate on request")+"</span><em>"+esc(r.lede)+"</em></div></div>";
   h+='<div class="reel-ctl"><span class="reel-ctl__n" id="reel-n" aria-hidden="true">01<i> / '+two(n)+'</i></span><span class="reel-ctl__bar" aria-hidden="true"><span id="reel-bar"></span></span>'+
     '<button type="button" class="sbtn" data-reel="-1" aria-label="Previous photo">'+rIco("prev",2)+"</button>"+
+    '<button type="button" class="sbtn" data-reel="pp" aria-label="Pause the photo tour"'+(PW.rm?" hidden":"")+">"+rIco("pause",2)+"</button>"+
     '<button type="button" class="sbtn" data-reel="1" aria-label="Next photo">'+rIco("next",2)+"</button>"+
-    '<button type="button" class="sbtn sbtn--txt" data-lb="cur">'+rIco("zoom",2)+"<span>Full screen</span></button></div>";
+    '<button type="button" class="sbtn sbtn--txt" data-lb="cur">'+rIco("zoom",2)+"<span>Full screen</span></button></div>"+
+    '<p class="reel-cap" id="reel-cap"></p>';
   h+='<div class="stay__body"><div class="stay__about"><h3 class="stay__name">'+esc(r.name)+'</h3><p class="stay__desc">'+esc(r.desc)+"</p>"+
     '<ul class="stay__has">'+r.has.map(function(x){ return "<li>"+rIco(x[0])+"<span>"+esc(x[1])+"</span></li>"; }).join("")+"</ul>"+
     '<div class="stay__near"><span>Keiyo Road, Ngara</span><span>Close to the CBD, Parklands and Pangani</span><span>Secure parking</span></div>'+
@@ -3292,46 +3303,186 @@ function updateBook(){
     (r.rate ? "That's "+KES(r.rate*stay.nights)+" at "+KES(r.rate)+" a night. Is it free?" : "What is the Deluxe rate for those nights?");
   $("stay-wa").href=waHref(msg);
 }
-function reelPhotos(){ var r=$("stay-reel"); return r ? r.querySelectorAll(".reel__ph") : []; }
-/* the photo nearest the middle of the reel is the current one; the two ends count as the first and last */
-function reelCur(){
-  var r=$("stay-reel"), ks=reelPhotos(), mid, best=0, bd=Infinity;
-  if(!r || !ks.length || !r.clientWidth) return 0;
-  if(r.scrollLeft>=r.scrollWidth-r.clientWidth-4) return ks.length-1;
-  mid=r.scrollLeft+r.clientWidth/2;
-  Array.prototype.forEach.call(ks,function(k,i){ var d=Math.abs(k.offsetLeft+k.offsetWidth/2-mid); if(d<bd){ bd=d; best=i; } });
-  return best;
-}
-function reelSync(){
-  var r=$("stay-reel"), ks=reelPhotos(), n=ks.length; if(!n) return;
-  var i=reelCur(), max=r.scrollWidth-r.clientWidth;
-  Array.prototype.forEach.call(ks,function(k,j){ k.classList.toggle("is-on", j===i); });
-  $("reel-n").innerHTML=two(i+1)+"<i> / "+two(n)+"</i>";
-  $("reel-bar").style.width=(max>0 ? Math.max(6, r.scrollLeft/max*100) : 100)+"%";
-  stay.cur=i;
-}
-function reelTo(i){
-  var r=$("stay-reel"), ks=reelPhotos(); if(!r || !ks.length) return;
-  var k=ks[Math.max(0, Math.min(ks.length-1, i))];
-  r.scrollTo({left:k.offsetLeft-(r.clientWidth-k.offsetWidth)/2, behavior:BEH});
-}
-/* next and previous go to the next photo past the middle, so the first press from the title card lands on photo one */
-function reelStep(dir){
-  var r=$("stay-reel"), ks=reelPhotos(); if(!r || !ks.length) return;
-  var mid=r.scrollLeft+r.clientWidth/2, pick=-1;
-  for(var j=0;j<ks.length;j++){
-    var c=ks[j].offsetLeft+ks[j].offsetWidth/2;
-    if(dir>0 && c>mid+8){ pick=j; break; }
-    if(dir<0 && c<mid-8) pick=j;
+/* ===================== the rooms photo wall ===================== */
+/* The room's photos laid out as prints on a sheet of paper, with a camera that tours them, on the timing the
+   lounge picked: prints about a fifth of the frame wide (.21), the camera going .95 of the way to each photo and
+   holding on it for .3 of each stop, easing in and out on cubic-bezier(.4,0,.2,1). Nearer prints are larger and
+   move more than far ones, which are paler and trail the camera a little (flow .5); the camera leans into each
+   move and pulls back a touch half-way. It visits the photos in order, 3.2 seconds a photo, since the template's
+   9-second loop would give a room's 7 or 8 photos barely a second each. The other prints on the sheet repeat
+   them, so the paper stays full. Hover or keyboard focus holds it, the arrows step, Pause stops it, a swipe
+   steps, and any print opens the photos full screen. With reduced motion nothing moves by itself and a step
+   cuts straight to the photo. */
+var PW = (function(){
+  var P = {cards:20, size:.21, travel:.95, hold:.3, flow:.5, step:3.2, depth:.6, fade:.3, zoom:.08, tilt:3, bank:.35, near:1.15};
+  var EASE = bez(.4,0,.2,1), RM = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var GLIDE = P.step*(1-P.hold)*1000, HOLD = P.step*P.hold*1000, LAG = P.flow*400;
+  var S = {el:null, world:null, room:null, cards:[], stops:[], n:0, to:0, held:-1, W:0, H:0, ww:0, wh:0, seg:null, prev:null, next:0,
+           playing:!RM, hold:false, vis:false, raf:0, tm:0, io:null, io2:null, ro:null, ok:false, loaded:false, intro:false, swiped:false};
+  function rng(a){ return function(){ a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  function clamp(v,a,b){ return v<a ? a : v>b ? b : v; }
+  /* the prints a room gets: each photo once, in order, then repeats to fill the sheet */
+  function html(r){
+    var n=r.photos.length, h="";
+    for(var k=0;k<P.cards;k++){
+      var i=k<n ? k : (k*3+1)%n, p=r.photos[i];
+      var pr='<span class="pw__p"><img data-src="rooms/'+p[0]+'.webp" alt="" width="'+p[1]+'" height="760" decoding="async" draggable="false">';
+      h+=k<n ? '<button type="button" class="pw__c" data-lb="'+i+'" aria-label="'+esc(p[2])+". Photo "+(i+1)+" of "+n+', opens full screen">'+pr+'<span class="reel__zoom">'+rIco("zoom",2)+"</span></span></button>"
+             : '<span class="pw__c pw__c--dup" data-lb="'+i+'" aria-hidden="true">'+pr+"</span></span>";
+    }
+    return h;
   }
-  if(pick<0){ if(dir>0) reelTo(ks.length-1); else r.scrollTo({left:0, behavior:BEH}); return; }
-  reelTo(pick);
-}
+  /* a grid of cells a little larger than the frame (packed closer on a phone); the room's own photos take the cells on a loop round the
+     middle, so the camera wanders in a ring, and the repeats fill the rest */
+  function layout(){
+    var W=S.el.clientWidth, H=S.el.clientHeight; S.ok=W>40 && H>40; if(!S.ok) return;
+    S.W=W; S.H=H;
+    var s=Math.max(W*P.size, Math.min(W*.4, 140)), cw=s*(W<600 ? 1.2 : 1.36), ch=s*(W<600 ? .92 : 1.02), N=S.cards.length;
+    var C=clamp(Math.round(Math.sqrt(N*(W/H)*(ch/cw))),3,7), R=Math.ceil(N/C), x, y, j;
+    S.ww=C*cw; S.wh=R*ch;
+    var rand=rng(S.room.id==="dlx" ? 8 : 7), cells=[], a0=-Math.PI*.8, prim=S.cards.filter(function(c){ return c.prim; });
+    for(y=0;y<R;y++) for(x=0;x<C;x++) cells.push({x:(x+.5)*cw, y:(y+.5)*ch});
+    S.stops=[];
+    prim.forEach(function(c,k){
+      var a=a0+2*Math.PI*k/prim.length, tx=S.ww/2+S.ww*.22*Math.cos(a), ty=S.wh/2+S.wh*.22*Math.sin(a), bi=0, bd=Infinity;
+      cells.forEach(function(q,m){ var d=(q.x-tx)*(q.x-tx)+(q.y-ty)*(q.y-ty); if(d<bd){ bd=d; bi=m; } });
+      c.cell=cells.splice(bi,1)[0]; S.stops[c.i]=c;
+    });
+    for(j=cells.length-1;j>0;j--){ var m=Math.floor(rand()*(j+1)), t=cells[j]; cells[j]=cells[m]; cells[m]=t; }
+    S.cards.forEach(function(c){
+      if(!c.prim) c.cell=cells.shift()||null;
+      var d=c.prim ? .55+.45*rand() : .8*rand(), k=.82+.36*d;
+      c.d=d; c.p=1+(d-.5)*P.depth;
+      c.w=(c.ar>=1 ? s : s*.7)*k; c.h=c.w/c.ar;
+      c.x=c.cell ? c.cell.x+(rand()-.5)*cw*.26 : 0; c.y=c.cell ? c.cell.y+(rand()-.5)*ch*.26 : 0;
+      c.el.hidden=!c.cell;
+      c.el.style.width=c.w.toFixed(1)+"px"; c.el.style.height=c.h.toFixed(1)+"px"; c.el.style.zIndex=Math.round(d*100);
+      c.el.style.setProperty("--o", (1-P.fade*(1-d)).toFixed(2)); c.el.style.setProperty("--r", ((rand()-.5)*2.4).toFixed(2)+"deg");
+    });
+  }
+  /* where the camera looks for a photo: .95 of the way from the middle of the sheet, kept on the paper */
+  function camFor(i){
+    var c=S.stops[i], z=P.near, hw=S.W/2/z, hh=S.H/2/z;
+    var x=S.ww/2+(c.x-S.ww/2)*P.travel, y=S.wh/2+(c.y-S.wh/2)*P.travel;
+    return {x:S.ww>2*hw ? clamp(x,hw,S.ww-hw) : S.ww/2, y:S.wh>2*hh ? clamp(y,hh,S.wh-hh) : S.wh/2, z:z};
+  }
+  /* the camera at a moment: on the current move, or on the one before it for prints still trailing behind */
+  function camAt(t){
+    var g=(S.prev && t<S.seg.t0) ? S.prev : S.seg, u=clamp((t-g.t0)/g.d,0,1), e=EASE(u);
+    return {x:g.a.x+(g.b.x-g.a.x)*e, y:g.a.y+(g.b.y-g.a.y)*e, z:(g.a.z+(g.b.z-g.a.z)*e)*(1-P.zoom*g.big*Math.sin(Math.PI*u))};
+  }
+  function go(i, now, inFrame){
+    S.to=i; if(!S.ok) return;
+    var a=camAt(now), b=camFor(i), dist=Math.sqrt((b.x-a.x)*(b.x-a.x)+(b.y-a.y)*(b.y-a.y));
+    S.prev=S.seg;
+    S.seg={a:a, b:b, from:S.held, to:i, t0:now, d:RM ? 1 : GLIDE*(dist<S.W*.08 ? .55 : 1), big:RM ? 0 : Math.min(1, dist/(S.W*.3))};
+    S.next=now+S.seg.d+HOLD;
+    if(!S.vis) draw(now+S.seg.d+LAG+1);
+    if(!inFrame) kick();
+  }
+  function draw(now){
+    if(!S.ok || !S.seg) return;
+    var g=S.seg, u=(now-g.t0)/g.d, bank=0, W2=S.W/2, H2=S.H/2;
+    if(!RM && u>0 && u<1) bank=P.tilt*clamp((g.b.x-g.a.x)/(S.W*P.bank),-1,1)*Math.sin(Math.PI*u);
+    S.world.style.transform=bank ? "rotate("+bank.toFixed(2)+"deg)" : "";
+    S.cards.forEach(function(c){
+      if(!c.cell) return;
+      var q=camAt(RM ? now : now-LAG*(1-c.d)), sx=W2+(c.x-q.x)*c.p*q.z, sy=H2+(c.y-q.y)*c.p*q.z;
+      c.el.style.transform="translate("+(sx-c.w/2).toFixed(1)+"px,"+(sy-c.h/2).toFixed(1)+"px) scale("+q.z.toFixed(3)+")";
+    });
+    /* the photo being moved to counts as the one on show from half-way there */
+    var h=(u>=.5 || g.from<0) ? g.to : g.from; if(h!==S.held) setHeld(h);
+  }
+  function setHeld(i){
+    var o=S.stops[S.held]; if(o) o.el.classList.remove("is-on");
+    S.held=i; stay.cur=i;
+    var c=S.stops[i], p=S.room.photos[i], num=$("reel-n"), bar=$("reel-bar"), cap=$("reel-cap");
+    if(c) c.el.classList.add("is-on");
+    if(num) num.innerHTML=two(i+1)+"<i> / "+two(S.n)+"</i>";
+    if(bar) bar.style.width=((i+1)/S.n*100).toFixed(1)+"%";
+    if(cap && p){ cap.setAttribute("aria-live", S.playing && !S.hold ? "off" : "polite"); cap.textContent=p[2]; }
+  }
+  function busy(now){ return !!S.seg && now<S.seg.t0+S.seg.d+LAG+40; }
+  function kick(){ if(!S.raf && S.vis && S.ok && !document.hidden){ clearTimeout(S.tm); S.tm=0; S.raf=requestAnimationFrame(frame); } }
+  function frame(now){
+    S.raf=0; if(!S.el || !S.el.isConnected) return;
+    if(S.playing && !S.hold && now>=S.next) go(mod(S.to+1,S.n), now, true);
+    draw(now);
+    if(!S.vis || document.hidden) return;
+    if(busy(now)) S.raf=requestAnimationFrame(frame);
+    else if(S.playing && !S.hold){ clearTimeout(S.tm); S.tm=setTimeout(function(){ S.tm=0; kick(); }, Math.max(16, S.next-now)); }
+  }
+  function hold(on){ S.hold=on; if(!on) S.next=Math.max(S.next, performance.now()+HOLD); kick(); }
+  function play(on){
+    S.playing=on && !RM; if(S.playing) S.next=Math.max(S.next, performance.now()+HOLD*.5);
+    var b=document.querySelector('#stay [data-reel="pp"]');
+    if(b){ b.innerHTML=rIco(S.playing?"pause":"play",2); b.setAttribute("aria-label", S.playing ? "Pause the photo tour" : "Play the photo tour"); }
+    kick();
+  }
+  function step(dir){ if(!S.n) return; play(false); go(mod(S.to+dir,S.n), performance.now()); }
+  function show(i){ if(!S.n) return; go(clamp(i,0,S.n-1), performance.now()); }
+  /* the camera starts pulled back over the middle of the sheet and moves in to the first photo */
+  function intro(){
+    S.intro=true; if(!S.ok || RM) return;
+    var now=performance.now();
+    S.prev=null; S.seg={a:{x:S.ww/2, y:S.wh/2, z:P.near*.78}, b:camFor(S.to), from:S.to, to:S.to, t0:now, d:GLIDE*.85, big:0};
+    S.next=now+S.seg.d+HOLD*2;
+  }
+  function reset(){
+    layout(); if(!S.ok) return;
+    var b=camFor(S.to); S.prev=null; S.seg={a:b, b:b, from:S.to, to:S.to, t0:0, d:1, big:0};
+    draw(performance.now());
+  }
+  function load(){
+    if(S.loaded) return; S.loaded=true;
+    S.cards.forEach(function(c){
+      var im=c.el.querySelector("img"); if(!im || im.getAttribute("src")) return;
+      im.addEventListener("load",function(){ im.classList.add("is-in"); });
+      im.src=im.getAttribute("data-src");
+    });
+  }
+  function wire(el){
+    el.addEventListener("pointerenter",function(e){ if(e.pointerType==="mouse") hold(true); });
+    el.addEventListener("pointerleave",function(e){ if(e.pointerType==="mouse") hold(false); });
+    el.addEventListener("focusin",function(e){
+      var c=e.target.closest(".pw__c"); if(!c || !kbd(c)) return;
+      hold(true); var i=+c.getAttribute("data-lb"); if(i!==S.to) go(i, performance.now());
+    });
+    el.addEventListener("focusout",function(e){ if(!el.contains(e.relatedTarget)) hold(false); });
+    var sw=null;
+    el.addEventListener("pointerdown",function(e){ sw={x:e.clientX, y:e.clientY, id:e.pointerId}; });
+    el.addEventListener("pointerup",function(e){
+      if(!sw || e.pointerId!==sw.id) return; var dx=e.clientX-sw.x, dy=e.clientY-sw.y; sw=null;
+      if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)*1.3){ S.swiped=true; setTimeout(function(){ S.swiped=false; }, 60); step(dx<0 ? 1 : -1); }
+    });
+    el.addEventListener("pointercancel",function(){ sw=null; });
+    /* a swipe is not a tap on a print */
+    el.addEventListener("click",function(e){ if(S.swiped){ e.stopPropagation(); e.preventDefault(); S.swiped=false; } }, true);
+  }
+  function mount(){
+    cancelAnimationFrame(S.raf); S.raf=0; clearTimeout(S.tm); S.tm=0;
+    [S.io,S.io2,S.ro].forEach(function(o){ if(o) o.disconnect(); });
+    S.el=$("stay-reel"); S.ok=false; if(!S.el){ S.cards=[]; return; }
+    S.room=roomById(stay.room); S.n=S.room.photos.length; S.world=S.el.querySelector(".pw__world");
+    S.cards=[].slice.call(S.world.children).map(function(e){ var i=+e.getAttribute("data-lb"); return {el:e, i:i, prim:e.tagName==="BUTTON", ar:S.room.photos[i][1]/760}; });
+    S.to=clamp(stay.cur||0,0,S.n-1); S.held=-1; S.loaded=false; S.intro=RM; S.vis=false; S.hold=false;
+    reset(); wire(S.el); play(S.playing);
+    if("ResizeObserver" in window){ S.ro=new ResizeObserver(function(){ var e=S.el; if(e && (e.clientWidth!==S.W || e.clientHeight!==S.H)){ reset(); kick(); } }); S.ro.observe(S.el); }
+    if("IntersectionObserver" in window){
+      S.io=new IntersectionObserver(function(es){ if(es[0].isIntersecting) load(); },{rootMargin:"600px 0px"}); S.io.observe(S.el);
+      S.io2=new IntersectionObserver(function(es){ S.vis=es[0].isIntersecting; if(S.vis && !S.intro) intro(); kick(); }); S.io2.observe(S.el);
+    } else { load(); S.vis=true; kick(); }
+  }
+  document.addEventListener("visibilitychange",function(){ if(document.hidden){ cancelAnimationFrame(S.raf); S.raf=0; clearTimeout(S.tm); S.tm=0; } else kick(); });
+  return {html:html, mount:mount, step:step, show:show, rm:RM,
+          toggle:function(){ play(!S.playing); },
+          sync:function(){ var e=S.el; if(e && e.isConnected && (e.clientWidth!==S.W || e.clientHeight!==S.H)) reset(); kick(); }};
+})();
 function wireStay(){
-  var r=$("stay-reel"); if(!r) return;
-  r.addEventListener("scroll",reelSoon,{passive:true});
+  if(!$("stay-reel")) return;
+  PW.mount();
   $("stay-in").addEventListener("change",function(){ stay.day=this.value; updateBook(); });
-  reelSync(); updateBook();
+  updateBook();
 }
 function setRoom(id){
   if(id===stay.room) return;
@@ -3371,7 +3522,7 @@ function closeLb(){
   if($("lb").hidden) return;
   $("lb").hidden=true; $("lb-stage").innerHTML=""; syncLayers();
   returnFocus("lb");
-  reelTo(lbI);
+  PW.show(lbI);
 }
 $("lb-stage").addEventListener("scroll",function(){
   var st=this; if(!lbRoom || $("lb").hidden) return;
@@ -3384,14 +3535,12 @@ $("lb-book").addEventListener("click",function(){
   closeLb();
   setTimeout(function(){ var b=$("stay-book"); if(b){ scrollToEl(b); $("stay-in").focus({preventScroll:true}); } },40);
 });
-/* the reel's counter and lit photo follow the scroll, a few times a second */
-function reelSoon(){ if(reelRaf) return; reelRaf=setTimeout(function(){ reelRaf=0; reelSync(); }, 60); }
-window.addEventListener("resize",function(){ if(!$("lb").hidden) lbGo(lbI,false); reelSoon(); });
+window.addEventListener("resize",function(){ if(!$("lb").hidden) lbGo(lbI,false); });
 $("menu-list").addEventListener("click",function(e){
   var t=e.target.closest("[data-room],[data-reel],[data-lb],[data-bk],[data-goto]");
   if(!t || !t.closest("#stay")) return;
   if(t.hasAttribute("data-room")) setRoom(t.getAttribute("data-room"));
-  else if(t.hasAttribute("data-reel")) reelStep(+t.getAttribute("data-reel"));
+  else if(t.hasAttribute("data-reel")){ var rv=t.getAttribute("data-reel"); if(rv==="pp") PW.toggle(); else PW.step(+rv); }
   else if(t.hasAttribute("data-lb")){ var v=t.getAttribute("data-lb"); openLb(v==="cur" ? stay.cur : +v); }
   else if(t.hasAttribute("data-bk")){
     var k=t.getAttribute("data-bk");
@@ -6034,7 +6183,7 @@ function route(){
   PLAY.close(); PLAN.close();
   refreshBar();
   if(h!=="menu" && changed) window.scrollTo(0,0);
-  if(h==="menu") reelSync();
+  if(h==="menu") PW.sync();
   /* #rooms is a link straight to the Rooms tab. On a fresh load it waits for the page to finish loading,
      then jumps, because a long smooth scroll started during loading gets lost. */
   if(toRooms){

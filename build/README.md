@@ -136,3 +136,22 @@ These three live in `bamboo-cask.html` itself, not in a build script.
   - The details and the Play button follow the front card.
   - Arrows, a swipe, the game names and Pause control it. Hover or keyboard focus holds it.
   - Both motions are written in the page's own code. No outside motion script is loaded.
+
+## The rooms photo wall (since version 33)
+
+This also lives in `bamboo-cask.html` itself (`PW` in the script). It replaces the old scrolling photo reel.
+
+- Each room's photos are laid out as prints on a sheet of paper, 20 prints in all. Each photo appears once in order, and repeats fill the rest of the sheet.
+- A camera tours the photos in order, on the timing the user gave:
+  - prints about a fifth of the frame wide (`size .21`);
+  - the camera goes `.95` of the way to each photo, holds for `.3` of each stop, and eases on `cubic-bezier(.4,0,.2,1)`;
+  - far prints trail the camera a little (`flow .5`).
+- **Pace:** 3.2 seconds a photo. The template's 9-second loop would give a room's 7 or 8 photos barely a second each.
+- **Depth:** nearer prints are larger and move more. Far ones are paler. The camera leans into each move and pulls back a touch half-way.
+- **Controls:**
+  - the counter, the arrows and Full screen work as before, and there is a new Pause button;
+  - hover or keyboard focus holds the tour, and keyboard focus on a print moves the camera to it;
+  - a swipe steps, and any print opens the photos full screen;
+  - with reduced motion nothing moves by itself, and a step cuts straight to the photo.
+- **Frame:** 16:9 on wider screens and square on phones, with the room's name and rate pinned to the corner.
+- **Button fix:** the rooms' round buttons (arrows, Full screen, the viewer's close button) shared a class name with the game screens' buttons. The game rule won and squeezed their icons to nothing. Their look is now pinned to the photo controls and the viewer.
