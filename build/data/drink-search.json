@@ -3467,5 +3467,65 @@
    "descurl": "https://commons.wikimedia.org/wiki/File:Pitcher_and_Piano,_Bank,_EC3_(2551335161).jpg",
    "idx": 7
   }
+ ],
+ "s2-tuborg": [
+  {
+   "title": "File:Tuborg Green.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Tuborg_Green.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Tuborg_Green.jpg/330px-Tuborg_Green.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "w": 980,
+   "h": 1909,
+   "mime": "image/jpeg",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "artist": "McKaby",
+   "descurl": "https://commons.wikimedia.org/wiki/File:Tuborg_Green.jpg",
+   "idx": 1
+  }
+ ],
+ "s2-heineken-00": [
+  {
+   "title": "File:Pure Malt Lager 0.0 (Heineken España).jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Pure_Malt_Lager_0.0_%28Heineken_Espa%C3%B1a%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/Pure_Malt_Lager_0.0_%28Heineken_Espa%C3%B1a%29.jpg/330px-Pure_Malt_Lager_0.0_%28Heineken_Espa%C3%B1a%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "w": 3024,
+   "h": 4032,
+   "mime": "image/jpeg",
+   "licence": "CC0",
+   "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "artist": "Pansebert",
+   "descurl": "https://commons.wikimedia.org/wiki/File:Pure_Malt_Lager_0.0_(Heineken_Espa%C3%B1a).jpg",
+   "idx": 1
+  }
+ ],
+ "s2-jw-green": [
+  {
+   "title": "File:JW Greens.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/JW_Greens.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/JW_Greens.jpg/330px-JW_Greens.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "w": 3456,
+   "h": 4298,
+   "mime": "image/jpeg",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "artist": "Iceman7840",
+   "descurl": "https://commons.wikimedia.org/wiki/File:JW_Greens.jpg",
+   "idx": 1
+  }
+ ],
+ "s2-pilsner": [
+  {
+   "title": "File:Pilsner Beer.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Pilsner_Beer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Pilsner_Beer.jpg/330px-Pilsner_Beer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "w": 2400,
+   "h": 1600,
+   "mime": "image/jpeg",
+   "licence": "CC0",
+   "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "artist": "safaritravelplus",
+   "descurl": "https://commons.wikimedia.org/wiki/File:Pilsner_Beer.jpg",
+   "idx": 1
+  }
  ]
 }

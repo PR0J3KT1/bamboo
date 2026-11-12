@@ -71,7 +71,7 @@ ROWS = {
  "R15 ORANGE ICE": ("X", "vape"), "R15 PASSION FRUIT": ("X", "vape"), "R15 STRAWBERRY ICE": ("X", "vape"),
  "RANGPUR TOT": ("Tanqueray Rangpur", "Tanqueray", G, "Flavoured Gin", "Tot", 41.3, "Scotland", r"^tanqueray rangpur"),
  "REDBULL": ("Red Bull", "Red Bull", M, "Energy Drink", "Can", 0.0, "Austria", r"~^red bull$"),
- "REMMY MARTIN 1LTR": ("Rémy Martin", "Rémy Martin", B, "Cognac", "1L", 40.0, "France", None),
+ "REMMY MARTIN 1LTR": ("Rémy Martin VSOP", "Rémy Martin", B, "Cognac VSOP", "1L", 40.0, "France", r"^r[eé]my martin vsop"),  # the user confirmed it is the VSOP (2026-11-12)
  "REMMY MARTIN VSOP": ("Rémy Martin VSOP", "Rémy Martin", B, "Cognac VSOP", "", 40.0, "France", r"^r[eé]my martin vsop"),
  "RICE": ("FOOD", "rice"),
  "RICHOT 350ML": ("Richot Brandy", "Richot", B, "Brandy", "350ml", 43.0, "South Africa", r"^richot brandy$"),

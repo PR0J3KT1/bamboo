@@ -222,7 +222,8 @@
   "bc-tanqueray-no-ten-1l": "bc-tanqueray-no-ten-750ml",
   "bc-drinking-water-small-bottle": "bc-drinking-water-large-bottle",
   "bc-white-cap-draught-mug": "bc-tusker-draught-mug",
-  "bc-johnnie-walker-white-1l": "bc-johnnie-walker-white-750ml"
+  "bc-johnnie-walker-white-1l": "bc-johnnie-walker-white-750ml",
+  "bc-remy-martin-vsop-1l": "remy-martin-vsop-ltr"
  },
  "drop": [
   "atlas-14",
@@ -409,6 +410,34 @@
    "file": "File:Beer jugs.jpg",
    "ready": true,
    "note": "A photo for illustration; the lounge’s jug may look different."
+  },
+  "bc-tuborg-bottle": {
+   "artist": "McKaby",
+   "licence": "CC BY-SA 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Tuborg_Green.jpg",
+   "file": "File:Tuborg Green.jpg",
+   "ready": true
+  },
+  "bc-heineken-0-0-bottle": {
+   "artist": "Pansebert",
+   "licence": "CC0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pure_Malt_Lager_0.0_(Heineken_Espa%C3%B1a).jpg",
+   "file": "File:Pure Malt Lager 0.0 (Heineken España).jpg",
+   "ready": true
+  },
+  "bc-johnnie-walker-green-label-750ml": {
+   "artist": "Iceman7840",
+   "licence": "CC BY-SA 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:JW_Greens.jpg",
+   "file": "File:JW Greens.jpg",
+   "ready": true
+  },
+  "bc-pilsner-lager-bottle": {
+   "artist": "safaritravelplus",
+   "licence": "CC0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pilsner_Beer.jpg",
+   "file": "File:Pilsner Beer.jpg",
+   "ready": true
   }
  }
 }

@@ -59,11 +59,24 @@ Version 29 added Johnnie Walker White (both sizes) with the White Walker edition
 
 Version 30 added Tusker Draught by the jug. The photo is a plain glass jug of lager, not the lounge's own jug, so the drink sheet says "A photo for illustration". 243 of the 331 drinks now have a photo.
 
-`build/commons/` keeps a copy of every Commons cut-out (21 files). Copy them into `<image dir>/commons/` before running `bs_sprites.py`. `drink_prep.py` can also remake the 15 newer ones from Commons, but not the six older ones.
+Version 34 searched Commons again, deeper, for all 88 drawn drinks. Besides text search, it walked brand categories two levels down (Tuborg, Tusker, East African Breweries, Johnnie Walker, Chivas Regal, Jack Daniel's, Bacardi, The Singleton, Concha y Toro and others), took 50 results a query, and skipped every file the first search had already turned down. Four new photos match the brand, flavour and pack:
+- **Tuborg (bottle):** "Tuborg Green.jpg", McKaby, CC BY-SA 3.0.
+- **Pilsner Lager (bottle):** "Pilsner Beer.jpg", safaritravelplus, CC0. It shows Kenya's current lion label, Alc 4.7%.
+- **Heineken 0.0 (bottle):** "Pure Malt Lager 0.0 (Heineken España).jpg", Pansebert, CC0. Like the photo turned down before, it is an open, empty bottle, but it stands against a plain wall, so the cut-out reads cleanly.
+- **Johnnie Walker Green Label 750ml:** the left bottle of "JW Greens.jpg", Iceman7840, CC BY-SA 3.0.
+
+Their candidates are in `data/drink-search.json` under the `s2-` keys, and their outlines are in `drink_choices2.json`. Run `drink_prep.py` with that file in place of `drink_choices.json`. 247 of the 331 drinks now have a photo.
+
+Version 35: the user confirmed that the sheet's "REMMY MARTIN 1LTR" is the VSOP. `stock_rows.py` now names it Rémy Martin VSOP 1L, and it shares the VSOP photo (the catalogue's photo is of the 1-litre VSOP). 248 of the 331 drinks now have a photo.
+
+Rerunning `stock_build.py` writes `stock_fixes.json` afresh from `photo_fixes.json`, which drops the **commons** entries. Run `drink_prep.py` again afterwards with `drink_choices.json` and then `drink_choices2.json`.
+
+Turned down in that search: a White Cap Lager bottle (a blurred phone photo of a half-drunk bottle, partly behind a glass), Tuborg Pilsener (a different beer), Smirnoff Ice Original (not one of the lounge's flavours), and a can labelled "Apple" that is not Jack Daniel's. Commons had nothing at all for Balozi, Guinness Smooth, Snapp, Kenya Originals and KO, Manyatta, Kasapreko and Alomo, Zappa, Bacardi Carta Negra, Chivas Regal Extra, The Singleton 15, or the South African, Kenyan and Spanish house wines.
+
+`build/commons/` keeps a copy of every Commons cut-out (25 files). Copy them into `<image dir>/commons/` before running `bs_sprites.py`. `drink_prep.py` can also remake the 19 newer ones from Commons, but not the six older ones.
 
 Left drawn on purpose:
-- **Heineken 0.0:** the only photo is an empty, open bottle against a window.
-- **The rest (87 drinks):** Commons has no free photo of these bottles, or none that matches the brand, flavour and pack. This covers most Kenyan brands, flavoured premixes and generic mixers.
+- **The rest (84 drinks):** Commons has no free photo of these bottles, or none that matches the brand, flavour and pack. This covers most Kenyan brands, flavoured premixes and generic mixers.
 
 ## Dish photos (since version 27)
 
