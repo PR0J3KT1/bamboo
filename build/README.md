@@ -168,3 +168,13 @@ This also lives in `bamboo-cask.html` itself (`PW` in the script). It replaces t
   - with reduced motion nothing moves by itself, and a step cuts straight to the photo.
 - **Frame:** 16:9 on wider screens and square on phones, with the room's name and rate pinned to the corner.
 - **Button fix:** the rooms' round buttons (arrows, Full screen, the viewer's close button) shared a class name with the game screens' buttons. The game rule won and squeezed their icons to nothing. Their look is now pinned to the photo controls and the viewer.
+
+## The website (Vercel)
+
+The repository root is the website. `index.html` is `bamboo-cask.html` wrapped in a full document; run `python -I build/wrap_page.py bamboo-cask.html index.html` after every change to the page. The wrapper moves the page's title, description, font links and theme script into `<head>`.
+
+Vercel deploys the repository from GitHub (framework preset "Other", no build command, the root as the output folder). Every push to `main` deploys again.
+- `vercel.json` sends `X-Robots-Tag: noindex, nofollow` on every file, so search engines leave the demo out until the lounge approves it. Remove that header to let it be listed.
+- `.vercelignore` keeps `build/` and `bamboo-cask.html` off the site.
+
+A local server in the repository root (`python -m http.server 8765`) shows the same site at http://localhost:8765/.

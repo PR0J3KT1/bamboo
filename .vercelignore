@@ -1,0 +1,5 @@
+# Only the site goes to Vercel: index.html and its image folders.
+# build/ holds the pipeline and its data; bamboo-cask.html is the unwrapped source of index.html.
+build/
+bamboo-cask.html
+.gitignore
