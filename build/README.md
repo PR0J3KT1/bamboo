@@ -169,6 +169,11 @@ This also lives in `bamboo-cask.html` itself (`PW` in the script). It replaces t
 - **Frame:** 16:9 on wider screens and square on phones, with the room's name and rate pinned to the corner.
 - **Button fix:** the rooms' round buttons (arrows, Full screen, the viewer's close button) shared a class name with the game screens' buttons. The game rule won and squeezed their icons to nothing. Their look is now pinned to the photo controls and the viewer.
 
+## Bamboo by default, and the pairing button (since version 36)
+
+- **Theme:** Bamboo (split cane and bamboo green) is the theme a first visit gets, whatever the phone's light or dark setting. The early script at the top of `bamboo-cask.html` sets it unless someone has picked Dark or Light on that device, and that pick is kept. Bamboo is listed first in the header picker and in the footer.
+- **Eat with … + Add:** on a bottle's card, the paired dish's + Add always added the dish to the order. The card itself never changed, though, so it looked broken. Now the card shows "✓ 1 in your order", the button turns to "+ One more", and a short message says what was added.
+
 ## The website (Vercel)
 
 The repository root is the website. `index.html` is `bamboo-cask.html` wrapped in a full document; run `python -I build/wrap_page.py bamboo-cask.html index.html` after every change to the page. The wrapper moves the page's title, description, font links and theme script into `<head>`.

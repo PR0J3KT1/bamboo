@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Big+Shoulders+Stencil+Display:wght@800;900&family=Figtree:wght@400;500;600;700&family=IM+Fell+English:ital@1&display=swap" rel="stylesheet">
-<script>(function(){try{var t=localStorage.getItem("bc-theme");if(t==="bamboo")document.documentElement.setAttribute("data-look","bamboo");else if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script>(function(){var t=null;try{t=localStorage.getItem("bc-theme");}catch(e){}if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);else document.documentElement.setAttribute("data-look","bamboo");})();</script>
 </head><body><style>
 /* Layout: a takeaway ordering skeleton (sticky "deliver to" header, category index, card grid,
    basket drawer, checkout, live tracking) dressed as a whisky house: peat-dark grounds,
@@ -579,6 +579,7 @@ textarea.in{min-height:72px;resize:vertical}
 .spec{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line-2)}
 .spec dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding-top:2px}
 .spec dd{margin:0;font-size:14.5px}
+.pair-in{display:inline-block;margin-left:10px;font-weight:600;font-size:13.5px;white-space:nowrap}
 .pd__buy{position:sticky;bottom:0;display:flex;gap:12px;align-items:center;padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));background:var(--bg-2);border-top:1px solid var(--line-2)}
 .pd__buy .btn{flex:1;min-width:0;padding:6px 16px;white-space:normal;line-height:1.2;text-align:center}
 .pd__buy .btn .nw{white-space:nowrap}
@@ -1873,9 +1874,9 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
         <button type="button" class="icon-btn" id="theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="tpick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
         <div class="tpick" id="tpick" role="group" aria-label="Theme" hidden>
           <p class="tpick__h" aria-hidden="true">Theme</p>
+          <button type="button" data-look-pick="bamboo" aria-pressed="false"><span class="sw sw--bamboo" aria-hidden="true"></span><span><b>Bamboo</b><small>Split cane and bamboo green</small></span></button>
           <button type="button" data-look-pick="dark" aria-pressed="false"><span class="sw sw--dark" aria-hidden="true"></span><span><b>Dark</b><small>Whisky brown and amber</small></span></button>
           <button type="button" data-look-pick="light" aria-pressed="false"><span class="sw sw--light" aria-hidden="true"></span><span><b>Light</b><small>Pale and plain</small></span></button>
-          <button type="button" data-look-pick="bamboo" aria-pressed="false"><span class="sw sw--bamboo" aria-hidden="true"></span><span><b>Bamboo</b><small>Split cane and bamboo green</small></span></button>
         </div>
       </div>
       <a class="basket-btn" id="hb" href="#basket" aria-label="Your order, 0 items"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Order</span><b id="hb-cnt">0</b></a>
@@ -2094,7 +2095,7 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
   <footer class="foot">
     <div class="wrap foot__in">
       <p><span class="drink">Not for sale to anyone under 18. Drink responsibly.</span> Delivery by <span class="tb"><i>Tuma</i><u>Boda</u></span>.</p>
-      <p><a href="#kitchen">Kitchen screen</a> · <a href="#track">Track an order</a> · <button type="button" class="linkish" id="age-change">Sign in</button><span class="foot__theme" id="foot-looks"> · Theme: <button type="button" class="linkish" data-look-pick="dark" aria-pressed="false">Dark</button>, <button type="button" class="linkish" data-look-pick="light" aria-pressed="false">Light</button> or <button type="button" class="linkish" data-look-pick="bamboo" aria-pressed="false">Bamboo</button></span></p>
+      <p><a href="#kitchen">Kitchen screen</a> · <a href="#track">Track an order</a> · <button type="button" class="linkish" id="age-change">Sign in</button><span class="foot__theme" id="foot-looks"> · Theme: <button type="button" class="linkish" data-look-pick="bamboo" aria-pressed="false">Bamboo</button>, <button type="button" class="linkish" data-look-pick="dark" aria-pressed="false">Dark</button> or <button type="button" class="linkish" data-look-pick="light" aria-pressed="false">Light</button></span></p>
       <p>A <span class="tb"><i>Tuma</i><u>Boda</u></span> ordering demo for Bamboo Cask Lounge. Payments on this page are simulated. Food and lounge photos by Bamboo Cask Lounge. Dishes it hasn't photographed yet show a free-licensed photo from Wikimedia Commons, for illustration, with the credit on the dish. A few bottle photos come from Wikimedia Commons, with the credit on each bottle. Some game and party photos come from Pexels, credited under each section.</p>
     </div>
   </footer>
@@ -5481,7 +5482,12 @@ function renderPD(){
       if(it.origin) h+="<dt>From</dt><dd>"+esc(it.origin)+"</dd>";
       if(it.notes) h+="<dt>Tastes of</dt><dd>"+esc(it.notes)+"</dd>";
       h+="<dt>Serve</dt><dd>"+esc(it.serve)+"</dd>";
-      if(pf) h+="<dt>Eat with</dt><dd>"+esc(pf.name)+", "+KES(pf.price)+' <button type="button" class="textbtn" data-qadd="'+it.pair+'">+ Add</button></dd>';
+      if(pf){
+        /* the dish's count in the order, so a tap on + Add shows up here and not only in the bar behind the card */
+        var pin=Object.keys(basket).reduce(function(s,k){ return s+(basket[k].id===it.pair?basket[k].qty:0); },0);
+        h+="<dt>Eat with</dt><dd>"+esc(pf.name)+", "+KES(pf.price)+' <button type="button" class="textbtn" data-qadd="'+it.pair+'">'+(pin?"+ One more":"+ Add")+"</button>"+
+          (pin?'<span class="pair-in">✓ '+pin+" in your order</span>":"")+"</dd>";
+      }
       if(it.alcohol) h+="<dt>Handover</dt><dd>The rider checks ID. Nobody under 18 can receive it.</dd>";
       h+="</dl>";
     }
@@ -5503,7 +5509,7 @@ $("pd").addEventListener("click",function(e){
   var mp=e.target.closest("[data-mpor]"); if(mp){ pd.id=mp.getAttribute("data-mpor"); renderPD(); return; }
   var p=e.target.closest("[data-popt]"); if(p){ pd.partOpt[p.parentNode.getAttribute("data-part")]=p.getAttribute("data-popt"); renderPD(); return; }
   var q=e.target.closest("[data-pq]"); if(q){ pd.qty=Math.max(1,Math.min(20,pd.qty+parseInt(q.getAttribute("data-pq"),10))); renderPD(); return; }
-  var qa=e.target.closest("[data-qadd]"); if(qa){ var gid=qa.getAttribute("data-qadd"); addKey(gid, ITEMS[gid].options?ITEMS[gid].options[0]:"", 1); renderPD(); return; }
+  var qa=e.target.closest("[data-qadd]"); if(qa){ var gid=qa.getAttribute("data-qadd"); addKey(gid, ITEMS[gid].options?ITEMS[gid].options[0]:"", 1); renderPD(); toast("Added to your order: "+ITEMS[gid].name+"."); return; }
   var go=e.target.closest("[data-pdadd],[data-pdpay]");
   if(go){
     var from=go.getBoundingClientRect(), pay=go.hasAttribute("data-pdpay");
@@ -6104,9 +6110,10 @@ window.addEventListener("load", alignCane);
 })();
 
 /* ===================== theme ===================== */
-/* Three looks: Dark (the whisky house), Light, and Bamboo (split cane and bamboo green). The header button opens a
-   small picker; on small phones the footer carries the same three. Bamboo sits on data-look, not data-theme, so the
-   viewer's own light or dark setting can't undo it. */
+/* Three looks: Bamboo (split cane and bamboo green), Dark (the whisky house) and Light. Bamboo is the default: the
+   early script in the head puts it on unless someone has picked Dark or Light on this device. The header button
+   opens a small picker; on small phones the footer carries the same three. Bamboo sits on data-look, not
+   data-theme, so the viewer's own light or dark setting can't undo it. */
 var LOOKS={dark:"Dark", light:"Light", bamboo:"Bamboo"};
 function curLook(){
   var r=document.documentElement, t=r.getAttribute("data-theme");
