@@ -174,6 +174,24 @@ This also lives in `bamboo-cask.html` itself (`PW` in the script). It replaces t
 - **Theme:** Bamboo (split cane and bamboo green) is the theme a first visit gets, whatever the phone's light or dark setting. The early script at the top of `bamboo-cask.html` sets it unless someone has picked Dark or Light on that device, and that pick is kept. Bamboo is listed first in the header picker and in the footer.
 - **Eat with … + Add:** on a bottle's card, the paired dish's + Add always added the dish to the order. The card itself never changed, though, so it looked broken. Now the card shows "✓ 1 in your order", the button turns to "+ One more", and a short message says what was added.
 
+## Games on a phone (since version 37)
+
+All of this lives in `bamboo-cask.html` (the phone rules sit at the end of the games CSS, under `max-width:719px`).
+- **Full screen:** on a phone a game fills the screen. Before, it was a sheet over the lower 60%, with the menu showing above it.
+  - The body is a column, so the Kichwa Juu word card, the Ungependa? choices and the Spin the Bottle table take the free room.
+  - Quiz answers and the Bei Gani? controls sit low, within thumb reach.
+  - The Chora! pad grows to the height that is left.
+  - The twelve Kumbukumbu cards always fit on one screen: three across on a tall phone, four on a shorter one. Before, the last row was cut off.
+  - On short phones (720px tall or less), the Guess the Bottle photo, the Perfect Pour glass and the answer buttons shrink.
+  - Every game was checked to fit with no scrolling at 375×812 and 360×640.
+- **The keyboard:**
+  - On a touch screen, no typing box takes focus by itself. Bei Gani? used to put the cursor in its number box for every dish, which threw the keyboard up over the buttons; it now starts on the slider.
+  - While the keyboard is up, the game is sized to the part of the screen above it (`visualViewport`, through `--vv-top` and `--vv-h`), and a box being typed in is scrolled into sight.
+  - Escape inside a name or guess box only puts the keyboard away. It used to close the game.
+  - Hints for a physical keyboard ("Keys: ← pass, → got it", "hold the space bar") are hidden on touch screens (`.kbd-only`).
+- **Card stack:** on a phone the front game card sits in the middle and the stack fans out behind it (`DK.x0`). On wider screens the whole fan stays centred.
+- **Spin the Bottle fix:** the game's wrapper used the class `spin`, which is also the checkout's 30px loading circle, so the table of names shrank to a small spinning ring. It is `spinb` now.
+
 ## The website (Vercel)
 
 The repository root is the website. `index.html` is `bamboo-cask.html` wrapped in a full document; run `python -I build/wrap_page.py bamboo-cask.html index.html` after every change to the page. The wrapper moves the page's title, description, font links and theme script into `<head>`.

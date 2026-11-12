@@ -1797,12 +1797,44 @@ html[data-look="bamboo"] .explore,html[data-look="bamboo"] .foot{background:var(
 .swatch{width:38px;height:38px;border-radius:50%;border:2px solid var(--s-line-2);background:var(--c)}
 .swatch.is-on{border-color:var(--s-ink);box-shadow:0 0 0 2px var(--s-bg) inset}
 /* spin the bottle */
-.spin{display:grid;place-items:center}
+/* "spinb", not "spin": .spin is the checkout's loading circle, and sharing it shrank the table to 30px */
+.spinb{display:grid;place-items:center}
 .spin__ring{position:relative;width:min(100%,360px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(205,223,123,.1),transparent 62%),repeating-conic-gradient(from 0deg,rgba(241,236,215,.04) 0 10deg,transparent 10deg 20deg);border:1px solid var(--s-line-2)}
 .spin__name{position:absolute;transform:translate(-50%,-50%);max-width:30%;padding:5px 10px;border-radius:999px;background:var(--s-card);border:1px solid var(--s-line-2);font-size:13px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spin__name.is-on{background:var(--s-lime);border-color:var(--s-lime);color:var(--s-on-lime)}
 .spin__btl{position:absolute;left:50%;top:50%;height:56%;width:auto;translate:-50% -50%;transform-origin:50% 50%;filter:drop-shadow(0 8px 12px rgba(0,0,0,.5))}
 @media (prefers-reduced-motion:reduce){.mcard__b,.mcard__f,.tbar i,.wyr__o::before{transition:none}.hu.is-got,.hu.is-pass{animation:none}}
+/* phones: a game takes the whole screen instead of a sheet over the menu. The script keeps --vv-top and --vv-h on the
+   part of the screen the keyboard leaves free, so with the keyboard up the game shrinks above it rather than under it.
+   The body is a column, so the Kichwa Juu card, the drawing pad and the bottle ring can take the room that is left. */
+@media (max-width:719px){
+  #play{padding:0;align-items:stretch;top:var(--vv-top,0px);bottom:auto;height:var(--vv-h,100%)}
+  #play .stage{display:flex;flex-direction:column;max-width:none;height:100%;max-height:none;border:0;border-radius:0;box-shadow:none}
+  #play .st-head{flex:none;padding-top:calc(12px + env(safe-area-inset-top,0px));padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+  #play .st-body{flex:1 0 auto;display:flex;flex-direction:column;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+  #play .hu{flex:1 0 auto;min-height:min(46vh,300px)}
+  /* answers and choices sit low, where a thumb reaches; the question stays up top with the clock */
+  #play .opts,#play .bei__in{margin-top:auto}
+  /* the bottle and its ring of names sit in the middle of the free screen, the buttons under them */
+  #play .spinb{flex:1 0 auto}
+  /* Ungependa's two choices split the free screen between them */
+  #play .wyr{flex:1 0 auto;grid-template-rows:minmax(96px,1fr) auto minmax(96px,1fr)}
+  /* the twelve Kumbukumbu cards always fit on one screen: four across, or three bigger ones on a tall phone */
+  #play .mem{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-block:auto}
+  #play .mcard__b::after{font-size:17px}
+}
+/* short phones: the hidden bottle and the pouring glass shrink so the answers still fit without scrolling */
+@media (max-width:719px) and (max-height:720px){
+  #play .gb__shot{width:min(44%,200px)}
+  #play .pour svg{max-height:33vh}
+  #play .opt{min-height:50px}
+}
+@media (max-width:719px) and (min-height:780px){
+  #play .mem{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  #play .mcard__b::after{font-size:22px}
+}
+/* hints for a physical keyboard, left off touch screens */
+@media (pointer:coarse){.kbd-only{display:none}}
 
 /*</play-css>*/
 
@@ -4434,13 +4466,15 @@ var PLAY = (function(){
   function deckMeasure(){
     var st=$("g-stage"); if(!st) return;
     var W=st.clientWidth, cw=W<600 ? W*.82 : Math.min(440, Math.max(290, W*SK.size*1.3)), ch=cw*9/16;
-    DK.W=W; DK.cw=cw; DK.ch=ch; DK.dx=SK.slip*cw*1.5; DK.dy=SK.slip*cw*1.7;
+    /* x0: how far left the front card starts. On a phone the front card sits in the middle and the stack fans out
+       behind it; on wider screens the whole fan is centred. */
+    DK.W=W; DK.cw=cw; DK.ch=ch; DK.dx=SK.slip*cw*1.5; DK.dy=SK.slip*cw*1.7; DK.x0=W<600 ? .5 : 1.5;
     st.style.setProperty("--cw", Math.round(cw)+"px"); st.style.setProperty("--cr", Math.round(SK.radius*ch*.75)+"px");
     st.style.setProperty("--sh", Math.round(ch+4*DK.dy+56)+"px");
   }
   /* where a card sits at depth d in the stack: each one a little lower, to the right, smaller and turned */
-  function pose(d){ var v=Math.min(d,4); return {x:(v-1.5)*DK.dx, y:(v-1.5)*DK.dy+10, r:v ? (v%2?1.8:-1.3)*(.6+.1*v) : 0, s:1-v*.035, o:Math.max(0,Math.min(1,5-d))}; }
-  function tossTo(s){ var dir=mod(s,2) ? -1 : 1; return {x:dir*SK.toss*DK.cw-1.5*DK.dx, y:-.24*DK.ch, r:dir*SK.twirl, s:1.02, o:1}; }
+  function pose(d){ var v=Math.min(d,4); return {x:(v-DK.x0)*DK.dx, y:(v-1.5)*DK.dy+10, r:v ? (v%2?1.8:-1.3)*(.6+.1*v) : 0, s:1-v*.035, o:Math.max(0,Math.min(1,5-d))}; }
+  function tossTo(s){ var dir=mod(s,2) ? -1 : 1; return {x:dir*SK.toss*DK.cw-DK.x0*DK.dx, y:-.24*DK.ch, r:dir*SK.twirl, s:1.02, o:1}; }
   function mix(a,b,e){ return {x:a.x+(b.x-a.x)*e, y:a.y+(b.y-a.y)*e, r:a.r+(b.r-a.r)*e, s:a.s+(b.s-a.s)*e, o:a.o+(b.o-a.o)*Math.max(0,Math.min(1,e))}; }
   function deckDraw(){
     var N=DK.n; if(!N) return;
@@ -4548,7 +4582,7 @@ var PLAY = (function(){
     var x=g(id); if(!x || !can(x)) return;
     stop(); rememberFocus("play");
     S={g:x, phase:"setup", setup:setupDefault(x)};
-    $("play").hidden=false; syncLayers(); refreshBar();
+    $("play").hidden=false; fitPlay(); syncLayers(); refreshBar();
     render();
     var f=$("play-card").querySelector("[data-pstart],.st-x"); if(f) f.focus();
   }
@@ -4570,8 +4604,13 @@ var PLAY = (function(){
     c.innerHTML=headHtml()+'<div class="st-body" id="st-body">'+bodyHtml()+"</div>";
     fillPhotos(c); Array.prototype.forEach.call(c.querySelectorAll(".shot"), lightShot);
     after();
-    var f=c.querySelector(focusSel||"[data-auto]"); if(f) f.focus({preventScroll:true});
+    /* on a touch screen a typing box never takes focus by itself: that would throw the keyboard up over the game.
+       Bei Gani? starts on its slider there instead, and the number box opens the keyboard only when tapped. */
+    var f=c.querySelector(focusSel||"[data-auto]");
+    if(f && touchKeys() && /^(INPUT|TEXTAREA)$/.test(f.tagName) && f.type!=="range") f=c.querySelector('#st-body input[type="range"]');
+    if(f) f.focus({preventScroll:true});
   }
+  function touchKeys(){ return !!(window.matchMedia && window.matchMedia("(pointer: coarse)").matches); }
   function bodyHtml(){
     if(S.phase==="setup") return setupHtml();
     if(S.phase==="handoff") return handoffHtml();
@@ -4808,7 +4847,7 @@ var PLAY = (function(){
       if(done){ var res=S.res;
         h+='<div class="said '+(res.acc>=85?"is-good":"is-bad")+'" role="status"><b>'+(res.late?D.say.timeUp:res.spilt?"Imemwagika: spilt!":res.acc>=85?pick(D.say.right):res.acc>=60?D.say.close:pick(D.say.wrong))+"</b><p>"+Math.round(res.poured)+" ml poured, target "+r.m.ml+" ml: <b>"+res.acc+"%</b></p></div>"+
           '<button type="button" class="sbtn sbtn--go" data-pnext data-auto>'+(S.i+1>=S.rounds.length?(S.party.solo?"See your score":"See who won"):(S.party.solo?"Next pour":"Pass the phone"))+"</button>";
-      } else h+='<button type="button" class="sbtn sbtn--go pour__btn" id="pour-btn" data-auto>Hold to pour</button><p class="st-note">Press and hold, or hold the space bar.</p>';
+      } else h+='<button type="button" class="sbtn sbtn--go pour__btn" id="pour-btn" data-auto>Hold to pour</button><p class="st-note">Press and hold<span class="kbd-only">, or hold the space bar</span>.</p>';
       return h;
     },
     after:function(){
@@ -4979,7 +5018,7 @@ var PLAY = (function(){
             '<button type="button" class="sbtn sbtn--go" data-pnext data-auto>'+(last?"See who won":"Next turn")+"</button>")+"</div></div>";
       }
       var word=S.words[S.w % S.words.length];
-      return barHtml()+'<div class="hu'+(S.flash?" is-"+S.flash:"")+'"><button type="button" class="hu__half hu__pass" data-hu="pass" aria-label="Pass">Pass</button><p class="hu__w" aria-live="polite">'+esc(word)+'</p><button type="button" class="hu__half hu__got" data-hu="got" aria-label="Got it" data-auto>Got it</button></div><p class="st-note">'+S.got+" got so far. Keys: ← pass, → got it.</p>";
+      return barHtml()+'<div class="hu'+(S.flash?" is-"+S.flash:"")+'"><button type="button" class="hu__half hu__pass" data-hu="pass" aria-label="Pass">Pass</button><p class="hu__w" aria-live="polite">'+esc(word)+'</p><button type="button" class="hu__half hu__got" data-hu="got" aria-label="Got it" data-auto>Got it</button></div><p class="st-note">'+S.got+' got so far.<span class="kbd-only"> Keys: ← pass, → got it.</span></p>';
     },
     after:function(){ if(S.phase!=="hu") return; var self=this, secs=S.party.secs; clock(secs, function(l){ setBar(l,secs); }, function(){ cue("bad"); S.phase="hu-end"; render(); }); },
     mark:function(got){
@@ -4988,7 +5027,7 @@ var PLAY = (function(){
       if(got){ S.got++; S.scores[turn().team]++; }
       cue(got?"good":"bad"); S.flash=got?"got":"pass";
       var w=$("play-card").querySelector(".hu__w"), box=$("play-card").querySelector(".hu"), n=$("play-card").querySelector(".st-note");
-      if(w) w.textContent=S.words[S.w % S.words.length]; if(n) n.textContent=S.got+" got so far. Keys: ← pass, → got it.";
+      if(w) w.textContent=S.words[S.w % S.words.length]; if(n) n.innerHTML=S.got+' got so far.<span class="kbd-only"> Keys: ← pass, → got it.</span>';
       if(box){ box.classList.remove("is-got","is-pass"); void box.offsetWidth; box.classList.add("is-"+S.flash); }
     },
     next:function(){ S.i++; if(S.i>=S.order.length){ teamEnd("words"); return; } handoff(); }
@@ -5033,6 +5072,13 @@ var PLAY = (function(){
     after:function(){
       if(S.phase!=="chora") return;
       var self=this, secs=S.party.secs, cv=$("chora-c"), ctx=cv.getContext("2d"), dpr=Math.min(2,window.devicePixelRatio||1), w=cv.parentNode.clientWidth, hh=Math.round(w*0.7);
+      /* on a phone the game fills the screen, so the pad also takes the height left over under the buttons */
+      cv.style.height=hh+"px";
+      var body=$("st-body"), last=body && body.lastElementChild;
+      if(last && window.matchMedia && window.matchMedia("(max-width:719px)").matches){
+        var spare=body.getBoundingClientRect().bottom-parseFloat(getComputedStyle(body).paddingBottom)-last.getBoundingClientRect().bottom;
+        if(spare>8) hh=Math.round(Math.min(w*1.4, hh+spare-8));
+      }
       cv.width=w*dpr; cv.height=hh*dpr; cv.style.height=hh+"px"; ctx.scale(dpr,dpr); ctx.lineCap="round"; ctx.lineJoin="round"; ctx.lineWidth=5;
       if(S.strokes) S.strokes.forEach(function(s){ line(s); });
       var cur=null;
@@ -5053,7 +5099,7 @@ var PLAY = (function(){
     setup:{names:true},
     start:function(){ store.set("bc-play-names", S.setup.names); S.names=S.setup.names.slice(); S.rot=0; S.dare=null; S.at=null; S.phase="spin"; render(); },
     html:function(){
-      var n=S.names.length, r=150, h='<div class="spin"><div class="spin__ring">';
+      var n=S.names.length, r=150, h='<div class="spinb"><div class="spin__ring">';
       S.names.forEach(function(nm,k){ var a=(k/n)*Math.PI*2-Math.PI/2; h+='<span class="spin__name'+(S.at===k?" is-on":"")+'" style="left:'+(50+Math.cos(a)*41).toFixed(2)+"%;top:"+(50+Math.sin(a)*41).toFixed(2)+'%">'+esc(nm)+"</span>"; });
       h+='<svg class="spin__btl" id="spin-btl" viewBox="0 0 60 200" style="transform:rotate('+S.rot+'deg)" aria-hidden="true"><path d="M24 8h12v26l8 14v130a10 10 0 0 1-10 10H26a10 10 0 0 1-10-10V48l8-14z" fill="#1d2a20" stroke="#CDDF7B" stroke-width="2"/><rect x="18" y="96" width="24" height="44" rx="3" fill="#E8AA45"/><rect x="23" y="4" width="14" height="10" rx="2" fill="#CDDF7B"/></svg></div></div>';
       h+='<div class="said'+(S.dare?" is-good":"")+'" role="status" id="spin-said">'+(S.dare?"<b>"+esc(S.names[S.at])+", your dare:</b><p>"+esc(S.dare)+"</p>":"<b>Ready?</b><p>Put the phone in the middle of the table.</p>")+"</div>";
@@ -5116,12 +5162,25 @@ var PLAY = (function(){
   function onInput(e){ var t=e.target; if(S && t.hasAttribute("data-tname")) S.setup.teams[+t.getAttribute("data-tname")].name=t.value.slice(0,14); }
   function onKey(e){
     if(!S || $("play").hidden) return false;
-    if(e.key==="Escape"){ close(); return true; }
-    var tag=(e.target.tagName||"").toLowerCase(); if(tag==="input" || tag==="textarea") return false;
+    var tag=(e.target.tagName||"").toLowerCase(), typing=(tag==="input" && e.target.type!=="range") || tag==="textarea";
+    /* Escape while typing a name or a guess only puts the keyboard away; it doesn't throw the game away */
+    if(e.key==="Escape"){ if(e.type!=="keydown") return true; if(typing){ e.target.blur(); return true; } close(); return true; }
+    if(typing) return false;
     if(S.g.id==="headsup" && S.phase==="hu"){ if(e.key==="ArrowRight"){ e.preventDefault(); GAME.headsup.mark(true); return true; } if(e.key==="ArrowLeft"){ e.preventDefault(); GAME.headsup.mark(false); return true; } }
     if(S.g.id==="pour" && S.phase==="pour" && S.key && (e.key===" " || e.code==="Space")){ e.preventDefault(); if(e.type==="keydown"){ if(!e.repeat) S.key.down(); } else S.key.up(); return true; }
     return false;
   }
+  /* phones: the open game sits on the part of the screen the keyboard leaves free (the CSS reads --vv-top and --vv-h),
+     and a box being typed in is scrolled into sight once the keyboard is up */
+  function fitPlay(){
+    var p=$("play"), vv=window.visualViewport; if(!vv || p.hidden) return;
+    p.style.setProperty("--vv-h", Math.round(vv.height)+"px"); p.style.setProperty("--vv-top", Math.round(vv.offsetTop)+"px");
+  }
+  if(window.visualViewport){ window.visualViewport.addEventListener("resize", fitPlay); window.visualViewport.addEventListener("scroll", fitPlay); }
+  $("play").addEventListener("focusin", function(e){
+    var t=e.target; if(!/^(INPUT|TEXTAREA)$/.test(t.tagName) || t.type==="range") return;
+    setTimeout(function(){ if(document.activeElement===t){ fitPlay(); t.scrollIntoView({block:"nearest"}); } }, 350);
+  });
   /* the end of Ungependa has its own screen */
   var _html=GAME.wyr.html; GAME.wyr.html=function(){ return S.phase==="wyr-end" ? wyrEnd+againHtml(false)+"</div>" : _html.call(this); };
 
