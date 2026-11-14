@@ -55,7 +55,10 @@ const families = Object.entries(o.FAM).map(([id, f]) => ({ id, name: f.name, lab
 const bundles = Object.entries(o.BUNDLES).map(([id, b]) => ({ id, name: b.name, who: b.who, photo: b.ph ?? null, parts: b.parts }));
 const categories = o.CATS.map((c, i) => ({ id: c.id, name: c.name, note: c.note ?? null, kind: c.kind ?? "items", adult: !!c.adult, sort: i }));
 const shelves = o.SHELVES.map((s, i) => ({ id: s.id, name: s.name, sort: i }));
-const places = o.PLACES.map((p) => ({ id: p.id, name: p.name, detail: p.sub, km: p.km, keywords: p.hay }));
+// the page keeps each place's coordinates only in the raw list, before .map(); read them from there
+const rawPlaces = new Function("return " + html.match(/var PLACES = (\[[\s\S]*?\n\])\.map\(/)[1])();
+const coords = new Map(rawPlaces.map((r) => [r[0], [r[3], r[4]]]));
+const places = o.PLACES.map((p) => ({ id: p.id, name: p.name, detail: p.sub, km: p.km, lat: coords.get(p.id)?.[0] ?? null, lng: coords.get(p.id)?.[1] ?? null, keywords: p.hay }));
 const out = { lounge: o.LOUNGE, popularPlaces: o.POPULAR, categories, shelves, families, items, bundles, pairings: o.GOES, places };
 fs.mkdirSync(path.dirname(dst), { recursive: true });
 fs.writeFileSync(dst, JSON.stringify(out, null, 1));

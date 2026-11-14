@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { connection } from "next/server";
-import { getMenu, type MenuItem } from "@/db/queries/menu";
+import { getMenu, toCatalog, type MenuItem } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
 import { Price } from "@/components/ui/price";
 import { Tag } from "@/components/ui/pill";
+import { CatalogProvider } from "@/components/order/catalog";
+import { AddButton, OpenItemButton } from "@/components/order/add-button";
 
 export async function Menu() {
   await connection();
@@ -24,7 +26,8 @@ export async function Menu() {
     it.familyId ? Math.min(...visible.filter((x) => x.familyId === it.familyId).map((x) => x.price)) : it.price;
 
   return (
-    <div className="flex flex-col gap-8">
+    <CatalogProvider catalog={toCatalog(menu, viewer.adult)}>
+    <div className="flex flex-col gap-8 pb-24">
       {menu.categories
         .filter((c) => c.kind === "items")
         .map((c) => {
@@ -52,16 +55,17 @@ export async function Menu() {
               {c.note && <p className="mt-1 font-serif text-[1rem] text-ink-2 italic">{c.note}</p>}
               <ul className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-[repeat(auto-fill,minmax(210px,1fr))] md:gap-4">
                 {list.map((it) => (
-                  <li key={it.id} className="flex flex-col gap-1.5 rounded-2xl border border-line bg-card p-3 md:p-3.5">
+                  <li key={it.id} className="relative flex flex-col gap-1.5 rounded-2xl border border-line bg-card p-3 has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-action md:p-3.5">
                     <h3 className="font-display text-[1.25rem] leading-[1.05] font-extrabold uppercase">
-                      {it.familyId ? families.get(it.familyId)?.name : it.name}
+                      <OpenItemButton id={it.id}>{it.familyId ? families.get(it.familyId)?.name : it.name}</OpenItemButton>
                     </h3>
                     {(it.description || it.kind) && (
                       <p className="line-clamp-2 text-fine text-ink-2">{it.description ?? [it.kind, it.size].filter(Boolean).join(", ")}</p>
                     )}
-                    <div className="mt-auto flex flex-wrap items-center justify-between gap-1 pt-1">
+                    {it.tag && <Tag tone="ok" className="self-start">{it.tag}</Tag>}
+                    <div className="mt-auto flex items-center justify-between gap-1 pt-1">
                       <Price amount={fromPrice(it)} from={!!it.familyId} />
-                      {it.tag && <Tag tone="ok">{it.tag}</Tag>}
+                      <AddButton id={it.id} name={it.familyId ? (families.get(it.familyId)?.name ?? it.name) : it.name} />
                     </div>
                   </li>
                 ))}
@@ -70,5 +74,6 @@ export async function Menu() {
           );
         })}
     </div>
+    </CatalogProvider>
   );
 }

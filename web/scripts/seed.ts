@@ -2,6 +2,7 @@
    Only adds rows that aren't there yet, so running it again never overwrites prices or edits
    made in the admin. usage: pnpm db:seed */
 import { readFileSync } from "node:fs";
+import { sql as dsql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "../src/db/schema";
@@ -24,7 +25,7 @@ type Menu = {
   }[];
   bundles: { id: string; name: string; who: string; photo: string | null; parts: [string, number][] }[];
   pairings: Record<string, string[]>;
-  places: { id: string; name: string; detail: string; km: number; keywords: string }[];
+  places: { id: string; name: string; detail: string; km: number; lat: number | null; lng: number | null; keywords: string }[];
 };
 
 const menu: Menu = JSON.parse(readFileSync(new URL("../src/db/seed-data/menu.json", import.meta.url), "utf8"));
@@ -70,7 +71,11 @@ async function main() {
     const popular = new Set(menu.popularPlaces);
     await tx.insert(schema.deliveryPlaces).values(
       menu.places.map((p) => ({ ...p, popular: popular.has(p.id) })),
-    ).onConflictDoNothing();
+    ).onConflictDoUpdate({
+      /* coordinates came later: fill them in on rows seeded before, touching nothing else */
+      target: schema.deliveryPlaces.id,
+      set: { lat: dsql`coalesce(${schema.deliveryPlaces.lat}, excluded.lat)`, lng: dsql`coalesce(${schema.deliveryPlaces.lng}, excluded.lng)` },
+    });
   });
 
   const [{ count }] = await sql`select count(*)::int as count from items`;

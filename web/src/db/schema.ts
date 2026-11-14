@@ -6,6 +6,7 @@ import {
   integer,
   jsonb,
   pgEnum,
+  pgSequence,
   pgTable,
   primaryKey,
   real,
@@ -205,6 +206,9 @@ export const deliveryPlaces = pgTable("delivery_places", {
   detail: text("detail").notNull(),
   /* Road distance from the lounge, estimated; the rider service gives the live figure. */
   km: real("km").notNull(),
+  /* The place's centre, for the rider service's fare quote. */
+  lat: real("lat"),
+  lng: real("lng"),
   keywords: text("keywords").notNull(),
   popular: boolean("popular").default(false).notNull(),
 });
@@ -224,6 +228,10 @@ export const orderStatus = pgEnum("order_status", [
 export const paymentMethod = pgEnum("payment_method", ["mpesa", "pay_on_delivery", "pay_at_counter"]);
 export const paymentStatus = pgEnum("payment_status", ["unpaid", "pending", "paid", "failed", "refunded"]);
 
+/* Order codes read out to staff and riders: BC-1001, BC-1002… The code is for people; the tracking
+   link uses the order's random id, so nobody can look up someone else's order by guessing a code. */
+export const orderCodeSeq = pgSequence("order_code_seq", { startWith: 1001 });
+
 export const orders = pgTable(
   "orders",
   {
@@ -236,6 +244,7 @@ export const orders = pgTable(
     customerName: text("customer_name").notNull(),
     phone: text("phone").notNull(),
     placeId: text("place_id").references(() => deliveryPlaces.id),
+    deliveryKm: real("delivery_km"),
     directions: text("directions"),
     note: text("note"),
     hasAlcohol: boolean("has_alcohol").default(false).notNull(),

@@ -11578,6 +11578,8 @@
    "name": "Ngara",
    "detail": "Ngara Road, around the lounge",
    "km": 1,
+   "lat": -1.2738,
+   "lng": 36.8245,
    "keywords": "ngara ngara road around the lounge keiyo kolobot ngara west"
   },
   {
@@ -11585,6 +11587,8 @@
    "name": "Parklands",
    "detail": "3rd Parklands Avenue",
    "km": 1.4,
+   "lat": -1.2615,
+   "lng": 36.8165,
    "keywords": "parklands 3rd parklands avenue"
   },
   {
@@ -11592,6 +11596,8 @@
    "name": "Aga Khan University Hospital",
    "detail": "3rd Parklands Avenue, Parklands",
    "km": 1.4,
+   "lat": -1.2614,
+   "lng": 36.8238,
    "keywords": "aga khan university hospital 3rd parklands avenue parklands aku hospital"
   },
   {
@@ -11599,6 +11605,8 @@
    "name": "MP Shah Hospital",
    "detail": "Shivachi Road, Parklands",
    "km": 1.4,
+   "lat": -1.264,
+   "lng": 36.8128,
    "keywords": "mp shah hospital shivachi road parklands hospital"
   },
   {
@@ -11606,6 +11614,8 @@
    "name": "City Park",
    "detail": "Limuru Road, Parklands",
    "km": 2,
+   "lat": -1.259,
+   "lng": 36.827,
    "keywords": "city park limuru road parklands"
   },
   {
@@ -11613,6 +11623,8 @@
    "name": "Highridge",
    "detail": "Parklands",
    "km": 2.7,
+   "lat": -1.2575,
+   "lng": 36.8075,
    "keywords": "highridge parklands"
   },
   {
@@ -11620,6 +11632,8 @@
    "name": "Nairobi National Museum",
    "detail": "Museum Hill",
    "km": 1,
+   "lat": -1.2744,
+   "lng": 36.8146,
    "keywords": "nairobi national museum museum hill museum hill"
   },
   {
@@ -11627,6 +11641,8 @@
    "name": "Chiromo",
    "detail": "Chiromo Road, Westlands",
    "km": 1.9,
+   "lat": -1.2725,
+   "lng": 36.8075,
    "keywords": "chiromo chiromo road westlands uon"
   },
   {
@@ -11634,6 +11650,8 @@
    "name": "University of Nairobi",
    "detail": "University Way, CBD",
    "km": 1.5,
+   "lat": -1.2797,
+   "lng": 36.8165,
    "keywords": "university of nairobi university way cbd uon main campus"
   },
   {
@@ -11641,6 +11659,8 @@
    "name": "Nairobi CBD",
    "detail": "Kenyatta Avenue, town",
    "km": 2.5,
+   "lat": -1.2864,
+   "lng": 36.822,
    "keywords": "nairobi cbd kenyatta avenue town town city centre center"
   },
   {
@@ -11648,6 +11668,8 @@
    "name": "KICC",
    "detail": "City Hall Way, CBD",
    "km": 2.8,
+   "lat": -1.2886,
+   "lng": 36.8232,
    "keywords": "kicc city hall way cbd kenyatta international convention centre"
   },
   {
@@ -11655,6 +11677,8 @@
    "name": "Kencom",
    "detail": "Moi Avenue, CBD",
    "km": 2.5,
+   "lat": -1.2858,
+   "lng": 36.8241,
    "keywords": "kencom moi avenue cbd bus stage"
   },
   {
@@ -11662,6 +11686,8 @@
    "name": "Kenya National Archives",
    "detail": "Moi Avenue, CBD",
    "km": 2.3,
+   "lat": -1.284,
+   "lng": 36.8256,
    "keywords": "kenya national archives moi avenue cbd"
   },
   {
@@ -11669,6 +11695,8 @@
    "name": "River Road",
    "detail": "CBD",
    "km": 2.4,
+   "lat": -1.2835,
+   "lng": 36.829,
    "keywords": "river road cbd"
   },
   {
@@ -11676,6 +11704,8 @@
    "name": "Railways",
    "detail": "Haile Selassie Avenue, CBD",
    "km": 3.3,
+   "lat": -1.2905,
+   "lng": 36.828,
    "keywords": "railways haile selassie avenue cbd railway station bus"
   },
   {
@@ -11683,6 +11713,8 @@
    "name": "Uhuru Park",
    "detail": "Kenyatta Avenue, CBD",
    "km": 3,
+   "lat": -1.2895,
+   "lng": 36.817,
    "keywords": "uhuru park kenyatta avenue cbd"
   },
   {
@@ -11690,6 +11722,8 @@
    "name": "Kariokor",
    "detail": "Racecourse Road",
    "km": 2.6,
+   "lat": -1.2775,
+   "lng": 36.8355,
    "keywords": "kariokor racecourse road market"
   },
   {
@@ -11697,6 +11731,8 @@
    "name": "Gikomba",
    "detail": "Gikomba market",
    "km": 3.4,
+   "lat": -1.284,
+   "lng": 36.838,
    "keywords": "gikomba gikomba market"
   },
   {
@@ -11704,6 +11740,8 @@
    "name": "Pangani",
    "detail": "Thika Road",
    "km": 2.6,
+   "lat": -1.2685,
+   "lng": 36.8375,
    "keywords": "pangani thika road"
   },
   {
@@ -11711,6 +11749,8 @@
    "name": "Eastleigh",
    "detail": "First Avenue",
    "km": 4.3,
+   "lat": -1.2735,
+   "lng": 36.8485,
    "keywords": "eastleigh first avenue 1st avenue"
   },
   {
@@ -11718,6 +11758,8 @@
    "name": "Mathare",
    "detail": "Juja Road",
    "km": 6,
+   "lat": -1.26,
+   "lng": 36.859,
    "keywords": "mathare juja road"
   },
   {
@@ -11725,6 +11767,8 @@
    "name": "Huruma",
    "detail": "Outering Road",
    "km": 8.1,
+   "lat": -1.2565,
+   "lng": 36.8725,
    "keywords": "huruma outering road"
   },
   {
@@ -11732,6 +11776,8 @@
    "name": "Muthaiga",
    "detail": "Muthaiga Road",
    "km": 4,
+   "lat": -1.247,
+   "lng": 36.833,
    "keywords": "muthaiga muthaiga road"
   },
   {
@@ -11739,6 +11785,8 @@
    "name": "Gigiri",
    "detail": "UN Avenue",
    "km": 5.5,
+   "lat": -1.2345,
+   "lng": 36.8115,
    "keywords": "gigiri un avenue un united nations"
   },
   {
@@ -11746,6 +11794,8 @@
    "name": "Village Market",
    "detail": "Limuru Road, Gigiri",
    "km": 6.5,
+   "lat": -1.2297,
+   "lng": 36.8045,
    "keywords": "village market limuru road gigiri mall"
   },
   {
@@ -11753,6 +11803,8 @@
    "name": "Runda",
    "detail": "Runda Road",
    "km": 7.9,
+   "lat": -1.218,
+   "lng": 36.81,
    "keywords": "runda runda road"
   },
   {
@@ -11760,6 +11812,8 @@
    "name": "Rosslyn Riviera Mall",
    "detail": "Limuru Road",
    "km": 8.8,
+   "lat": -1.2205,
+   "lng": 36.788,
    "keywords": "rosslyn riviera mall limuru road mall"
   },
   {
@@ -11767,6 +11821,8 @@
    "name": "Two Rivers Mall",
    "detail": "Limuru Road, Ruaka",
    "km": 9.6,
+   "lat": -1.2108,
+   "lng": 36.7955,
    "keywords": "two rivers mall limuru road ruaka mall"
   },
   {
@@ -11774,6 +11830,8 @@
    "name": "Ruaka",
    "detail": "Limuru Road",
    "km": 11.3,
+   "lat": -1.2068,
+   "lng": 36.7785,
    "keywords": "ruaka limuru road"
   },
   {
@@ -11781,6 +11839,8 @@
    "name": "Ridgeways",
    "detail": "Kiambu Road",
    "km": 8.1,
+   "lat": -1.22,
+   "lng": 36.8395,
    "keywords": "ridgeways kiambu road ridgeways mall"
   },
   {
@@ -11788,6 +11848,8 @@
    "name": "Thindigua",
    "detail": "Kiambu Road",
    "km": 10.9,
+   "lat": -1.199,
+   "lng": 36.835,
    "keywords": "thindigua kiambu road"
   },
   {
@@ -11795,6 +11857,8 @@
    "name": "Kiambu town",
    "detail": "Kiambu",
    "km": 15,
+   "lat": -1.1714,
+   "lng": 36.8356,
    "keywords": "kiambu town kiambu"
   },
   {
@@ -11802,6 +11866,8 @@
    "name": "Garden Estate",
    "detail": "Thika Road",
    "km": 7.6,
+   "lat": -1.231,
+   "lng": 36.852,
    "keywords": "garden estate thika road"
   },
   {
@@ -11809,6 +11875,8 @@
    "name": "Garden City Mall",
    "detail": "Thika Road",
    "km": 10.4,
+   "lat": -1.2322,
+   "lng": 36.878,
    "keywords": "garden city mall thika road mall"
   },
   {
@@ -11816,6 +11884,8 @@
    "name": "USIU-Africa",
    "detail": "Thika Road, Kasarani",
    "km": 11.7,
+   "lat": -1.2193,
+   "lng": 36.8793,
    "keywords": "usiu africa thika road kasarani university"
   },
   {
@@ -11823,6 +11893,8 @@
    "name": "Thika Road Mall",
    "detail": "Roysambu",
    "km": 12.8,
+   "lat": -1.2195,
+   "lng": 36.8885,
    "keywords": "thika road mall roysambu trm"
   },
   {
@@ -11830,6 +11902,8 @@
    "name": "Roysambu",
    "detail": "Thika Road",
    "km": 12.7,
+   "lat": -1.218,
+   "lng": 36.887,
    "keywords": "roysambu thika road"
   },
   {
@@ -11837,6 +11911,8 @@
    "name": "Kasarani",
    "detail": "Mwiki Road",
    "km": 13.7,
+   "lat": -1.2215,
+   "lng": 36.8975,
    "keywords": "kasarani mwiki road stadium moi international sports centre"
   },
   {
@@ -11844,6 +11920,8 @@
    "name": "Zimmerman",
    "detail": "Thika Road",
    "km": 14.6,
+   "lat": -1.2085,
+   "lng": 36.8955,
    "keywords": "zimmerman thika road"
   },
   {
@@ -11851,6 +11929,8 @@
    "name": "Githurai 45",
    "detail": "Thika Road",
    "km": 18.3,
+   "lat": -1.1965,
+   "lng": 36.9175,
    "keywords": "githurai 45 thika road"
   },
   {
@@ -11858,6 +11938,8 @@
    "name": "Kahawa West",
    "detail": "Kahawa",
    "km": 17.2,
+   "lat": -1.1845,
+   "lng": 36.8965,
    "keywords": "kahawa west kahawa"
   },
   {
@@ -11865,6 +11947,8 @@
    "name": "Kenyatta University",
    "detail": "Thika Road, Kahawa",
    "km": 21.6,
+   "lat": -1.1806,
+   "lng": 36.9328,
    "keywords": "kenyatta university thika road kahawa ku"
   },
   {
@@ -11872,6 +11956,8 @@
    "name": "Ruiru",
    "detail": "Thika Road",
    "km": 27.9,
+   "lat": -1.148,
+   "lng": 36.96,
    "keywords": "ruiru thika road"
   },
   {
@@ -11879,6 +11965,8 @@
    "name": "Westlands",
    "detail": "Waiyaki Way",
    "km": 2.5,
+   "lat": -1.2655,
+   "lng": 36.804,
    "keywords": "westlands waiyaki way"
   },
   {
@@ -11886,6 +11974,8 @@
    "name": "Sarit Centre",
    "detail": "Karuna Road, Westlands",
    "km": 3,
+   "lat": -1.2608,
+   "lng": 36.8022,
    "keywords": "sarit centre karuna road westlands mall"
   },
   {
@@ -11893,6 +11983,8 @@
    "name": "Westgate Mall",
    "detail": "Mwanzi Road, Westlands",
    "km": 3.2,
+   "lat": -1.257,
+   "lng": 36.803,
    "keywords": "westgate mall mwanzi road westlands"
   },
   {
@@ -11900,6 +11992,8 @@
    "name": "Global Trade Centre",
    "detail": "Waiyaki Way, Westlands",
    "km": 2.8,
+   "lat": -1.2665,
+   "lng": 36.8015,
    "keywords": "global trade centre waiyaki way westlands gtc"
   },
   {
@@ -11907,6 +12001,8 @@
    "name": "Riverside Drive",
    "detail": "Westlands",
    "km": 3.8,
+   "lat": -1.2705,
+   "lng": 36.795,
    "keywords": "riverside drive westlands"
   },
   {
@@ -11914,6 +12010,8 @@
    "name": "ABC Place",
    "detail": "Waiyaki Way",
    "km": 6.7,
+   "lat": -1.2585,
+   "lng": 36.777,
    "keywords": "abc place waiyaki way"
   },
   {
@@ -11921,6 +12019,8 @@
    "name": "Spring Valley",
    "detail": "Westlands",
    "km": 6,
+   "lat": -1.246,
+   "lng": 36.788,
    "keywords": "spring valley westlands"
   },
   {
@@ -11928,6 +12028,8 @@
    "name": "Loresho",
    "detail": "Westlands",
    "km": 9.9,
+   "lat": -1.2495,
+   "lng": 36.757,
    "keywords": "loresho westlands"
   },
   {
@@ -11935,6 +12037,8 @@
    "name": "Kitisuru",
    "detail": "Westlands",
    "km": 9.5,
+   "lat": -1.231,
+   "lng": 36.77,
    "keywords": "kitisuru westlands"
   },
   {
@@ -11942,6 +12046,8 @@
    "name": "Kangemi",
    "detail": "Waiyaki Way",
    "km": 11,
+   "lat": -1.265,
+   "lng": 36.747,
    "keywords": "kangemi waiyaki way"
   },
   {
@@ -11949,6 +12055,8 @@
    "name": "Mountain View",
    "detail": "Waiyaki Way",
    "km": 13.4,
+   "lat": -1.256,
+   "lng": 36.732,
    "keywords": "mountain view waiyaki way"
   },
   {
@@ -11956,6 +12064,8 @@
    "name": "Uthiru",
    "detail": "Waiyaki Way",
    "km": 16.3,
+   "lat": -1.2615,
+   "lng": 36.712,
    "keywords": "uthiru waiyaki way"
   },
   {
@@ -11963,6 +12073,8 @@
    "name": "Kikuyu town",
    "detail": "Kikuyu",
    "km": 23.8,
+   "lat": -1.246,
+   "lng": 36.663,
    "keywords": "kikuyu town kikuyu"
   },
   {
@@ -11970,6 +12082,8 @@
    "name": "Kileleshwa",
    "detail": "Othaya Road",
    "km": 5.7,
+   "lat": -1.283,
+   "lng": 36.784,
    "keywords": "kileleshwa othaya road"
   },
   {
@@ -11977,6 +12091,8 @@
    "name": "Lavington",
    "detail": "James Gichuru Road",
    "km": 7.6,
+   "lat": -1.278,
+   "lng": 36.77,
    "keywords": "lavington james gichuru road lavington mall"
   },
   {
@@ -11984,6 +12100,8 @@
    "name": "Valley Arcade",
    "detail": "Gitanga Road, Lavington",
    "km": 8.3,
+   "lat": -1.283,
+   "lng": 36.7665,
    "keywords": "valley arcade gitanga road lavington"
   },
   {
@@ -11991,6 +12109,8 @@
    "name": "Kilimani",
    "detail": "Argwings Kodhek Road",
    "km": 6,
+   "lat": -1.2905,
+   "lng": 36.786,
    "keywords": "kilimani argwings kodhek road"
   },
   {
@@ -11998,6 +12118,8 @@
    "name": "Yaya Centre",
    "detail": "Argwings Kodhek Road, Kilimani",
    "km": 5.9,
+   "lat": -1.2925,
+   "lng": 36.788,
    "keywords": "yaya centre argwings kodhek road kilimani mall"
   },
   {
@@ -12005,6 +12127,8 @@
    "name": "Hurlingham",
    "detail": "Argwings Kodhek Road",
    "km": 5,
+   "lat": -1.2955,
+   "lng": 36.7985,
    "keywords": "hurlingham argwings kodhek road"
   },
   {
@@ -12012,6 +12136,8 @@
    "name": "The Nairobi Hospital",
    "detail": "Argwings Kodhek Road",
    "km": 4.5,
+   "lat": -1.2955,
+   "lng": 36.8045,
    "keywords": "the nairobi hospital argwings kodhek road"
   },
   {
@@ -12019,6 +12145,8 @@
    "name": "Upper Hill",
    "detail": "Upper Hill Road",
    "km": 4.4,
+   "lat": -1.299,
+   "lng": 36.815,
    "keywords": "upper hill upper hill road"
   },
   {
@@ -12026,6 +12154,8 @@
    "name": "Kenyatta National Hospital",
    "detail": "Hospital Road, Upper Hill",
    "km": 5.1,
+   "lat": -1.301,
+   "lng": 36.8068,
    "keywords": "kenyatta national hospital hospital road upper hill knh"
   },
   {
@@ -12033,6 +12163,8 @@
    "name": "Prestige Plaza",
    "detail": "Ngong Road",
    "km": 6.7,
+   "lat": -1.2995,
+   "lng": 36.7865,
    "keywords": "prestige plaza ngong road mall"
   },
   {
@@ -12040,6 +12172,8 @@
    "name": "Adams Arcade",
    "detail": "Ngong Road",
    "km": 7.8,
+   "lat": -1.3005,
+   "lng": 36.778,
    "keywords": "adams arcade ngong road"
   },
   {
@@ -12047,6 +12181,8 @@
    "name": "Kenyatta Market",
    "detail": "Golf Course",
    "km": 6.5,
+   "lat": -1.306,
+   "lng": 36.796,
    "keywords": "kenyatta market golf course"
   },
   {
@@ -12054,6 +12190,8 @@
    "name": "The Junction Mall",
    "detail": "Ngong Road",
    "km": 9.7,
+   "lat": -1.298,
+   "lng": 36.762,
    "keywords": "the junction mall ngong road"
   },
   {
@@ -12061,6 +12199,8 @@
    "name": "Kawangware",
    "detail": "Naivasha Road",
    "km": 11,
+   "lat": -1.285,
+   "lng": 36.748,
    "keywords": "kawangware naivasha road"
   },
   {
@@ -12068,6 +12208,8 @@
    "name": "Dagoretti Corner",
    "detail": "Ngong Road",
    "km": 11.7,
+   "lat": -1.2995,
+   "lng": 36.748,
    "keywords": "dagoretti corner ngong road"
   },
   {
@@ -12075,6 +12217,8 @@
    "name": "Karen",
    "detail": "Karen Road",
    "km": 18.3,
+   "lat": -1.326,
+   "lng": 36.712,
    "keywords": "karen karen road"
   },
   {
@@ -12082,6 +12226,8 @@
    "name": "The Hub Karen",
    "detail": "Dagoretti Road, Karen",
    "km": 18.9,
+   "lat": -1.3195,
+   "lng": 36.704,
    "keywords": "the hub karen dagoretti road karen mall"
   },
   {
@@ -12089,6 +12235,8 @@
    "name": "Ngong town",
    "detail": "Ngong Road",
    "km": 28.1,
+   "lat": -1.361,
+   "lng": 36.656,
    "keywords": "ngong town ngong road"
   },
   {
@@ -12096,6 +12244,8 @@
    "name": "Langata",
    "detail": "Langata Road",
    "km": 13.6,
+   "lat": -1.342,
+   "lng": 36.765,
    "keywords": "langata langata road langata"
   },
   {
@@ -12103,6 +12253,8 @@
    "name": "Galleria Mall",
    "detail": "Langata Road",
    "km": 12.9,
+   "lat": -1.339,
+   "lng": 36.769,
    "keywords": "galleria mall langata road"
   },
   {
@@ -12110,6 +12262,8 @@
    "name": "Bomas of Kenya",
    "detail": "Langata Road",
    "km": 12.9,
+   "lat": -1.341,
+   "lng": 36.771,
    "keywords": "bomas of kenya langata road"
   },
   {
@@ -12117,6 +12271,8 @@
    "name": "Carnivore",
    "detail": "Langata Road",
    "km": 9.1,
+   "lat": -1.3285,
+   "lng": 36.8045,
    "keywords": "carnivore langata road"
   },
   {
@@ -12124,6 +12280,8 @@
    "name": "Wilson Airport",
    "detail": "Langata Road",
    "km": 7.8,
+   "lat": -1.3217,
+   "lng": 36.8148,
    "keywords": "wilson airport langata road"
   },
   {
@@ -12131,6 +12289,8 @@
    "name": "T-Mall",
    "detail": "Langata Road",
    "km": 6.3,
+   "lat": -1.311,
+   "lng": 36.8115,
    "keywords": "t mall langata road tmall"
   },
   {
@@ -12138,6 +12298,8 @@
    "name": "Kibera",
    "detail": "Kibera Drive",
    "km": 8.2,
+   "lat": -1.313,
+   "lng": 36.786,
    "keywords": "kibera kibera drive"
   },
   {
@@ -12145,6 +12307,8 @@
    "name": "Nyayo Stadium",
    "detail": "Langata Road",
    "km": 5.3,
+   "lat": -1.305,
+   "lng": 36.825,
    "keywords": "nyayo stadium langata road"
   },
   {
@@ -12152,6 +12316,8 @@
    "name": "Madaraka",
    "detail": "Mbagathi Way",
    "km": 5.6,
+   "lat": -1.3075,
+   "lng": 36.819,
    "keywords": "madaraka mbagathi way"
   },
   {
@@ -12159,6 +12325,8 @@
    "name": "Strathmore University",
    "detail": "Ole Sangale Road, Madaraka",
    "km": 6.1,
+   "lat": -1.31,
+   "lng": 36.8128,
    "keywords": "strathmore university ole sangale road madaraka"
   },
   {
@@ -12166,6 +12334,8 @@
    "name": "Nairobi West",
    "detail": "Lusaka Road",
    "km": 6.3,
+   "lat": -1.312,
+   "lng": 36.8215,
    "keywords": "nairobi west lusaka road"
   },
   {
@@ -12173,6 +12343,8 @@
    "name": "South C",
    "detail": "Mombasa Road",
    "km": 7.4,
+   "lat": -1.319,
+   "lng": 36.825,
    "keywords": "south c mombasa road"
   },
   {
@@ -12180,6 +12352,8 @@
    "name": "South B",
    "detail": "Mombasa Road",
    "km": 6.5,
+   "lat": -1.31,
+   "lng": 36.837,
    "keywords": "south b mombasa road"
   },
   {
@@ -12187,6 +12361,8 @@
    "name": "Capital Centre",
    "detail": "Mombasa Road",
    "km": 7.4,
+   "lat": -1.3165,
+   "lng": 36.8355,
    "keywords": "capital centre mombasa road mall"
   },
   {
@@ -12194,6 +12370,8 @@
    "name": "Industrial Area",
    "detail": "Enterprise Road",
    "km": 7.2,
+   "lat": -1.307,
+   "lng": 36.851,
    "keywords": "industrial area enterprise road"
   },
   {
@@ -12201,6 +12379,8 @@
    "name": "Imara Daima",
    "detail": "Mombasa Road",
    "km": 12.1,
+   "lat": -1.329,
+   "lng": 36.875,
    "keywords": "imara daima mombasa road"
   },
   {
@@ -12208,6 +12388,8 @@
    "name": "JKIA",
    "detail": "Airport North Road, Embakasi",
    "km": 17.8,
+   "lat": -1.3192,
+   "lng": 36.9278,
    "keywords": "jkia airport north road embakasi jomo kenyatta international airport"
   },
   {
@@ -12215,6 +12397,8 @@
    "name": "Syokimau",
    "detail": "Mombasa Road",
    "km": 21.3,
+   "lat": -1.36,
+   "lng": 36.93,
    "keywords": "syokimau mombasa road sgr"
   },
   {
@@ -12222,6 +12406,8 @@
    "name": "Rongai",
    "detail": "Magadi Road",
    "km": 20.8,
+   "lat": -1.394,
+   "lng": 36.758,
    "keywords": "rongai magadi road ongata"
   },
   {
@@ -12229,6 +12415,8 @@
    "name": "Embakasi",
    "detail": "Outering Road",
    "km": 13.9,
+   "lat": -1.317,
+   "lng": 36.9,
    "keywords": "embakasi outering road"
   },
   {
@@ -12236,6 +12424,8 @@
    "name": "Pipeline",
    "detail": "Outering Road, Embakasi",
    "km": 12.7,
+   "lat": -1.3115,
+   "lng": 36.8935,
    "keywords": "pipeline outering road embakasi"
   },
   {
@@ -12243,6 +12433,8 @@
    "name": "Donholm",
    "detail": "Outering Road",
    "km": 11.2,
+   "lat": -1.296,
+   "lng": 36.89,
    "keywords": "donholm outering road"
   },
   {
@@ -12250,6 +12442,8 @@
    "name": "Buruburu",
    "detail": "Mumias South Road",
    "km": 8.9,
+   "lat": -1.286,
+   "lng": 36.877,
    "keywords": "buruburu mumias south road"
   },
   {
@@ -12257,6 +12451,8 @@
    "name": "Umoja",
    "detail": "Moi Drive",
    "km": 12,
+   "lat": -1.283,
+   "lng": 36.899,
    "keywords": "umoja moi drive"
   },
   {
@@ -12264,6 +12460,8 @@
    "name": "Kayole",
    "detail": "Kangundo Road",
    "km": 15,
+   "lat": -1.275,
+   "lng": 36.92,
    "keywords": "kayole kangundo road"
   },
   {
@@ -12271,6 +12469,8 @@
    "name": "Makadara",
    "detail": "Jogoo Road",
    "km": 7.7,
+   "lat": -1.295,
+   "lng": 36.865,
    "keywords": "makadara jogoo road"
   }
  ]
