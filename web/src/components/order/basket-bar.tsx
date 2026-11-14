@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Sheet } from "@/components/ui/sheet";
 import { Stepper } from "@/components/ui/stepper";
 import { Price } from "@/components/ui/price";
@@ -28,6 +29,13 @@ export function useBasketTotals() {
 export function BasketBar() {
   const [open, setOpen] = useState(false);
   const { basket: b, lines, unavailable, count, subtotal } = useBasketTotals();
+  const { catalog, byId } = useCatalog();
+  /* one thing that goes with what's in the order and isn't in it yet */
+  const inOrder = new Set(lines.map((l) => l.itemId));
+  const suggestion = lines
+    .flatMap((l) => catalog.pairs[l.item?.familyId ?? l.itemId] ?? catalog.pairs[l.itemId] ?? [])
+    .map((id) => byId.get(id))
+    .find((it) => it && !inOrder.has(it.id) && !it.options?.length);
   if (!lines.length && !open) return null;
 
   return (
@@ -36,7 +44,7 @@ export function BasketBar() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="fixed inset-x-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto flex h-[60px] max-w-xl items-center justify-between rounded-full bg-lime pr-2 pl-[22px] text-on-lime shadow-lift"
+          className="fixed inset-x-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto flex lg:hidden h-[60px] max-w-xl items-center justify-between rounded-full bg-lime pr-2 pl-[22px] text-on-lime shadow-lift"
         >
           <span className="flex flex-col text-left leading-tight">
             <span className="font-bold">View order</span>
@@ -84,6 +92,7 @@ export function BasketBar() {
             <ul className="-mt-1 flex flex-col">
               {lines.filter((l) => l.item).map((l) => (
                 <li key={lineKey(l.itemId, l.option)} className="flex items-center gap-3 border-b border-line-2 py-3.5">
+                  {l.item!.image && <Image src={l.item!.image} alt="" width={112} height={112} className="size-14 shrink-0 rounded-[10px] object-cover" />}
                   <div className="flex min-w-0 flex-1 flex-col">
                     <span className="font-display text-[1.1875rem] leading-tight font-extrabold uppercase">{lineName(l.item, l.option)}</span>
                     <span className="text-fine text-ink-2">KES {l.item!.price.toLocaleString("en-KE")} each</span>
@@ -95,6 +104,15 @@ export function BasketBar() {
                 </li>
               ))}
             </ul>
+            {suggestion && (
+              <div className="flex items-center justify-between gap-3 rounded-2xl bg-ground p-3.5">
+                <span className="flex flex-col">
+                  <span className="text-fine font-bold">You might want</span>
+                  <span>{suggestion.name} <span className="text-ink-2">KES {suggestion.price.toLocaleString("en-KE")}</span></span>
+                </span>
+                <Button size="sm" variant="outline" onClick={() => basket.add(suggestion.id, null, 1)}>Add</Button>
+              </div>
+            )}
             <TextAreaField label="A note for the kitchen" rows={2} maxLength={300} value={b.note} onChange={(e) => basket.set({ note: e.target.value })} placeholder="Choma well done, please." />
           </>
         )}

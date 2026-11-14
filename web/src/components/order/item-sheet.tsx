@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
 import { basket } from "@/lib/basket";
 import { useCatalog } from "./catalog";
+import { cn } from "@/lib/utils";
 
 export function ItemSheet({ id, onClose }: { id: string | null; onClose: () => void }) {
   const { byId } = useCatalog();
@@ -61,19 +62,43 @@ function ItemSheetBody({ id, onClose }: { id: string; onClose: () => void }) {
       }
     >
       {(item.description || item.kind) && (
-        <p className="text-body text-ink-2">{item.description ?? [item.kind, item.size].filter(Boolean).join(", ")}</p>
+        <p className="text-body text-ink-2">{item.description ?? item.kind}</p>
       )}
       {item.serve && <p className="font-serif text-[1rem] text-ink-2 italic">{item.serve}</p>}
 
-      {sizes.length > 1 && (
-        <fieldset className="flex flex-col gap-2">
-          <legend className="mb-2 font-bold">{family?.sizeLabel}</legend>
-          <div className="flex flex-wrap gap-2">
-            {sizes.map((s) => (
-              <ChoicePill key={s.id} selected={s.id === sizeId} onClick={() => setSizeId(s.id)}>
-                {s.portion} <span className="figures text-[1.0625rem]">{s.price.toLocaleString("en-KE")}</span>
-              </ChoicePill>
+      {item.alcohol && (
+        <dl className="flex flex-wrap gap-x-5 gap-y-1 rounded-2xl bg-grove px-4 py-3 text-on-grove">
+          {[["Size", item.size], ["Strength", item.abv !== null ? `${item.abv}%` : null], ["From", item.origin], ["Brand", item.brand]]
+            .filter(([, v]) => v)
+            .map(([k, v]) => (
+              <div key={k} className="flex flex-col">
+                <dt className="text-fine text-on-grove-2">{k}</dt>
+                <dd className="font-semibold">{v}</dd>
+              </div>
             ))}
+        </dl>
+      )}
+
+      {sizes.length > 1 && (
+        <fieldset className="flex flex-col">
+          <legend className="mb-2.5 font-bold">{family?.sizeLabel}</legend>
+          <div className="grid grid-cols-3 gap-2">
+            {sizes.map((s) => {
+              const on = s.id === sizeId;
+              return (
+                <label
+                  key={s.id}
+                  className={cn(
+                    "relative flex cursor-pointer flex-col gap-0.5 rounded-xl border-[1.5px] px-3 py-2.5 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-focus has-[:focus-visible]:ring-offset-2",
+                    on ? "border-action bg-action text-on-action" : "border-line bg-card hover:border-action",
+                  )}
+                >
+                  <input type="radio" name="size" checked={on} onChange={() => setSizeId(s.id)} className="sr-only" />
+                  <span className="text-[0.875rem] font-semibold">{s.portion}</span>
+                  <span className="figures text-[1.125rem] leading-none">{s.price.toLocaleString("en-KE")}</span>
+                </label>
+              );
+            })}
           </div>
         </fieldset>
       )}

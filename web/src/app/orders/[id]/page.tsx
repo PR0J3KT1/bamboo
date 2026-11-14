@@ -7,6 +7,8 @@ import { asc, eq } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { PAYMENT_LABEL, stepsFor } from "@/lib/order-status";
 import { formatKes, Price } from "@/components/ui/price";
+import { buttonStyles } from "@/components/ui/button";
+import { displayPhone, normalizeKenyanPhone } from "@/lib/phone";
 import { cn } from "@/lib/utils";
 import { KeepFresh } from "./keep-fresh";
 
@@ -38,6 +40,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
     return e ? e.at.toLocaleTimeString("en-KE", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Africa/Nairobi" }) : null;
   };
 
+  const lounge = process.env.LOUNGE_PHONE ? normalizeKenyanPhone(process.env.LOUNGE_PHONE) : null;
   const steps = stepsFor(o.mode);
   const cancelled = o.status === "cancelled";
   const at = steps.findIndex((s) => s.status === o.status);
@@ -48,8 +51,10 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
   return (
     <>
       <KeepFresh id={o.id} active={!done} />
-      <header className="grove-bg text-on-grove">
-        <div className="mx-auto flex max-w-2xl flex-col gap-3.5 px-4 pt-4 pb-7">
+      <header className="grove-bg relative text-on-grove">
+        {/* the glow of the coals */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_70%_at_85%_0%,rgb(201_138_30/0.32),rgb(201_138_30/0)_60%)]" />
+        <div className="relative mx-auto flex max-w-2xl flex-col gap-3.5 px-4 pt-4 pb-7">
           <div className="flex items-center justify-between">
             <span className="font-semibold">Order {o.code}</span>
             <Link href="/" className="flex h-11 items-center font-semibold text-on-grove">Menu</Link>
@@ -120,6 +125,11 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
         </section>
 
         {o.note && <p className="text-body text-ink-2">Your note: {o.note}</p>}
+        {lounge && (
+          <a href={`tel:${lounge}`} className={buttonStyles({ variant: "outline", size: "lg", block: true })}>
+            Call the lounge, {displayPhone(lounge)}
+          </a>
+        )}
       </main>
     </>
   );

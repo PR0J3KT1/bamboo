@@ -50,9 +50,15 @@ export type CatalogItem = {
   size: string | null;
   serve: string | null;
   image: string | null;
+  categoryId: string;
+  shelfId: string | null;
+  brand: string | null;
+  abv: number | null;
+  origin: string | null;
 };
 export type CatalogFamily = { id: string; name: string; sizeLabel: string; leadItemId: string | null };
-export type Catalog = { items: CatalogItem[]; families: CatalogFamily[]; pairs: Record<string, string[]> };
+export type CatalogShelf = { id: string; name: string };
+export type Catalog = { items: CatalogItem[]; families: CatalogFamily[]; shelves: CatalogShelf[]; pairs: Record<string, string[]> };
 
 /** The menu cut down to what a viewer may see: alcohol only for adults. */
 export function toCatalog(menu: Menu, adult: boolean): Catalog {
@@ -61,6 +67,7 @@ export function toCatalog(menu: Menu, adult: boolean): Catalog {
     .map((i) => ({
       id: i.id, name: i.name, description: i.description, price: i.price, alcohol: i.alcohol, familyId: i.familyId,
       portion: i.portion, tag: i.tag, options: i.options, optionLabel: i.optionLabel, kind: i.kind, size: i.size, serve: i.serve, image: i.image,
+      categoryId: i.categoryId, shelfId: i.shelfId, brand: i.brand, abv: i.abv, origin: i.origin,
     }));
   const visible = new Set(items.map((i) => i.id));
   const pairs: Record<string, string[]> = {};
@@ -70,6 +77,7 @@ export function toCatalog(menu: Menu, adult: boolean): Catalog {
     families: menu.families
       .filter((f) => items.some((i) => i.familyId === f.id))
       .map((f) => ({ id: f.id, name: f.name, sizeLabel: f.sizeLabel, leadItemId: f.leadItemId })),
+    shelves: menu.shelves.filter((s) => items.some((i) => i.shelfId === s.id)).map((s) => ({ id: s.id, name: s.name })),
     pairs,
   };
 }

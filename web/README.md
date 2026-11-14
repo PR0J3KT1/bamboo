@@ -33,6 +33,17 @@ Without Africa's Talking keys, sign-in codes are printed in the `pnpm dev` log.
 
 Alcohol is filtered on the server: it is never sent to a guest or to an account under 18.
 
+## The menu (/)
+
+- Every section in one scroll. On phones the green culm bar sticks to the top and lights the
+  section on screen (short names there, full names on the desktop stalk). On desktop the order
+  sits beside the menu; on phones it's the lime bar at the bottom.
+- **The Cask Room**, for adults: a rail per shelf, "See all" opens the whole shelf with strength,
+  price and style filters and a sort, and the search looks across every shelf. Guests, unfinished
+  accounts and under-18s get the closed door instead, and no drink ever reaches their browser.
+  The old site's animated bottle wall needs the drink photos, which haven't moved over yet.
+- `LOUNGE_PHONE` shows a "Call the lounge" button on the tracking page; it's hidden when unset.
+
 ## The admin (/admin)
 
 Three roles, in `src/lib/permissions.ts`: **customer** (everyone), **staff** (orders, the sold-out
