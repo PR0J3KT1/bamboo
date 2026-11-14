@@ -13,6 +13,8 @@ export type PricedItem = {
   alcohol: boolean;
   active: boolean;
   options: string[] | null;
+  /** The menu section; the bar and the soft drinks aren't "food" for a game reward. */
+  categoryId?: string;
 };
 
 export type Place = { id: string; name: string; km: number };
@@ -91,3 +93,14 @@ export function priceOrder(input: {
   const subtotal = priced.reduce((s, l) => s + l.unitPrice * l.qty, 0);
   return { ok: true, lines: priced, subtotal, deliveryFee, total: subtotal + deliveryFee, hasAlcohol, km };
 }
+
+/* ── the game reward: a share off the food ── */
+export const NOT_FOOD = new Set(["bar", "soft"]);
+
+/** What the kitchen part of an order comes to: everything but the Cask Room and the soft drinks. */
+export function foodSubtotal(lines: { itemId: string; unitPrice: number; qty: number }[], items: Map<string, PricedItem>) {
+  return lines.reduce((s, l) => s + (NOT_FOOD.has(items.get(l.itemId)?.categoryId ?? "") ? 0 : l.unitPrice * l.qty), 0);
+}
+
+/** A percent off the food, in whole shillings. */
+export const rewardDiscount = (food: number, percent: number) => Math.round((food * percent) / 100);

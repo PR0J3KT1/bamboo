@@ -69,6 +69,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
           <div className="flex flex-col gap-1 border-t border-dashed border-line pt-2.5 text-ink-2">
             <div className="flex justify-between"><span>Food and drinks</span><span>{formatKes(o.subtotal)}</span></div>
             {o.mode === "delivery" && <div className="flex justify-between"><span>Delivery{o.deliveryKm ? `, ${o.deliveryKm} km` : ""}</span><span>{formatKes(o.deliveryFee)}</span></div>}
+            {o.discount > 0 && <div className="flex justify-between font-semibold text-action"><span>Game reward (customer won it)</span><span>−{formatKes(o.discount)}</span></div>}
           </div>
           <div className="flex items-baseline justify-between"><span className="font-bold">Total</span><Price amount={o.total} size="xl" /></div>
         </section>

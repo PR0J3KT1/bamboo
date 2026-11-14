@@ -119,6 +119,9 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
           {o.deliveryFee > 0 && (
             <div className="flex justify-between text-ink-2"><span>Delivery to {order.place}</span><span>{formatKes(o.deliveryFee)}</span></div>
           )}
+          {o.discount > 0 && (
+            <div className="flex justify-between text-action"><span>Game reward, off the food</span><span>−{formatKes(o.discount)}</span></div>
+          )}
           <div className="mt-1 flex items-baseline justify-between border-t border-line pt-2">
             <span className="font-bold">{PAYMENT_LABEL[o.paymentMethod]}</span>
             <Price amount={o.total} size="lg" />

@@ -42,6 +42,8 @@ export function SettingsForm({ initial }: { initial: LoungeSettings }) {
     dlxGuests: String(initial.rooms.dlx.maxGuests),
     orderingOpen: initial.ordering.open,
     orderingNote: initial.ordering.note,
+    rewardsOpen: initial.rewards.open,
+    rewardPct: String(initial.rewards.percent),
     tablesOpen: initial.tables.open,
     from: initial.tables.from,
     to: initial.tables.to,
@@ -63,6 +65,7 @@ export function SettingsForm({ initial }: { initial: LoungeSettings }) {
         dlx: { rate: num(s.dlxRate), maxGuests: Number(s.dlxGuests) },
       },
       ordering: { open: s.orderingOpen, note: s.orderingNote },
+      rewards: { open: s.rewardsOpen, percent: Number(s.rewardPct) },
       tables: { open: s.tablesOpen, from: s.from, to: s.to, maxPeople: Number(s.maxPeople) },
     } as LoungeSettings;
     start(async () => {
@@ -117,6 +120,20 @@ export function SettingsForm({ initial }: { initial: LoungeSettings }) {
             <input inputMode="numeric" className={input} aria-invalid={isBad("tables.maxPeople") || undefined} value={s.maxPeople} onChange={(e) => set("maxPeople", e.target.value)} />
           </Field>
         </div>
+      </section>
+
+      <section className={card} aria-labelledby="s-games">
+        <h2 id="s-games" className="font-display text-[1.5rem] font-extrabold uppercase">Game rewards</h2>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="font-semibold">Give codes for high scores</p>
+            <p className="text-fine text-ink-2">A solo score over the line in a quiz or skill game wins a one-off code for a share off the food in one order. Codes last 14 days; one connection can win 5 a day.</p>
+          </div>
+          <Switch aria-label="Give codes for high scores" checked={s.rewardsOpen} onCheckedChange={(v) => set("rewardsOpen", !!v)} />
+        </div>
+        <Field label="Percent off the food" className="max-w-48" hint={isBad("rewards.percent") ? bad!.error : "Drinks aren't included."} error={isBad("rewards.percent")}>
+          <input inputMode="numeric" className={input} aria-invalid={isBad("rewards.percent") || undefined} value={s.rewardPct} onChange={(e) => set("rewardPct", e.target.value)} />
+        </Field>
       </section>
 
       <section className={card} aria-labelledby="s-lounge">

@@ -64,6 +64,21 @@ Alcohol is filtered on the server: it is never sent to a guest or to an account 
   list sent to the lounge on WhatsApp, or the whole party added to the order. Under-18s and guests
   get food, sodas and water only. An order line can be up to 300 (for the biggest parties).
 
+## Games (/games)
+
+The old site's 13 games, ported (`src/lib/games/core.ts` for the content and rules, tested;
+`src/app/games/[id]` for the screens): five quizzes (Historia Yetu, Unasema Sheng?, Methali,
+Kaunti Gani?, Bar Trivia), party games (Kichwa Juu, Ungependa?, Chora!, Spin the Bottle) and skill
+games (Guess the Bottle, Perfect Pour, Bei Gani?, Kumbukumbu). Solo, or in teams on one phone
+with "pass the phone" between turns. Four are Cask Room games, for adults only. A phone doesn't
+see the same question again until it has seen the rest.
+
+**The reward:** a solo score over the line (8 of 10 in a quiz, 70 in a skill game, 85% in Perfect
+Pour) wins a one-off code, `CHEZA-XXXXXX`, for a share off the food (5% by default; the bar and
+soft drinks aren't included) in one order within 14 days. The server issues it, checkout checks it
+and uses it up in the order's transaction, and one connection can win 5 a day. Admins switch
+rewards off or change the percent in Settings.
+
 ## Rooms (/rooms) and tables (/book)
 
 Customers ask for a room (dates, nights, guests) or book a table (day, time, people, occasion).

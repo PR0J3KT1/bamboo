@@ -32,6 +32,10 @@ export const SettingsSchema = z.object({
     dlx: room,
   }),
   ordering: z.object({ open: z.boolean(), note: z.string().trim().max(200, "Keep the note to 200 characters.") }),
+  rewards: z.object({
+    open: z.boolean(),
+    percent: z.number({ error: "The reward is a whole percent, like 5." }).int("The reward is a whole percent, like 5.").min(1, "At least 1%.").max(20, "Up to 20% off the food."),
+  }),
   tables: z
     .object({
       open: z.boolean(),
@@ -50,6 +54,7 @@ export const DEFAULTS: LoungeSettings = {
   rating: null, // not shown until someone confirms a current figure
   rooms: { std: { rate: 3500, maxGuests: 2 }, dlx: { rate: null, maxGuests: 2 } },
   ordering: { open: true, note: "" },
+  rewards: { open: true, percent: 5 },
   tables: { open: true, from: "12:00", to: "23:00", maxPeople: 30 },
 };
 
@@ -61,6 +66,7 @@ export function withDefaults(saved: unknown): LoungeSettings {
     ...s,
     rooms: { std: { ...DEFAULTS.rooms.std, ...s.rooms?.std }, dlx: { ...DEFAULTS.rooms.dlx, ...s.rooms?.dlx } },
     ordering: { ...DEFAULTS.ordering, ...s.ordering },
+    rewards: { ...DEFAULTS.rewards, ...s.rewards },
     tables: { ...DEFAULTS.tables, ...s.tables },
   };
   const ok = SettingsSchema.safeParse(merged);

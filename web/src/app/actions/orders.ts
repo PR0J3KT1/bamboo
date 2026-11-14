@@ -5,7 +5,7 @@ import { db, schema } from "@/db";
 import { getViewer, isPhoneBlocked } from "@/lib/session";
 import { BLOCKED_MESSAGE } from "@/lib/blocked";
 import { normalizeKenyanPhone } from "@/lib/phone";
-import { fareFor, MAX_LINES, MAX_QTY, priceOrder, type PricedItem } from "@/lib/orders";
+import { fareFor, foodSubtotal, MAX_LINES, MAX_QTY, priceOrder, rewardDiscount, type PricedItem } from "@/lib/orders";
 import { notifyOrder } from "@/lib/order-feed";
 import { quoteDeliveryFee } from "@/lib/tumaboda";
 import { getSettings } from "@/lib/settings";
@@ -21,6 +21,7 @@ const Input = z.object({
   note: z.string().trim().max(300).nullable(),
   name: z.string().trim().min(1).max(80),
   phone: z.string().max(20),
+  rewardCode: z.string().trim().toUpperCase().max(20).nullable().optional(),
 });
 
 export type PlaceOrderInput = z.input<typeof Input>;
@@ -52,7 +53,7 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   const ids = [...new Set(input.lines.map((l) => l.itemId))];
   const [rows, place] = await Promise.all([
     db
-      .select({ id: schema.items.id, name: schema.items.name, price: schema.items.price, alcohol: schema.items.alcohol, active: schema.items.active, options: schema.items.options })
+      .select({ id: schema.items.id, name: schema.items.name, price: schema.items.price, alcohol: schema.items.alcohol, active: schema.items.active, options: schema.items.options, categoryId: schema.items.categoryId })
       .from(schema.items)
       .where(inArray(schema.items.id, ids)),
     input.mode === "delivery" && input.placeId
@@ -60,9 +61,10 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
       : Promise.resolve(null),
   ]);
 
+  const itemMap = new Map<string, PricedItem>(rows.map((r) => [r.id, r]));
   const priced = priceOrder({
     lines: input.lines,
-    items: new Map<string, PricedItem>(rows.map((r) => [r.id, r])),
+    items: itemMap,
     adult: viewer.adult,
     mode: input.mode,
     place: place,
@@ -79,6 +81,15 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   }
 
   const order = await db.transaction(async (tx) => {
+    /* a game reward: checked and used up inside the order's transaction, so it can't go twice */
+    let discount = 0;
+    let reward: string | null = null;
+    if (input.rewardCode) {
+      const [r] = await tx.select().from(schema.rewardCodes).where(eq(schema.rewardCodes.code, input.rewardCode)).for("update").limit(1);
+      if (!r || r.usedAt || r.expiresAt < new Date()) return { error: !r ? "That game code isn't one of ours. Take it off to carry on." : r.usedAt ? "That game code has been used already. Take it off to carry on." : "That game code has expired. Take it off to carry on." } as const;
+      discount = rewardDiscount(foodSubtotal(priced.lines, itemMap), r.percent);
+      reward = r.code;
+    }
     const [{ n }] = await tx.execute<{ n: string }>(sql`select nextval('order_code_seq')::text as n`);
     const [o] = await tx
       .insert(schema.orders)
@@ -96,18 +107,20 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
         hasAlcohol: priced.hasAlcohol,
         subtotal: priced.subtotal,
         deliveryFee: priced.deliveryFee,
-        discount: 0,
-        total: priced.total,
+        discount,
+        total: priced.total - discount,
         paymentMethod: input.mode === "delivery" ? "pay_on_delivery" : "pay_at_counter",
         paymentStatus: "unpaid",
       })
       .returning({ id: schema.orders.id, code: schema.orders.code });
     await tx.insert(schema.orderLines).values(priced.lines.map((l) => ({ orderId: o.id, ...l })));
+    if (reward) await tx.update(schema.rewardCodes).set({ usedAt: new Date(), orderId: o.id }).where(eq(schema.rewardCodes.code, reward));
     await tx.insert(schema.orderEvents).values({ orderId: o.id, status: "received", byName: "Customer" });
     /* the orders board hears about it when the transaction commits */
     await notifyOrder(tx, o.id);
     return o;
   });
+  if ("error" in order) return { ok: false, error: order.error! };
 
   return { ok: true, id: order.id, code: order.code };
 }

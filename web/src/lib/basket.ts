@@ -108,3 +108,45 @@ export function rememberBooking(id: string, code: string) {
     /* not essential */
   }
 }
+
+/* ── a game reward won on this phone, applied at checkout ── */
+const REWARD_KEY = "bc-app-reward";
+export type SavedReward = { code: string; percent: number; expires: string };
+const rewardListeners = new Set<() => void>();
+function rewardRaw() {
+  try {
+    return localStorage.getItem(REWARD_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+export const reward = {
+  get(raw: string): SavedReward | null {
+    try {
+      const r = raw ? (JSON.parse(raw) as SavedReward) : null;
+      return r && r.code && new Date(r.expires) > new Date() ? r : null;
+    } catch {
+      return null;
+    }
+  },
+  set(r: SavedReward | null) {
+    try {
+      if (r) localStorage.setItem(REWARD_KEY, JSON.stringify(r));
+      else localStorage.removeItem(REWARD_KEY);
+    } catch {
+      /* private mode */
+    }
+    rewardListeners.forEach((l) => l());
+  },
+};
+export function useReward(): SavedReward | null {
+  const raw = useSyncExternalStore(
+    (cb) => {
+      rewardListeners.add(cb);
+      return () => rewardListeners.delete(cb);
+    },
+    rewardRaw,
+    () => "",
+  );
+  return reward.get(raw);
+}

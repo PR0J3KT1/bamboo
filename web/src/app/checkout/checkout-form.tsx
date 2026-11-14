@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import type { DeliveryPlace } from "@/db/queries/menu";
-import { basket, rememberOrder } from "@/lib/basket";
-import { fareFor } from "@/lib/orders";
+import { basket, rememberOrder, reward, useReward } from "@/lib/basket";
+import { checkReward } from "@/app/actions/rewards";
+import { fareFor, NOT_FOOD, rewardDiscount } from "@/lib/orders";
 import { deliveryFee, placeOrder } from "@/app/actions/orders";
 import { useBasketTotals } from "@/components/order/basket-bar";
 import { lineName } from "@/components/order/catalog";
@@ -50,6 +51,21 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
   }, [quoteKey, place, subtotal]);
   const fee = b.mode === "delivery" && place ? (quote?.key === quoteKey ? quote.fee : fareFor(place.km)) : 0;
   const ok = lines.filter((l) => l.item);
+  /* a game reward: a share off the food, the bar and soft drinks left out */
+  const won = useReward();
+  const food = ok.reduce((s, l) => s + (NOT_FOOD.has(l.item!.categoryId) ? 0 : l.qty * l.item!.price), 0);
+  const discount = won ? rewardDiscount(food, won.percent) : 0;
+  const [typing, setTyping] = useState(false);
+  const [typed, setTyped] = useState("");
+  const [codeError, setCodeError] = useState<string | null>(null);
+  async function applyCode() {
+    setCodeError(null);
+    const r = await checkReward(typed);
+    if (!r.ok) return setCodeError(r.error);
+    /* the server has the expiry; a day here is only how long this phone keeps it in mind */
+    reward.set({ code: typed.trim().toUpperCase(), percent: r.percent, expires: new Date(Date.now() + 86_400_000).toISOString() });
+    setTyping(false);
+  }
   const hasAlcohol = ok.some((l) => l.item!.alcohol);
 
   function submit() {
@@ -68,12 +84,14 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
         note: b.note || null,
         name,
         phone,
+        rewardCode: won?.code ?? null,
       });
       if (!r.ok) {
         setError(r.error);
         return;
       }
       rememberOrder(r.id, r.code);
+      if (won) reward.set(null);
       basket.clear();
       router.push(`/orders/${r.id}`);
     });
@@ -185,9 +203,40 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
                 <span>{place ? `KES ${formatKes(fee)}` : "Choose a place"}</span>
               </div>
             )}
+            {won ? (
+              <div className="flex items-center justify-between gap-2 text-action">
+                <span>
+                  Game reward, {won.percent}% off the food <span className="text-fine text-ink-2">({won.code})</span>{" "}
+                  <button type="button" className="text-fine font-semibold text-ink-2 underline" onClick={() => reward.set(null)}>Remove</button>
+                </span>
+                <span className="font-semibold">−KES {formatKes(discount)}</span>
+              </div>
+            ) : typing ? (
+              <div role="group" aria-label="Game code" className="flex flex-wrap items-center gap-2">
+                <label className="sr-only" htmlFor="reward-code">Game code</label>
+                <input
+                  id="reward-code"
+                  value={typed}
+                  onChange={(e) => setTyped(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      applyCode();
+                    }
+                  }}
+                  placeholder="CHEZA-7KQ2MX"
+                  autoCapitalize="characters"
+                  className="h-10 min-w-0 flex-1 rounded-full border border-line bg-card px-3 uppercase"
+                />
+                <Button size="sm" variant="outline" onClick={applyCode}>Apply</Button>
+                {codeError && <p role="alert" className="w-full text-fine font-semibold text-danger">{codeError}</p>}
+              </div>
+            ) : (
+              <button type="button" onClick={() => setTyping(true)} className="self-start text-fine font-semibold text-action underline">Have a game code?</button>
+            )}
             <div className="flex items-baseline justify-between">
               <span className="font-bold">To pay</span>
-              <Price amount={subtotal + fee} size="xl" />
+              <Price amount={subtotal + fee - discount} size="xl" />
             </div>
             {closed && <p role="status" className="rounded-xl bg-warn-soft p-3 font-semibold text-warn-ink">{closed}</p>}
             {error && <p role="alert" className="rounded-xl bg-danger-soft p-3 font-semibold text-danger-ink">{error}</p>}

@@ -60,3 +60,20 @@ test("delivery needs a place; quantities are capped", () => {
   assert.equal(priceOrder({ lines: [{ itemId: "ug", option: null, qty: 146 }], items, adult: false, mode: "collect", place: null }).ok, true); // a ruracio's worth
   assert.equal(priceOrder({ lines: [], items, adult: false, mode: "collect", place: null }).ok, false);
 });
+
+test("a game reward takes a share off the food only", async () => {
+  const { foodSubtotal, rewardDiscount } = await import("./orders");
+  const items = new Map([
+    ["mbc-1", { id: "mbc-1", name: "Mbuzi choma", price: 1800, alcohol: false, active: true, options: null, categoryId: "grill" }],
+    ["k6", { id: "k6", name: "Chivas", price: 8000, alcohol: true, active: true, options: null, categoryId: "bar" }],
+    ["soda", { id: "soda", name: "Soda", price: 150, alcohol: false, active: true, options: null, categoryId: "soft" }],
+  ]);
+  const lines = [
+    { itemId: "mbc-1", unitPrice: 1800, qty: 2 },
+    { itemId: "k6", unitPrice: 8000, qty: 1 },
+    { itemId: "soda", unitPrice: 150, qty: 4 },
+  ];
+  assert.equal(foodSubtotal(lines, items), 3600);
+  assert.equal(rewardDiscount(3600, 5), 180);
+  assert.equal(rewardDiscount(1990, 5), 100); // rounded to the shilling
+});

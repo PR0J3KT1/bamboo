@@ -18,7 +18,7 @@ import { loungePhoto, pictureFor } from "@/lib/pictures";
 import Image from "next/image";
 
 /* Shorter names for the culm bar on a phone, where the full ones crowd it. */
-const SHORT: Record<string, string> = { who: "Who's eating?", party: "Parties", breakfast: "Breakfast", grill: "Off the grill", pot: "Pots and fish", soups: "Soups", sides: "Sides", soft: "Soft drinks" };
+const SHORT: Record<string, string> = { who: "Who's eating?", party: "Parties", games: "Games", rooms: "Rooms", breakfast: "Breakfast", grill: "Off the grill", pot: "Pots and fish", soups: "Soups", sides: "Sides", soft: "Soft drinks" };
 
 /* The menu page below the header: the culm nav, every section in one scroll, and on desktop the
    order beside it. Alcohol never leaves the server for a guest or an account under 18; they get
@@ -39,7 +39,7 @@ export async function Menu() {
   const bottles = menu.items.filter((i) => i.alcohol).length;
 
   const hasPlates = menu.bundles.length > 0;
-  const sections = menu.categories.filter((c) => (c.kind === "items" && (c.adultOnly || byCategory.get(c.id)?.length)) || (c.kind === "bundles" && hasPlates) || c.kind === "party");
+  const sections = menu.categories.filter((c) => (c.kind === "items" && (c.adultOnly || byCategory.get(c.id)?.length)) || (c.kind === "bundles" && hasPlates) || c.kind === "party" || c.kind === "games" || c.kind === "rooms");
   const nav: NavSection[] = sections.map((c) => ({ id: c.id, name: c.adultOnly ? "The Cask Room" : c.name, short: SHORT[c.id] ?? (c.adultOnly ? "Cask Room" : c.name) }));
   const firstFood = sections.find((c) => !c.adultOnly)?.id;
 
@@ -58,6 +58,8 @@ export async function Menu() {
           {sections.map((c) => {
             if (c.kind === "bundles") return <WhosEating key={c.id} id={c.id} title={c.name} note={c.note} />;
             if (c.kind === "party") return <PartyCards key={c.id} id={c.id} title={c.name} note={null} />;
+            if (c.kind === "games") return <Teaser key={c.id} id={c.id} title="Cheza!" line="Quizzes, party games and skill games for the table. Solo, or in teams on one phone." badge={settings.rewards.open ? `Win ${settings.rewards.percent}% off the food` : null} href="/games" go="Play a game" photo="/games/headsup.webp" />;
+            if (c.kind === "rooms") return <Teaser key={c.id} id={c.id} title="Rooms upstairs" line="Standard and Deluxe rooms above the lounge, with room service from the kitchen, 24 hours." badge={settings.rooms.std.rate ? `From KES ${settings.rooms.std.rate.toLocaleString("en-KE")} a night` : null} href="/rooms" go="See the rooms" photo="/rooms/dlx-2-xl.webp" />;
             if (c.adultOnly) {
               if (viewer.adult) return <CaskRoom key={c.id} id={c.id} title={c.name} />;
               return (
@@ -156,6 +158,22 @@ function CaskClosed({ id, title, bottles, state, opensOn, backTo }: { id: string
             <Image src={ph.src} alt={ph.alt} fill sizes="220px" className="object-cover" />
           </div>
         )}
+      </div>
+    </section>
+  );
+}
+
+/* A section that leads to its own page: the games, the rooms. */
+function Teaser({ id, title, line, badge, href, go, photo }: { id: string; title: string; line: string; badge: string | null; href: string; go: string; photo: string }) {
+  return (
+    <section id={id} tabIndex={-1} aria-labelledby={`${id}-h`} className="grove-bg relative isolate scroll-mt-16 overflow-hidden rounded-3xl text-on-grove outline-none lg:scroll-mt-6">
+      <Image src={photo} alt="" fill sizes="(min-width: 1024px) 760px, 100vw" className="-z-20 object-cover" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(14_28_19/0.92)_0%,rgb(14_28_19/0.7)_55%,rgb(14_28_19/0.35)_100%)]" />
+      <div className="flex flex-col items-start gap-3 p-6 md:p-8">
+        <h2 id={`${id}-h`} className="font-stencil text-h1 font-black uppercase">{title}</h2>
+        <p className="max-w-md font-serif text-lead italic">{line}</p>
+        {badge && <span className="rounded-full bg-lime px-3.5 py-1 font-semibold text-on-lime">{badge}</span>}
+        <Link href={href} className="brass-btn mt-1 inline-flex h-12 items-center rounded-full px-6 font-bold">{go}</Link>
       </div>
     </section>
   );

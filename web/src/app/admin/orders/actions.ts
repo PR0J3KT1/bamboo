@@ -108,7 +108,7 @@ async function callRider(orderId: string, me: UserRow): Promise<OrderActionResul
       directions: o.directions,
       lat: place.lat,
       lng: place.lng,
-      goodsKes: o.subtotal,
+      goodsKes: o.subtotal - o.discount, // what the rider collects for the food, after any game reward
       items: row.items,
       hasAlcohol: o.hasAlcohol,
     });

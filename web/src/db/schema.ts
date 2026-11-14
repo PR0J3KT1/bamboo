@@ -418,3 +418,22 @@ export const bookings = pgTable(
   },
   (t) => [index("bookings_status_idx").on(t.status), index("bookings_check_in_idx").on(t.checkIn), index("bookings_at_idx").on(t.at)],
 );
+
+/* ───────────────────────── Game rewards ─────────────────────────
+   A solo score over the line in a rewarded game wins a code for a share off the food in one order
+   (src/lib/games/core.ts, src/app/actions/rewards.ts). Each code works once, until it expires. */
+export const rewardCodes = pgTable(
+  "reward_codes",
+  {
+    code: text("code").primaryKey(), // CHEZA-7KQ2MX
+    game: text("game").notNull(),
+    score: integer("score").notNull(),
+    percent: integer("percent").notNull(), // as it was when won
+    ipHash: text("ip_hash"), // to cap how many one connection can win a day; never the address itself
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    orderId: uuid("order_id").references(() => orders.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [index("reward_codes_ip_idx").on(t.ipHash, t.createdAt)],
+);
