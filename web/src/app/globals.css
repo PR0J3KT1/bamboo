@@ -115,6 +115,34 @@
   --lift: 0 18px 48px rgb(40 30 20 / 0.2);
 }
 
+/* Chart colours for the reports, in a fixed order (series 1 is used alone for single-series
+   charts). Checked with the dataviz validator against each theme's panel: colour-blind and
+   normal-vision separation pass; light amber is under 3:1, so its parts are always labelled
+   and every chart has a table. on-series is the text set inside a filled part. */
+:root,
+[data-theme="bamboo"],
+[data-theme="light"] {
+  --series-1: #3b7a2f;
+  --series-2: #2f7fb8;
+  --series-3: #c7802a;
+  --on-series-1: #ffffff;
+  --on-series-2: #ffffff;
+  --on-series-3: #1a1408;
+  --grid: #e5dcc2;
+}
+[data-theme="light"] {
+  --grid: #e1e2d6;
+}
+[data-theme="dark"] {
+  --series-1: #5f9a3e;
+  --series-2: #3f8fd6;
+  --series-3: #c98500;
+  --on-series-1: #10180a;
+  --on-series-2: #0b1420;
+  --on-series-3: #1a1408;
+  --grid: #3b3128;
+}
+
 /* shadcn's names, mapped onto ours, so the admin components follow every theme */
 :root,
 [data-theme] {
@@ -153,6 +181,13 @@
 
 @theme inline {
   /* ours */
+  --color-series-1: var(--series-1);
+  --color-series-2: var(--series-2);
+  --color-series-3: var(--series-3);
+  --color-on-series-1: var(--on-series-1);
+  --color-on-series-2: var(--on-series-2);
+  --color-on-series-3: var(--on-series-3);
+  --color-grid: var(--grid);
   --color-ground: var(--ground);
   --color-ground-2: var(--ground-2);
   --color-panel: var(--panel);

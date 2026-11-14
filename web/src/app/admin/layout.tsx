@@ -15,7 +15,7 @@ async function Frame({ children }: { children: React.ReactNode }) {
     { href: "/admin", label: "Orders" },
     ...(can(user.role, { menu: ["toggle"] }) ? [{ href: "/admin/menu", label: "Menu" }] : []),
     ...(can(user.role, { customer: ["view"] }) ? [{ href: "/admin/customers", label: "Customers" }] : []),
-    /* Reports (phase 7) joins here when it's built */
+    ...(can(user.role, { report: ["view"] }) ? [{ href: "/admin/reports", label: "Reports" }] : []),
     ...(can(user.role, { user: ["set-role"] }) ? [{ href: "/admin/team", label: "Team" }] : []),
   ];
   return (

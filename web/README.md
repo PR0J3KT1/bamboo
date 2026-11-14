@@ -112,6 +112,21 @@ Orders are counted by number, so an account's earlier guest orders count too.
   code and can't order, until an admin unblocks it. Team members can't be blocked until they're
   taken off the team.
 
+## Reports (/admin/reports)
+
+Admins only. Pick today, 7 days, 30 days, or any range up to 92 days; days are calendar days in
+Nairobi time, by when the order was placed.
+
+- **Sales** are items less discounts, on completed orders only. Delivery fees go to the rider and
+  are shown apart. Cancelled orders are listed with their reasons and not counted; orders still
+  open aren't counted either. Sales are compared with the same number of days just before.
+- Charts: sales by day (by hour for a single day), what sold (kitchen, soft drinks, Cask Room),
+  how customers paid, best sellers by quantity or by KES, and orders by delivery area. Each has
+  a "Show as a table" view. The chart colours are `--series-1..3` in `globals.css`, checked for
+  colour-blind separation and contrast in all three themes.
+- **Orders CSV** (every order in the period, with status and items) and **Items sold CSV** for
+  the bookkeeper, from `/admin/reports/export`. Each download is written to the audit log.
+
 ## Changing the schema
 
 Edit `src/db/schema.ts`, then `pnpm db:generate --name <what-changed>` and `pnpm db:migrate`.
