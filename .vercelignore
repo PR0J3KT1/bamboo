@@ -3,3 +3,6 @@
 build/
 bamboo-cask.html
 .gitignore
+
+# The Next.js app is deployed on its own, not as part of the static site.
+web/

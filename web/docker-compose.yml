@@ -1,0 +1,20 @@
+# Local development: Postgres only. Run the app with `pnpm dev`.
+#   docker compose up -d
+# For a self-hosted server, see docker-compose.prod.yml.
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: bamboo
+      POSTGRES_PASSWORD: bamboo
+      POSTGRES_DB: bamboo_cask
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bamboo -d bamboo_cask"]
+      interval: 5s
+      retries: 10
+volumes:
+  pgdata:
