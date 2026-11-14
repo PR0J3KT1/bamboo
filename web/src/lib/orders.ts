@@ -23,7 +23,9 @@ export type PricedOrder =
   | { ok: true; lines: PricedLine[]; subtotal: number; deliveryFee: number; total: number; hasAlcohol: boolean; km: number | null }
   | { ok: false; error: string };
 
-export const MAX_QTY = 50;
+/* Enough for the party planner's biggest party (300 guests: beer by the hundred), and a stop for
+   anything wilder. Big orders are confirmed by the lounge before the kitchen starts. */
+export const MAX_QTY = 300;
 export const MAX_LINES = 60;
 
 /** Delivery fare: KES 150 up to 3 km, then KES 30 a km, rounded to the nearest 10. The same rule

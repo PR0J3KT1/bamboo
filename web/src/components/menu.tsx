@@ -12,11 +12,13 @@ import { SectionBar, SectionStalk, type NavSection } from "@/components/menu/sec
 import { CaskRoom } from "@/components/menu/cask-room";
 import { Pic } from "@/components/ui/picture";
 import { MoreAtLounge } from "@/components/menu/more-at-lounge";
+import { WhosEating } from "@/components/menu/whos-eating";
+import { PartyCards } from "@/components/menu/party-cards";
 import { loungePhoto, pictureFor } from "@/lib/pictures";
 import Image from "next/image";
 
 /* Shorter names for the culm bar on a phone, where the full ones crowd it. */
-const SHORT: Record<string, string> = { breakfast: "Breakfast", grill: "Off the grill", pot: "Pots and fish", soups: "Soups", sides: "Sides", soft: "Soft drinks" };
+const SHORT: Record<string, string> = { who: "Who's eating?", party: "Parties", breakfast: "Breakfast", grill: "Off the grill", pot: "Pots and fish", soups: "Soups", sides: "Sides", soft: "Soft drinks" };
 
 /* The menu page below the header: the culm nav, every section in one scroll, and on desktop the
    order beside it. Alcohol never leaves the server for a guest or an account under 18; they get
@@ -36,7 +38,8 @@ export async function Menu() {
     it.familyId ? Math.min(...visible.filter((x) => x.familyId === it.familyId).map((x) => x.price)) : it.price;
   const bottles = menu.items.filter((i) => i.alcohol).length;
 
-  const sections = menu.categories.filter((c) => c.kind === "items" && (c.adultOnly || byCategory.get(c.id)?.length));
+  const hasPlates = menu.bundles.length > 0;
+  const sections = menu.categories.filter((c) => (c.kind === "items" && (c.adultOnly || byCategory.get(c.id)?.length)) || (c.kind === "bundles" && hasPlates) || c.kind === "party");
   const nav: NavSection[] = sections.map((c) => ({ id: c.id, name: c.adultOnly ? "The Cask Room" : c.name, short: SHORT[c.id] ?? (c.adultOnly ? "Cask Room" : c.name) }));
   const firstFood = sections.find((c) => !c.adultOnly)?.id;
 
@@ -53,6 +56,8 @@ export async function Menu() {
             </div>
           )}
           {sections.map((c) => {
+            if (c.kind === "bundles") return <WhosEating key={c.id} id={c.id} title={c.name} note={c.note} />;
+            if (c.kind === "party") return <PartyCards key={c.id} id={c.id} title={c.name} note={null} />;
             if (c.adultOnly) {
               if (viewer.adult) return <CaskRoom key={c.id} id={c.id} title={c.name} />;
               return (

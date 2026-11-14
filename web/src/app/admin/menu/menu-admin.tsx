@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -62,6 +63,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
     <main className="mx-auto flex w-full max-w-[1400px] flex-col gap-3.5 px-4 py-5 pb-28 md:px-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h1 className="font-display text-h2 font-extrabold uppercase">Menu and prices</h1>
+        {canEdit && <Link href="/admin/menu/plates" className="text-fine font-semibold text-action underline underline-offset-2">Who&rsquo;s eating? plates</Link>}
         <span className="text-ink-2">{soldOutCount} sold out</span>
       </div>
 

@@ -56,6 +56,7 @@ test("a dish with choices needs one of them", () => {
 
 test("delivery needs a place; quantities are capped", () => {
   assert.equal(priceOrder({ lines: [{ itemId: "ug", option: null, qty: 1 }], items, adult: false, mode: "delivery", place: null }).ok, false);
-  assert.equal(priceOrder({ lines: [{ itemId: "ug", option: null, qty: 51 }], items, adult: false, mode: "collect", place: null }).ok, false);
+  assert.equal(priceOrder({ lines: [{ itemId: "ug", option: null, qty: 301 }], items, adult: false, mode: "collect", place: null }).ok, false);
+  assert.equal(priceOrder({ lines: [{ itemId: "ug", option: null, qty: 146 }], items, adult: false, mode: "collect", place: null }).ok, true); // a ruracio's worth
   assert.equal(priceOrder({ lines: [], items, adult: false, mode: "collect", place: null }).ok, false);
 });

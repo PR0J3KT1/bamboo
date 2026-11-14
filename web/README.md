@@ -51,6 +51,19 @@ Alcohol is filtered on the server: it is never sent to a guest or to an account 
   get a rail instead.
 - The lounge's hours, phone and Google rating come from Settings in the admin.
 
+## Plates and parties
+
+- **Who's eating?** plates on the menu: dishes put together for one, two or the table, each at the
+  price of its parts, added to the order in one tap. A plate hides while any of its dishes is
+  sold out, and plates with alcohol show only to adults. Admins edit them in Menu → Who's eating?
+  plates (`/admin/menu/plates`).
+- **Party packages** (`/party`, `src/lib/party.ts`): the old site's planner, ported line for line
+  and checked against it (the same totals to the shilling). Pick the occasion, guests, hours, food
+  and drinks and a budget tier; it works out the choma, sides, drinks and mixers from the menu at
+  the lounge's prices. Every line can be changed or swapped, the bill split between friends, the
+  list sent to the lounge on WhatsApp, or the whole party added to the order. Under-18s and guests
+  get food, sodas and water only. An order line can be up to 300 (for the biggest parties).
+
 ## Rooms (/rooms) and tables (/book)
 
 Customers ask for a room (dates, nights, guests) or book a table (day, time, people, occasion).
