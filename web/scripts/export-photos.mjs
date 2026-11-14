@@ -4,6 +4,7 @@
 //   food    free-licensed photos for dishes the lounge hasn't photographed yet (BC_FOODPH), each
 //           with its credit; dishes maps an item or family id to one of them
 // The bottle sprite sheets (drinks/*.webp|avif) are copied as they are; items.sprite points into them.
+// So are the room photos (rooms/*.webp, each with an -xl copy for full screen; src/lib/rooms.ts).
 // usage: node scripts/export-photos.mjs ../bamboo-cask.html
 import fs from "node:fs";
 import path from "node:path";
@@ -26,6 +27,7 @@ const out = {
 const pub = path.resolve("public");
 const files = new Set([...Object.values(out.lounge), ...Object.values(out.food)].map((p) => p.src.slice(1)));
 for (const f of fs.readdirSync(path.join(root, "drinks"))) files.add(`drinks/${f}`);
+for (const f of fs.readdirSync(path.join(root, "rooms"))) files.add(`rooms/${f}`);
 let copied = 0;
 for (const f of files) {
   const from = path.join(root, f);

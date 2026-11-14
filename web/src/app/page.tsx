@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu } from "@/components/menu";
 import { ViewerBar } from "@/components/viewer-bar";
 import { ModeSwitch } from "@/components/order/mode-switch";
@@ -43,7 +44,7 @@ export default function Home() {
             {facts.map((f) => (
               <li key={f} className="flex items-center gap-2">
                 <span aria-hidden className="size-1.5 rounded-full bg-lime" />
-                {f}
+                {f === "Rooms upstairs" ? <Link href="/rooms" className="underline underline-offset-2 hover:text-on-grove">{f}</Link> : f}
               </li>
             ))}
           </ul>

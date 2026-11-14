@@ -53,6 +53,14 @@ Alcohol is filtered on the server: it is never sent to a guest or to an account 
   rating stays hidden until it's set there. `LOUNGE_PHONE` overrides the phone, which is used for
   "Call the lounge", the WhatsApp button and the WhatsApp links.
 
+## Rooms (/rooms)
+
+Standard (KES 3,500 a night) and Deluxe (rate on request) rooms upstairs, from the old site:
+the lounge's own photos as a gallery that opens full screen, what each room has, and a booking
+card (check-in, nights, guests) that works out the stay and opens WhatsApp with the request
+written out. The lounge confirms there; nothing is paid on the page. The rooms, rates and photo
+captions are in `src/lib/rooms.ts`; set the Deluxe `rate` there once the lounge gives it.
+
 ## The admin (/admin)
 
 Three roles, in `src/lib/permissions.ts`: **customer** (everyone), **staff** (orders, the sold-out
