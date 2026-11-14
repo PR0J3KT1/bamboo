@@ -2,7 +2,8 @@
 import { eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db, schema } from "@/db";
-import { getViewer } from "@/lib/session";
+import { getViewer, isPhoneBlocked } from "@/lib/session";
+import { BLOCKED_MESSAGE } from "@/lib/blocked";
 import { normalizeKenyanPhone } from "@/lib/phone";
 import { MAX_LINES, MAX_QTY, priceOrder, type PricedItem } from "@/lib/orders";
 
@@ -37,7 +38,8 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   const phone = normalizeKenyanPhone(input.phone);
   if (!phone) return { ok: false, error: "Enter a Kenyan mobile number, like 0712 345 678, so the rider can call." };
 
-  const viewer = await getViewer();
+  const [viewer, blocked] = await Promise.all([getViewer(), isPhoneBlocked(phone)]);
+  if (blocked) return { ok: false, error: BLOCKED_MESSAGE };
 
   const ids = [...new Set(input.lines.map((l) => l.itemId))];
   const [rows, place] = await Promise.all([

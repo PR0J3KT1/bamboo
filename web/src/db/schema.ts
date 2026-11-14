@@ -38,7 +38,11 @@ export const user = pgTable("user", {
   phoneNumberVerified: boolean("phone_number_verified"),
   /* Set once, by completeProfile(). "YYYY-MM-DD", so no time zone can move the 18th birthday. */
   dateOfBirth: date("date_of_birth", { mode: "string" }),
-  role: text("role").default("customer").notNull(), // customer | staff | admin
+  role: text("role").default("customer").notNull(), // customer | staff | admin (src/lib/permissions.ts)
+  /* Better Auth's admin plugin: a blocked number can't sign in or order */
+  banned: boolean("banned").default(false),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires", { withTimezone: true }),
   ...timestamps,
 });
 
@@ -50,6 +54,7 @@ export const session = pgTable(
     token: text("token").notNull().unique(),
     ipAddress: text("ip_address"),
     userAgent: text("user_agent"),
+    impersonatedBy: text("impersonated_by"), // admin plugin field; impersonation is switched off
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -278,6 +283,27 @@ export const orderLines = pgTable(
     qty: integer("qty").notNull(),
   },
   (t) => [index("order_lines_order_idx").on(t.orderId)],
+);
+
+/* ───────────────────────── Audit ─────────────────────────
+   Every change made in the admin, with who made it and what it was before, so a price change
+   or a new admin always has a name on it. */
+
+export const auditEvents = pgTable(
+  "audit_events",
+  {
+    id: serial("id").primaryKey(),
+    actorId: text("actor_id").references(() => user.id, { onDelete: "set null" }),
+    /* kept as written, so the record still reads right after the account is gone */
+    actorName: text("actor_name").notNull(),
+    action: text("action").notNull(), // e.g. "role.set", "user.ban", "item.price", "order.status"
+    entityType: text("entity_type").notNull(),
+    entityId: text("entity_id").notNull(),
+    before: jsonb("before"),
+    after: jsonb("after"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [index("audit_entity_idx").on(t.entityType, t.entityId), index("audit_created_idx").on(t.createdAt)],
 );
 
 /* ───────────────────────── Relations ───────────────────────── */

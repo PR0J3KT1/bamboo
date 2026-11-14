@@ -31,7 +31,7 @@ function Steps({ step }: { step: Step }) {
   );
 }
 
-export function SignInFlow({ signedIn, profileComplete }: { signedIn: boolean; profileComplete: boolean }) {
+export function SignInFlow({ signedIn, profileComplete, next }: { signedIn: boolean; profileComplete: boolean; next: string }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>(signedIn ? "profile" : "phone");
   const [phone, setPhone] = useState("");
@@ -50,7 +50,7 @@ export function SignInFlow({ signedIn, profileComplete }: { signedIn: boolean; p
       <>
         <SignInHeader title="You're signed in" note="Your account is ready." />
         <div className="mx-auto w-full max-w-md px-4 py-6">
-          <Link href="/" className={buttonStyles({ variant: "main", size: "lg", block: true })}>Back to the menu</Link>
+          <Link href={next} className={buttonStyles({ variant: "main", size: "lg", block: true })}>{next === "/" ? "Back to the menu" : "Carry on"}</Link>
         </div>
       </>
     );
@@ -73,7 +73,7 @@ export function SignInFlow({ signedIn, profileComplete }: { signedIn: boolean; p
       if (error) return setError(error.message ?? "That code didn't work. Check it and try again.");
       const s = await authClient.getSession();
       if (s.data?.user.dateOfBirth) {
-        router.push("/");
+        router.push(next);
         router.refresh();
       } else setStep("profile");
     });
@@ -85,7 +85,7 @@ export function SignInFlow({ signedIn, profileComplete }: { signedIn: boolean; p
       const r = await completeProfile({ name, dateOfBirth: dob, confirmed });
       if (!r.ok) return setError(r.error);
       if (r.adult) {
-        router.push("/");
+        router.push(next);
         router.refresh();
       } else {
         const on = new Date(r.eighteenOn + "T00:00:00").toLocaleDateString("en-KE", { day: "numeric", month: "long", year: "numeric" });
