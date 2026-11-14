@@ -17,11 +17,12 @@ import { PlacePicker } from "./place-picker";
 
 const card = "flex flex-col gap-3 rounded-2xl border border-line bg-panel p-4";
 
-export function CheckoutForm({ places, signedIn, defaultName, defaultPhone }: {
+export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, closed }: {
   places: DeliveryPlace[];
   signedIn: boolean;
   defaultName: string;
   defaultPhone: string;
+  closed: string | null;
 }) {
   const router = useRouter();
   const { basket: b, lines, unavailable, subtotal } = useBasketTotals();
@@ -188,8 +189,9 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone }: {
               <span className="font-bold">To pay</span>
               <Price amount={subtotal + fee} size="xl" />
             </div>
+            {closed && <p role="status" className="rounded-xl bg-warn-soft p-3 font-semibold text-warn-ink">{closed}</p>}
             {error && <p role="alert" className="rounded-xl bg-danger-soft p-3 font-semibold text-danger-ink">{error}</p>}
-            <Button type="submit" variant="main" size="lg" block disabled={pending || !ok.length} className="mt-1.5">
+            <Button type="submit" variant="main" size="lg" block disabled={pending || !ok.length || !!closed} className="mt-1.5">
               {pending ? "Placing your order…" : "Place order"}
             </Button>
           </div>

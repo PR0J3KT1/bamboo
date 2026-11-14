@@ -1,10 +1,16 @@
 "use client";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { BedDouble, ChevronLeft, ChevronRight, Coffee, DoorClosed, Expand, LampDesk, Minus, Plus, Sofa, Tv, Wifi, X } from "lucide-react";
 import { todayInNairobi } from "@/lib/age";
-import { addDays, bookingMessage, dayName, guestsWord, MAX_GUESTS, MAX_NIGHTS, nightsWord, ROOMS, xl, type Amenity, type Room } from "@/lib/rooms";
+import { addDays, bookingMessage, dayName, guestsWord, MAX_NIGHTS, nightsWord, ROOMS, xl, type Amenity, type Room, type RoomTerms } from "@/lib/rooms";
+import { requestRoom } from "@/app/actions/bookings";
+import { useSession } from "@/lib/auth-client";
+import { displayPhone } from "@/lib/phone";
+import { whatsapp } from "@/lib/lounge";
+import { rememberBooking } from "@/lib/basket";
 import { WhatsAppIcon } from "@/components/brand";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +23,7 @@ function useToday() {
   return useSyncExternalStore(noop, () => todayInNairobi(), () => "");
 }
 
-export function RoomsView({ phone, phoneShown, waBase }: { phone: string; phoneShown: string; waBase: string }) {
+export function RoomsView({ terms, phone }: { terms: RoomTerms; phone: string }) {
   const [roomId, setRoomId] = useState<Room["id"]>("std");
   const room = ROOMS.find((r) => r.id === roomId)!;
   const [open, setOpen] = useState<number | null>(null);
@@ -34,7 +40,7 @@ export function RoomsView({ phone, phoneShown, waBase }: { phone: string; phoneS
             className={cn("flex flex-col items-start rounded-xl px-4 py-2.5 text-left", r.id === roomId ? "bg-panel shadow-sm" : "text-ink-2 hover:text-ink")}
           >
             <span className="font-display text-[1.375rem] leading-none font-extrabold uppercase">{r.short}</span>
-            <span className="text-fine">{r.rate ? `${kes(r.rate)} a night` : "Rate on request"}</span>
+            <span className="text-fine">{terms[r.id].rate ? `${kes(terms[r.id].rate!)} a night` : "Rate on request"}</span>
           </button>
         ))}
       </div>
@@ -69,7 +75,7 @@ export function RoomsView({ phone, phoneShown, waBase }: { phone: string; phoneS
             <Link href="/" className="font-semibold text-action underline underline-offset-2">See the menu</Link>
           </p>
         </section>
-        <BookingCard room={room} phone={phone} phoneShown={phoneShown} waBase={waBase} />
+        <BookingCard room={room} terms={terms} phone={phone} />
       </div>
 
       {open !== null && <Lightbox room={room} start={open} onClose={() => setOpen(null)} />}
@@ -179,44 +185,93 @@ function Step({ label, value, words, min, max, onChange }: { label: string; valu
   );
 }
 
-/* Check-in date, nights and guests; what the stay comes to; then WhatsApp with the request
-   written out. The lounge confirms there. Nothing is paid on this page. */
-function BookingCard({ room, phone, phoneShown, waBase }: { room: Room; phone: string; phoneShown: string; waBase: string }) {
+/* Check-in date, nights and guests; what the stay comes to; who's asking. "Send the request"
+   saves it for the lounge, who confirm or decline in the admin and text the answer. WhatsApp
+   stays as the other way to ask. Nothing is paid on this page. */
+function BookingCard({ room, terms, phone }: { room: Room; terms: RoomTerms; phone: string }) {
+  const router = useRouter();
   const today = useToday();
+  const session = useSession();
   const [picked, setPicked] = useState("");
   const [nights, setNights] = useState(1);
   const [guests, setGuests] = useState(1);
+  const [name, setName] = useState<string | null>(null);
+  const [tel, setTel] = useState<string | null>(null);
+  const [note, setNote] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [pending, start] = useTransition();
+
+  const { rate, maxGuests } = terms[room.id];
+  const people = Math.min(guests, maxGuests);
   const checkIn = picked && today && picked >= today ? picked : today;
   const out = checkIn ? addDays(checkIn, nights) : "";
-  const href = checkIn ? `${waBase}?text=${encodeURIComponent(bookingMessage(room, checkIn, nights, guests))}` : waBase;
+  /* signed in: start from the account's name and number */
+  const u = session.data?.user as { name?: string; phoneNumber?: string | null; dateOfBirth?: string | null } | undefined;
+  const nameValue = name ?? (u?.dateOfBirth ? (u.name ?? "") : "");
+  const telValue = tel ?? (u?.phoneNumber ? displayPhone(u.phoneNumber) : "");
+
+  function send() {
+    setError(null);
+    start(async () => {
+      const r = await requestRoom({ room: room.id, checkIn, nights, guests: people, name: nameValue, phone: telValue, note: note || null });
+      if (!r.ok) return setError(r.error);
+      rememberBooking(r.id, r.code);
+      router.push(`/bookings/${r.id}`);
+    });
+  }
 
   return (
-    <form aria-label={`Book the ${room.name}`} onSubmit={(e) => e.preventDefault()} className="cane-panel flex flex-col gap-4 rounded-3xl p-5 lg:sticky lg:top-6">
+    <form
+      aria-label={`Book the ${room.name}`}
+      onSubmit={(e) => {
+        e.preventDefault();
+        send();
+      }}
+      className="cane-panel flex flex-col gap-4 rounded-3xl p-5 lg:sticky lg:top-6"
+    >
       <h3 className="relative font-display text-[1.75rem] leading-none font-extrabold text-[#285418] uppercase">Book the {room.short}</h3>
       <div className="relative flex flex-col gap-1.5">
         <label htmlFor="stay-in" className="text-fine font-semibold">Check in</label>
-        <input id="stay-in" type="date" min={today || undefined} value={checkIn} onChange={(e) => setPicked(e.target.value)} className="h-12 rounded-full border border-line bg-card px-4" />
+        <input id="stay-in" type="date" required min={today || undefined} value={checkIn} onChange={(e) => setPicked(e.target.value)} className="h-12 rounded-full border border-line bg-card px-4" />
       </div>
       <div className="relative grid grid-cols-2 gap-3">
         <Step label="Nights" value={nights} words={nightsWord(nights)} min={1} max={MAX_NIGHTS} onChange={setNights} />
-        <Step label="Guests" value={guests} words={guestsWord(guests)} min={1} max={MAX_GUESTS} onChange={setGuests} />
+        <Step label="Guests" value={people} words={guestsWord(people)} min={1} max={maxGuests} onChange={setGuests} />
       </div>
       {checkIn && (
         <p className="relative">
-          <b>{dayName(checkIn)}</b> to <b>{dayName(out)}</b>, {nightsWord(nights)}, {guestsWord(guests)}
+          <b>{dayName(checkIn)}</b> to <b>{dayName(out)}</b>, {nightsWord(nights)}, {guestsWord(people)}
         </p>
       )}
       <div className="relative flex items-baseline justify-between border-t border-[rgb(110_92_30/0.3)] pt-3">
-        <span className="text-[#3c4a2c]">{room.rate ? `${kes(room.rate)} × ${nightsWord(nights)}` : `${room.short}, ${nightsWord(nights)}`}</span>
-        {room.rate ? <span className="figures text-[1.75rem] leading-none">{kes(room.rate * nights)}</span> : <span className="font-semibold">Rate on request</span>}
+        <span className="text-[#3c4a2c]">{rate ? `${kes(rate)} × ${nightsWord(nights)}` : `${room.short}, ${nightsWord(nights)}`}</span>
+        {rate ? <span className="figures text-[1.75rem] leading-none">{kes(rate * nights)}</span> : <span className="font-semibold">Rate on request</span>}
       </div>
-      <a href={href} target="_blank" rel="noopener noreferrer" className="relative inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#1fa855] px-6 text-[1.0625rem] font-bold text-white hover:bg-[#1a9249]">
-        <WhatsAppIcon className="size-5" /> Reserve on WhatsApp
-      </a>
-      <p className="relative text-center">
-        or call <a href={`tel:${phone}`} className="font-semibold underline underline-offset-2">{phoneShown}</a>
+      <div className="relative grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        <label className="flex flex-col gap-1.5 text-fine font-semibold">
+          Your name
+          <input required autoComplete="name" maxLength={80} value={nameValue} onChange={(e) => setName(e.target.value)} className="h-12 rounded-full border border-line bg-card px-4 text-body font-normal" />
+        </label>
+        <label className="flex flex-col gap-1.5 text-fine font-semibold">
+          Phone
+          <input required type="tel" inputMode="tel" autoComplete="tel" placeholder="0712 345 678" value={telValue} onChange={(e) => setTel(e.target.value)} className="h-12 rounded-full border border-line bg-card px-4 text-body font-normal" />
+        </label>
+      </div>
+      <label className="relative flex flex-col gap-1.5 text-fine font-semibold">
+        Anything the lounge should know <span className="font-normal text-[#3c4a2c]">(optional)</span>
+        <textarea rows={2} maxLength={300} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Arriving late, a cot for a child…" className="resize-none rounded-2xl border border-line bg-card px-4 py-2.5 text-body font-normal" />
+      </label>
+      {error && <p role="alert" className="relative rounded-xl bg-danger-soft p-3 font-semibold text-danger-ink">{error}</p>}
+      <button type="submit" disabled={pending || !checkIn} className="brass-btn relative inline-flex h-14 items-center justify-center rounded-full px-6 text-[1.0625rem] font-bold disabled:opacity-60">
+        {pending ? "Sending…" : "Send the request"}
+      </button>
+      <p className="relative text-center text-fine text-[#3c4a2c]">
+        The lounge confirms by SMS. Or ask on{" "}
+        <a href={whatsapp(phone, checkIn ? bookingMessage(room, rate, checkIn, nights, people) : undefined)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-[#1a7f3f] underline underline-offset-2">
+          <WhatsAppIcon className="size-3.5" />WhatsApp
+        </a>{" "}
+        or call <a href={`tel:${phone}`} className="font-semibold underline underline-offset-2">{displayPhone(phone)}</a>. Nothing is paid on this page.
       </p>
-      <p className="relative text-fine text-[#3c4a2c]">The lounge confirms the room on WhatsApp. Nothing is paid on this page.</p>
     </form>
   );
 }

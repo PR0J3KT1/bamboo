@@ -8,6 +8,7 @@ import { normalizeKenyanPhone } from "@/lib/phone";
 import { fareFor, MAX_LINES, MAX_QTY, priceOrder, type PricedItem } from "@/lib/orders";
 import { notifyOrder } from "@/lib/order-feed";
 import { quoteDeliveryFee } from "@/lib/tumaboda";
+import { getSettings } from "@/lib/settings";
 
 const Input = z.object({
   lines: z
@@ -36,6 +37,11 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
     return { ok: false, error: "Something in the order didn't look right. Refresh the page and try again." };
   }
   const input = parsed.data;
+
+  const settings = await getSettings();
+  if (!settings.ordering.open) {
+    return { ok: false, error: settings.ordering.note || "The kitchen isn't taking orders online just now. Call or WhatsApp the lounge." };
+  }
 
   const phone = normalizeKenyanPhone(input.phone);
   if (!phone) return { ok: false, error: "Enter a Kenyan mobile number, like 0712 345 678, so the rider can call." };

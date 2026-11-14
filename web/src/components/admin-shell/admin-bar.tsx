@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
-export type AdminNavItem = { href: string; label: string };
+export type AdminNavItem = { href: string; label: string; count?: number };
 
 /* The grove bar across every admin page: where you are, where you can go (only the places your
    role can use), and who's signed in. */
@@ -16,6 +16,7 @@ export function AdminBar({ nav, who }: { nav: AdminNavItem[]; who: string }) {
     <header className="grove-bg text-on-grove">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-4 py-2.5 md:px-5">
         <Link href="/admin" className="font-display text-[1.5rem] font-extrabold uppercase">Bamboo Cask</Link>
+        <Link href="/" className="text-fine font-semibold text-on-grove-2 underline-offset-2 hover:text-on-grove hover:underline">See the site</Link>
         <nav aria-label="Admin" className="order-3 -mx-1 flex w-full gap-1 overflow-x-auto md:order-none md:mx-0 md:ml-auto md:w-auto">
           {nav.map((n) => (
             <Link
@@ -28,6 +29,9 @@ export function AdminBar({ nav, who }: { nav: AdminNavItem[]; who: string }) {
               )}
             >
               {n.label}
+              {!!n.count && (
+                <span className="ml-1.5 min-w-5 rounded-full bg-lime px-1.5 text-center text-fine font-bold text-on-lime" aria-label={`${n.count} waiting`}>{n.count}</span>
+              )}
             </Link>
           ))}
         </nav>

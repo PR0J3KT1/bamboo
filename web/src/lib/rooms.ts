@@ -1,7 +1,7 @@
 /* The rooms upstairs, from the old site. Photos are the lounge's own (public/rooms): each is
    [file, width at 760px tall, what it shows], with an -xl copy for full screen (1600 on its long
-   side). The Standard rate is the lounge's; the Deluxe rate stays null until the lounge gives it,
-   so that room asks for it on WhatsApp instead of showing a total. */
+   side). Rates and how many can stay are in Settings (src/lib/settings.ts): a room with no rate
+   asks for it instead of showing a total. */
 
 export type Amenity = "bed" | "sofa" | "tv" | "cup" | "door" | "wifi" | "desk";
 export type RoomPhoto = { file: string; width: number; height: number; alt: string };
@@ -9,7 +9,6 @@ export type Room = {
   id: "std" | "dlx";
   name: string;
   short: string;
-  rate: number | null; // KES a night
   lede: string;
   desc: string;
   has: [Amenity, string][];
@@ -23,7 +22,6 @@ export const ROOMS: Room[] = [
     id: "std",
     name: "Standard room",
     short: "Standard",
-    rate: 3500,
     lede: "For a work trip or a short stay.",
     desc: "Cream walls, timber floors, a sitting corner by the window and the bed under its net. Upstairs from the grill, so dinner is a short walk or a call away.",
     has: [
@@ -48,7 +46,6 @@ export const ROOMS: Room[] = [
     id: "dlx",
     name: "Deluxe room",
     short: "Deluxe",
-    rate: null,
     lede: "More room, for longer stays.",
     desc: "Timber ceilings, a four-poster bed under a canopy net, and space to sit or work. The largest has its own lounge corner with an L-shaped sofa.",
     has: [
@@ -73,7 +70,8 @@ export const ROOMS: Room[] = [
 ];
 
 export const MAX_NIGHTS = 30;
-export const MAX_GUESTS = 2;
+export type RoomTerms = Record<Room["id"], { rate: number | null; maxGuests: number }>;
+export const isRoomId = (x: string): x is Room["id"] => x === "std" || x === "dlx";
 
 /** The full-screen copy of a photo and its size. */
 export function xl(p: RoomPhoto) {
@@ -97,12 +95,12 @@ export const nightsWord = (n: number) => `${n} ${n === 1 ? "night" : "nights"}`;
 export const guestsWord = (n: number) => `${n} ${n === 1 ? "guest" : "guests"}`;
 
 /** The WhatsApp message asking for the room: dates, nights, guests, and the total or the rate question. */
-export function bookingMessage(room: Room, checkIn: string, nights: number, guests: number) {
+export function bookingMessage(room: Room, rate: number | null, checkIn: string, nights: number, guests: number, code?: string) {
   const out = addDays(checkIn, nights);
   const kes = (n: number) => `KES ${n.toLocaleString("en-KE")}`;
   return (
-    `Hello Bamboo Cask, I'd like to book a ${room.name}: check in ${dayName(checkIn)}, check out ${dayName(out)} ` +
+    `Hello Bamboo Cask, ${code ? `about my request ${code}: ` : ""}I'd like to book a ${room.name}: check in ${dayName(checkIn)}, check out ${dayName(out)} ` +
     `(${nightsWord(nights)}), ${guestsWord(guests)}. ` +
-    (room.rate ? `That's ${kes(room.rate * nights)} at ${kes(room.rate)} a night. Is it free?` : `What is the ${room.short} rate for those nights?`)
+    (rate ? `That's ${kes(rate * nights)} at ${kes(rate)} a night. Is it free?` : `What is the ${room.short} rate for those nights?`)
   );
 }

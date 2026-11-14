@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { bookingSummary, STATUS_LABEL } from "@/lib/bookings";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
@@ -93,6 +94,28 @@ async function Customer({ params }: { params: Promise<{ phone: string }> }) {
             {c.orders.length === 0 && <li className="px-4 py-5 text-ink-2">No orders yet.</li>}
           </ul>
         </section>
+        {c.bookings.length > 0 && (
+          <section className="min-w-0 flex-[999_1_420px] overflow-hidden rounded-2xl border border-line bg-panel">
+            <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line px-4 py-3.5">
+              <h2 className="font-bold">Bookings</h2>
+              <span className="text-ink-2">{c.bookings.length === 1 ? "1 booking" : `${c.bookings.length} bookings`}</span>
+            </div>
+            <ul>
+              {c.bookings.map((b) => (
+                <li key={b.id} className="flex flex-wrap items-center justify-between gap-3 border-b border-line-2 px-4 py-3 last:border-0">
+                  <span className="flex min-w-0 flex-col">
+                    <Link href={`/admin/bookings/${b.id}`} className="font-bold text-action underline">{b.code}</Link>
+                    <span className="text-fine text-ink-2">{bookingSummary(b)}</span>
+                  </span>
+                  <span className="flex items-center gap-3.5">
+                    <Tag tone={b.status === "requested" ? "warn" : b.status === "confirmed" ? "ok" : b.status === "declined" ? "danger" : "neutral"}>{STATUS_LABEL[b.status]}</Tag>
+                    <span className="text-fine text-ink-2">{date(b.createdAt)}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
     </>
   );

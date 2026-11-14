@@ -24,3 +24,12 @@ test("admins do everything except impersonate", () => {
   }
   assert.equal(can("admin", { user: ["impersonate"] }), false);
 });
+
+test("bookings are for staff and admins; settings for admins only", () => {
+  assert.ok(can("staff", { booking: ["view", "update"] }));
+  assert.ok(can("admin", { booking: ["view", "update"] }));
+  assert.ok(!can("customer", { booking: ["view"] }));
+  assert.ok(can("admin", { settings: ["edit"] }));
+  assert.ok(!can("staff", { settings: ["edit"] }));
+  assert.ok(!can(null, { settings: ["edit"] }));
+});

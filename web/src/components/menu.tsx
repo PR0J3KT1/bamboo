@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getMenu, toCatalog, type MenuItem } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
+import { getSettings } from "@/lib/settings";
 import { eighteenthBirthday } from "@/lib/age";
 import { Price } from "@/components/ui/price";
 import { Tag } from "@/components/ui/pill";
@@ -21,7 +22,7 @@ const SHORT: Record<string, string> = { breakfast: "Breakfast", grill: "Off the 
    order beside it. Alcohol never leaves the server for a guest or an account under 18; they get
    the closed Cask Room instead. */
 export async function Menu() {
-  const [menu, viewer] = await Promise.all([getMenu(), getViewer()]);
+  const [menu, viewer, settings] = await Promise.all([getMenu(), getViewer(), getSettings()]);
 
   const visible = menu.items.filter((i) => !i.alcohol || viewer.adult);
   const families = new Map(menu.families.map((f) => [f.id, f]));
@@ -45,6 +46,12 @@ export async function Menu() {
       <div className="mx-auto grid w-full max-w-[1360px] flex-1 gap-7 px-4 pt-5 pb-10 md:px-8 lg:grid-cols-[200px_minmax(0,1fr)_300px] lg:pt-7 lg:pb-12">
         <SectionStalk sections={nav} />
         <div className="flex min-w-0 flex-col gap-6">
+          {!settings.ordering.open && (
+            <div role="status" className="flex flex-col gap-1 rounded-2xl border-[1.5px] border-warn bg-warn-soft p-4 text-warn-ink">
+              <p className="font-bold">Not taking orders online just now.</p>
+              <p>{settings.ordering.note || "Have a look at the menu, and call or WhatsApp the lounge to order."}</p>
+            </div>
+          )}
           {sections.map((c) => {
             if (c.adultOnly) {
               if (viewer.adult) return <CaskRoom key={c.id} id={c.id} title={c.name} />;

@@ -9,7 +9,7 @@ import { PAYMENT_LABEL, stepsFor } from "@/lib/order-status";
 import { formatKes, Price } from "@/components/ui/price";
 import { buttonStyles } from "@/components/ui/button";
 import { displayPhone } from "@/lib/phone";
-import { LOUNGE } from "@/lib/lounge";
+import { getSettings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { KeepFresh } from "./keep-fresh";
 
@@ -41,7 +41,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
     return e ? e.at.toLocaleTimeString("en-KE", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Africa/Nairobi" }) : null;
   };
 
-  const lounge = LOUNGE.phone;
+  const lounge = (await getSettings()).phone;
   const steps = stepsFor(o.mode);
   const cancelled = o.status === "cancelled";
   const at = steps.findIndex((s) => s.status === o.status);

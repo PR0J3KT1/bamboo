@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { Brand } from "@/components/brand";
 import { LoungeFooter } from "@/components/menu/more-at-lounge";
-import { LOUNGE, whatsapp } from "@/lib/lounge";
+import { LOUNGE } from "@/lib/lounge";
+import { getSettings } from "@/lib/settings";
 import { ROOMS } from "@/lib/rooms";
 import { RoomsView } from "./rooms-view";
 
@@ -13,9 +14,10 @@ export const metadata: Metadata = {
   description: "Standard and Deluxe rooms upstairs at Bamboo Cask, Keiyo Road, Ngara. From KES 3,500 a night, with room service from the kitchen, 24 hours.",
 };
 
-const from = Math.min(...ROOMS.map((r) => r.rate ?? Infinity));
-
-export default function RoomsPage() {
+export default async function RoomsPage() {
+  const settings = await getSettings();
+  const rates = ROOMS.map((r) => settings.rooms[r.id].rate).filter((r): r is number => r !== null);
+  const from = rates.length ? Math.min(...rates) : null;
   return (
     <>
       <header className="relative isolate overflow-hidden bg-grove text-on-grove">
@@ -31,11 +33,11 @@ export default function RoomsPage() {
           <p className="font-semibold text-lime">Upstairs at {LOUNGE.where}</p>
           <h1 className="font-stencil text-h1 font-black md:text-[5rem]">ROOMS UPSTAIRS</h1>
           <p className="max-w-md font-serif text-lead italic md:text-[1.25rem]">Sleep upstairs from the grill. Order dinner to the room, and breakfast in the morning.</p>
-          <p className="mt-1 font-semibold">From KES {from.toLocaleString("en-KE")} a night</p>
+          {from && <p className="mt-1 font-semibold">From KES {from.toLocaleString("en-KE")} a night</p>}
         </div>
       </header>
       <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 py-6 md:px-8 md:py-10">
-        <RoomsView phone={LOUNGE.phone} phoneShown={LOUNGE.phoneShown} waBase={whatsapp()} />
+        <RoomsView terms={settings.rooms} phone={settings.phone} />
       </main>
       <LoungeFooter />
     </>

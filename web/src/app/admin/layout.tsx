@@ -4,6 +4,7 @@ import { checkPermission } from "@/lib/session";
 import { can } from "@/lib/permissions";
 import { AdminBar, type AdminNavItem } from "@/components/admin-shell/admin-bar";
 import { NoAccess } from "@/components/admin-shell/no-access";
+import { countRequests } from "@/db/queries/bookings";
 
 export const metadata: Metadata = { title: { default: "Admin", template: "%s · Bamboo Cask admin" } };
 
@@ -15,8 +16,10 @@ async function Frame({ children }: { children: React.ReactNode }) {
     { href: "/admin", label: "Orders" },
     ...(can(user.role, { menu: ["toggle"] }) ? [{ href: "/admin/menu", label: "Menu" }] : []),
     ...(can(user.role, { customer: ["view"] }) ? [{ href: "/admin/customers", label: "Customers" }] : []),
+    ...(can(user.role, { booking: ["view"] }) ? [{ href: "/admin/bookings", label: "Bookings", count: await countRequests() }] : []),
     ...(can(user.role, { report: ["view"] }) ? [{ href: "/admin/reports", label: "Reports" }] : []),
     ...(can(user.role, { user: ["set-role"] }) ? [{ href: "/admin/team", label: "Team" }] : []),
+    ...(can(user.role, { settings: ["edit"] }) ? [{ href: "/admin/settings", label: "Settings" }] : []),
   ];
   return (
     <>

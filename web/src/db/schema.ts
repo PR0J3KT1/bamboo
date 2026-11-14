@@ -372,3 +372,49 @@ export const orderLinesRelations = relations(orderLines, ({ one }) => ({
   order: one(orders, { fields: [orderLines.orderId], references: [orders.id] }),
   item: one(items, { fields: [orderLines.itemId], references: [items.id] }),
 }));
+
+/* ───────────────────────── Settings ─────────────────────────
+   The lounge's details the admin edits (hours, phone, rating, room rates, whether online ordering
+   and table booking are open), one JSON value per key. See src/lib/settings.ts for the shape and
+   the defaults a missing key falls back to. */
+export const settings = pgTable("settings", {
+  key: text("key").primaryKey(),
+  value: jsonb("value").notNull(),
+  updatedBy: text("updated_by"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().$onUpdate(() => new Date()).notNull(),
+});
+
+/* ───────────────────────── Bookings ─────────────────────────
+   A room for some nights, or a table at a time. The customer asks; staff confirm or decline in
+   the admin, with a reply the customer gets by SMS. Nothing is paid online. */
+export const bookingKind = pgEnum("booking_kind", ["room", "table"]);
+export const bookingStatus = pgEnum("booking_status", ["requested", "confirmed", "declined", "cancelled", "completed"]);
+/* Short codes read out on the phone, from BK-1001. */
+export const bookingCodeSeq = pgSequence("booking_code_seq", { startWith: 1001 });
+
+export const bookings = pgTable(
+  "bookings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    code: text("code").notNull().unique(),
+    kind: bookingKind("kind").notNull(),
+    status: bookingStatus("status").default("requested").notNull(),
+    userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+    name: text("name").notNull(),
+    phone: text("phone").notNull(), // E.164
+    guests: integer("guests").notNull(), // people staying, or at the table
+    // a room
+    room: text("room"), // "std" | "dlx" (src/lib/rooms.ts)
+    checkIn: date("check_in"), // YYYY-MM-DD
+    nights: integer("nights"),
+    rate: integer("rate"), // KES a night when asked, if the room had a rate then
+    // a table
+    at: timestamp("at", { withTimezone: true }), // the table's date and time
+    occasion: text("occasion"), // "Match day", "Birthday"…
+    note: text("note"), // from the customer
+    reply: text("reply"), // from the lounge, sent by SMS with a confirm or decline
+    handledBy: text("handled_by"),
+    ...timestamps,
+  },
+  (t) => [index("bookings_status_idx").on(t.status), index("bookings_check_in_idx").on(t.checkIn), index("bookings_at_idx").on(t.at)],
+);

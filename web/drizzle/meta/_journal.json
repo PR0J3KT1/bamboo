@@ -43,6 +43,13 @@
       "when": 1794647604357,
       "tag": "0005_blocked_numbers",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794681122523,
+      "tag": "0006_settings_bookings",
+      "breakpoints": true
     }
   ]
 }

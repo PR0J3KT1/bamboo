@@ -4,15 +4,18 @@ import Link from "next/link";
 import { Menu } from "@/components/menu";
 import { ViewerBar } from "@/components/viewer-bar";
 import { ModeSwitch } from "@/components/order/mode-switch";
-import { Brand, WhatsAppButton } from "@/components/brand";
+import { Brand } from "@/components/brand";
+import { WhatsAppButton } from "@/components/whatsapp-button";
+import { getSettings } from "@/lib/settings";
 import { LoungeFooter } from "@/components/menu/more-at-lounge";
 import { loungePhoto } from "@/lib/pictures";
 import { LOUNGE } from "@/lib/lounge";
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getSettings();
   const hero = loungePhoto("hero");
   const facts = [
-    LOUNGE.rating && `${LOUNGE.rating.stars} stars from ${LOUNGE.rating.reviews.toLocaleString("en-KE")} Google reviews`,
+    settings.rating && `${settings.rating.stars} stars from ${settings.rating.reviews.toLocaleString("en-KE")} Google reviews`,
     "Live sport on big screens",
     "Rooms upstairs",
     "Events and a car wash",
@@ -30,7 +33,7 @@ export default function Home() {
           </Suspense>
         </div>
         <div className="mx-auto flex max-w-[1360px] flex-col gap-4 px-4 pt-8 pb-7 md:px-8 md:pt-14 md:pb-11">
-          <p className="font-semibold text-lime">{LOUNGE.where}. {LOUNGE.hours}.</p>
+          <p className="font-semibold text-lime">{LOUNGE.where}. {settings.hours}.</p>
           <h1 className="font-stencil text-h1 font-black md:text-[5rem]">
             CHARCOAL. <br />
             CASK. <br className="md:hidden" />
@@ -44,7 +47,7 @@ export default function Home() {
             {facts.map((f) => (
               <li key={f} className="flex items-center gap-2">
                 <span aria-hidden className="size-1.5 rounded-full bg-lime" />
-                {f === "Rooms upstairs" ? <Link href="/rooms" className="underline underline-offset-2 hover:text-on-grove">{f}</Link> : f}
+                {f === "Rooms upstairs" ? <Link href="/rooms" className="underline underline-offset-2 hover:text-on-grove">{f}</Link> : f === "Live sport on big screens" ? <Link href="/book" className="underline underline-offset-2 hover:text-on-grove">{f}: book a table</Link> : f}
               </li>
             ))}
           </ul>

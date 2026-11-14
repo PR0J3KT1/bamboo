@@ -91,7 +91,7 @@ export async function listCustomers(opts: { q?: string; team?: boolean; limit?: 
 
 /** One customer by number, with their orders. */
 export async function getCustomer(phone: string) {
-  const [[u], orders, [guestBlock]] = await Promise.all([
+  const [[u], orders, [guestBlock], bookings] = await Promise.all([
     db.select().from(schema.user).where(eq(schema.user.phoneNumber, phone)).limit(1),
     db
       .select({
@@ -111,8 +111,9 @@ export async function getCustomer(phone: string) {
       .orderBy(desc(schema.orders.createdAt))
       .limit(100),
     db.select().from(schema.blockedNumbers).where(eq(schema.blockedNumbers.phone, phone)).limit(1),
+    db.select().from(schema.bookings).where(eq(schema.bookings.phone, phone)).orderBy(desc(schema.bookings.createdAt)).limit(50),
   ]);
-  if (!u && !orders.length && !guestBlock) return null;
+  if (!u && !orders.length && !guestBlock && !bookings.length) return null;
   const completed = orders.filter((o) => o.status === "completed");
   return {
     phone,
@@ -122,6 +123,7 @@ export async function getCustomer(phone: string) {
     blocked: (u ? isBanned(u) : false) || !!guestBlock,
     blockReason: u?.banReason ?? guestBlock?.reason ?? null,
     orders,
+    bookings,
     spent: completed.reduce((s, o) => s + o.total, 0),
   };
 }

@@ -3,8 +3,8 @@ import { defaultStatements } from "better-auth/plugins/admin/access";
 
 /* Who may do what in the admin. Three roles:
      customer  the default for every account: no admin at all
-     staff     the orders board, the sold-out switch, looking up customers
-     admin     everything: prices and items, roles and blocks, reports
+     staff     the orders board, the sold-out switch, looking up customers, bookings
+     admin     everything: prices and items, roles and blocks, reports, the lounge's settings
    Better Auth's own user-management actions (set role, block) are admin only, and nobody can
    impersonate anybody. Used on the server for every check, and in the browser only to hide
    what someone can't use. */
@@ -14,6 +14,8 @@ export const statements = {
   menu: ["toggle", "edit"],
   customer: ["view"],
   report: ["view"],
+  booking: ["view", "update"],
+  settings: ["edit"],
 } as const;
 
 export const ac = createAccessControl(statements);
@@ -24,6 +26,7 @@ export const roles = {
     order: ["view", "update"],
     menu: ["toggle"],
     customer: ["view"],
+    booking: ["view", "update"],
   }),
   admin: ac.newRole({
     user: ["list", "get", "set-role", "ban", "update"],
@@ -32,6 +35,8 @@ export const roles = {
     menu: ["toggle", "edit"],
     customer: ["view"],
     report: ["view"],
+    booking: ["view", "update"],
+    settings: ["edit"],
   }),
 };
 

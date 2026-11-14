@@ -96,3 +96,15 @@ export function rememberOrder(id: string, code: string) {
     /* not essential */
   }
 }
+
+/** The same for bookings: a guest can find the booking's page again from this browser. */
+const BOOKINGS_KEY = "bc-app-bookings";
+export function rememberBooking(id: string, code: string) {
+  try {
+    const list = JSON.parse(localStorage.getItem(BOOKINGS_KEY) ?? "[]") as { id: string; code: string; at: number }[];
+    list.unshift({ id, code, at: Date.now() });
+    localStorage.setItem(BOOKINGS_KEY, JSON.stringify(list.slice(0, 20)));
+  } catch {
+    /* not essential */
+  }
+}

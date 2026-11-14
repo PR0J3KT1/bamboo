@@ -13,10 +13,11 @@ test("stay dates roll over months and years", () => {
 });
 
 test("the booking message carries the stay and the total, or asks for the rate", () => {
-  const m = bookingMessage(std, "2026-11-14", 3, 2);
+  const m = bookingMessage(std, 3500, "2026-11-14", 3, 2);
   assert.match(m, /Standard room: check in Sat, 14 Nov, check out Tue, 17 Nov \(3 nights\), 2 guests/);
   assert.match(m, /KES 10,500 at KES 3,500 a night/);
-  assert.match(bookingMessage(dlx, "2026-11-14", 1, 1), /What is the Deluxe rate/);
+  assert.match(bookingMessage(dlx, null, "2026-11-14", 1, 1), /What is the Deluxe rate/);
+  assert.match(bookingMessage(std, 3500, "2026-11-14", 1, 1, "BK-1004"), /^Hello Bamboo Cask, about my request BK-1004: /);
 });
 
 test("full-screen copies keep the photo's orientation", () => {

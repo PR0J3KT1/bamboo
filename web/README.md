@@ -49,17 +49,24 @@ Alcohol is filtered on the server: it is never sent to a guest or to an account 
 - **The Cask Room wall**: a row of bottles per shelf, drifting; hover or focus holds a row, Pause
   holds them all, reduced motion keeps them still. Shelves with fewer than four bottle photos
   get a rail instead.
-- The lounge's facts (address, hours, phone, Google rating) are in `src/lib/lounge.ts`. The
-  rating stays hidden until it's set there. `LOUNGE_PHONE` overrides the phone, which is used for
-  "Call the lounge", the WhatsApp button and the WhatsApp links.
+- The lounge's hours, phone and Google rating come from Settings in the admin.
 
-## Rooms (/rooms)
+## Rooms (/rooms) and tables (/book)
 
-Standard (KES 3,500 a night) and Deluxe (rate on request) rooms upstairs, from the old site:
-the lounge's own photos as a gallery that opens full screen, what each room has, and a booking
-card (check-in, nights, guests) that works out the stay and opens WhatsApp with the request
-written out. The lounge confirms there; nothing is paid on the page. The rooms, rates and photo
-captions are in `src/lib/rooms.ts`; set the Deluxe `rate` there once the lounge gives it.
+Customers ask for a room (dates, nights, guests) or book a table (day, time, people, occasion).
+Either is saved as a booking with a code (BK-1001) and a page of its own (/bookings/[id]) where
+they see where it stands, the lounge's reply, and can cancel. Staff answer in **Bookings** in the
+admin: confirming or declining texts the customer (declining needs a reason). A number can't have
+more than 3 requests waiting. Nothing is paid online. Room photos and captions are in
+`src/lib/rooms.ts`; the rates, guests per room and table hours are in Settings.
+
+## Settings (/admin/settings, admins only)
+
+What customers see about the lounge, kept in the `settings` table (`src/lib/settings-schema.ts`
+for the shape, defaults and messages): opening hours, the phone used for Call, WhatsApp and SMS,
+the Google rating (hidden until set), room rates and guests, table hours and size, and two
+switches: **taking orders online** (off: the menu shows the note and checkout refuses, on the
+server too) and **booking tables online**. Every save is audited.
 
 ## The admin (/admin)
 
@@ -171,7 +178,7 @@ deployed from this folder with `vercel deploy --prod`. The static site stays a s
   `DATABASE_URL=… DATABASE_URL_UNPOOLED=… pnpm db:migrate && pnpm db:seed`.
 - **Set in the project:** `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `BETTER_AUTH_TRUSTED_ORIGINS`.
 - **Still to add:** `AT_API_KEY`, `AT_USERNAME`, `AT_SENDER_ID` (sign-in codes), the `R2_*`
-  values (photos), the `TUMABODA_*` values (riders) and `LOUNGE_PHONE`. Then make the first
+  values (photos), the `TUMABODA_*` values (riders) Then make the first
   admin: `pnpm admin:grant +2547… admin` with the production database in the environment.
 
 ## Self-hosting
