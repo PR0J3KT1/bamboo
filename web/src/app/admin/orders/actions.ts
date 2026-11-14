@@ -85,7 +85,7 @@ export async function callRiderFor(orderId: string): Promise<OrderActionResult> 
 async function callRider(orderId: string, me: UserRow): Promise<OrderActionResult> {
   if (!tumabodaEnabled()) return { ok: false, error: "TumaBoda isn't set up yet (TUMABODA_API_KEY). Arrange the rider by phone." };
   const [row] = await db
-    .select({ o: schema.orders, place: schema.deliveryPlaces, items: sql<number>`(select coalesce(sum(qty),0)::int from ${schema.orderLines} where ${schema.orderLines.orderId} = ${schema.orders.id})` })
+    .select({ o: schema.orders, place: schema.deliveryPlaces, items: sql<number>`(select coalesce(sum(ol.qty), 0)::int from order_lines ol where ol.order_id = "orders"."id")` })
     .from(schema.orders)
     .leftJoin(schema.deliveryPlaces, eq(schema.orders.placeId, schema.deliveryPlaces.id))
     .where(eq(schema.orders.id, orderId))

@@ -315,6 +315,15 @@ export const orderLines = pgTable(
   (t) => [index("order_lines_order_idx").on(t.orderId)],
 );
 
+/* Numbers blocked without an account (guests who only ever ordered as guests). Accounts are
+   blocked through Better Auth's own fields on the user (banned, banReason). */
+export const blockedNumbers = pgTable("blocked_numbers", {
+  phone: text("phone").primaryKey(), // E.164, +2547…
+  reason: text("reason"),
+  byName: text("by_name").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 /* ───────────────────────── Audit ─────────────────────────
    Every change made in the admin, with who made it and what it was before, so a price change
    or a new admin always has a name on it. */

@@ -14,7 +14,8 @@ async function Frame({ children }: { children: React.ReactNode }) {
   const nav: AdminNavItem[] = [
     { href: "/admin", label: "Orders" },
     ...(can(user.role, { menu: ["toggle"] }) ? [{ href: "/admin/menu", label: "Menu" }] : []),
-    /* Customers (phase 6) and Reports (phase 7) join here as they're built */
+    ...(can(user.role, { customer: ["view"] }) ? [{ href: "/admin/customers", label: "Customers" }] : []),
+    /* Reports (phase 7) joins here when it's built */
     ...(can(user.role, { user: ["set-role"] }) ? [{ href: "/admin/team", label: "Team" }] : []),
   ];
   return (

@@ -99,6 +99,19 @@ with the phone's metadata (GPS) removed, and stored in R2 under a new name each 
 Without R2, development saves photos in `public/uploads`; production refuses uploads with a clear
 message. Any S3-compatible store works with `R2_ENDPOINT` in place of `R2_ACCOUNT_ID`.
 
+## Customers (/admin/customers)
+
+A customer is a phone number: an account, or a guest who has only ordered without signing in.
+Orders are counted by number, so an account's earlier guest orders count too.
+
+- Staff and admins see the list (search by name or number), each customer's Cask Room status
+  and order history. A **Staff** tab lists the team.
+- Only admins see dates of birth, change roles there, and **block a number** (with a reason).
+  Blocking an account signs it out everywhere (Better Auth's admin plugin); blocking a guest
+  number adds it to `blocked_numbers`. Either way the number can't sign in, gets no sign-in
+  code and can't order, until an admin unblocks it. Team members can't be blocked until they're
+  taken off the team.
+
 ## Changing the schema
 
 Edit `src/db/schema.ts`, then `pnpm db:generate --name <what-changed>` and `pnpm db:migrate`.
