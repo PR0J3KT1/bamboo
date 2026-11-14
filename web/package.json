@@ -14,7 +14,8 @@
     "menu:export": "node scripts/export-menu.mjs ../bamboo-cask.html src/db/seed-data/menu.json",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "tsx --test \"src/**/*.test.ts\"",
-    "admin:grant": "tsx scripts/grant-role.ts"
+    "admin:grant": "tsx scripts/grant-role.ts",
+    "tumaboda:mock": "node scripts/tumaboda-mock.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

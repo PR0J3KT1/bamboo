@@ -1,12 +1,12 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import type { DeliveryPlace } from "@/db/queries/menu";
 import { basket, rememberOrder } from "@/lib/basket";
 import { fareFor } from "@/lib/orders";
-import { placeOrder } from "@/app/actions/orders";
+import { deliveryFee, placeOrder } from "@/app/actions/orders";
 import { useBasketTotals } from "@/components/order/basket-bar";
 import { lineName } from "@/components/order/catalog";
 import { Button, buttonStyles } from "@/components/ui/button";
@@ -32,7 +32,22 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone }: {
   const [pending, start] = useTransition();
 
   const place = places.find((p) => p.id === b.placeId) ?? null;
-  const fee = b.mode === "delivery" && place ? fareFor(place.km) : 0;
+
+  /* TumaBoda's fee for this place and this much food, fetched as either changes; the fare rule
+     stands in until it arrives (or if TumaBoda isn't set up). */
+  const quoteKey = place && b.mode === "delivery" ? `${place.id}:${subtotal}` : null;
+  const [quote, setQuote] = useState<{ key: string; fee: number } | null>(null);
+  useEffect(() => {
+    if (!quoteKey || !place) return;
+    let live = true;
+    deliveryFee(place.id, subtotal).then((r) => {
+      if (live && r) setQuote({ key: quoteKey, fee: r.fee });
+    });
+    return () => {
+      live = false;
+    };
+  }, [quoteKey, place, subtotal]);
+  const fee = b.mode === "delivery" && place ? (quote?.key === quoteKey ? quote.fee : fareFor(place.km)) : 0;
   const ok = lines.filter((l) => l.item);
   const hasAlcohol = ok.some((l) => l.item!.alcohol);
 

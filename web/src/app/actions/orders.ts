@@ -5,7 +5,9 @@ import { db, schema } from "@/db";
 import { getViewer, isPhoneBlocked } from "@/lib/session";
 import { BLOCKED_MESSAGE } from "@/lib/blocked";
 import { normalizeKenyanPhone } from "@/lib/phone";
-import { MAX_LINES, MAX_QTY, priceOrder, type PricedItem } from "@/lib/orders";
+import { fareFor, MAX_LINES, MAX_QTY, priceOrder, type PricedItem } from "@/lib/orders";
+import { notifyOrder } from "@/lib/order-feed";
+import { quoteDeliveryFee } from "@/lib/tumaboda";
 
 const Input = z.object({
   lines: z
@@ -61,6 +63,15 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   });
   if (!priced.ok) return priced;
 
+  /* The delivery fee: TumaBoda's quote for this drop-off when it's set up, else the fare rule. */
+  if (input.mode === "delivery" && place?.lat != null && place.lng != null) {
+    const quoted = await quoteDeliveryFee({ lat: place.lat, lng: place.lng }, priced.subtotal);
+    if (quoted != null) {
+      priced.deliveryFee = quoted;
+      priced.total = priced.subtotal + quoted;
+    }
+  }
+
   const order = await db.transaction(async (tx) => {
     const [{ n }] = await tx.execute<{ n: string }>(sql`select nextval('order_code_seq')::text as n`);
     const [o] = await tx
@@ -86,10 +97,20 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
       })
       .returning({ id: schema.orders.id, code: schema.orders.code });
     await tx.insert(schema.orderLines).values(priced.lines.map((l) => ({ orderId: o.id, ...l })));
-    /* The orders board listens for this; Postgres delivers it when the transaction commits. */
-    await tx.execute(sql`select pg_notify('orders', ${o.id})`);
+    await tx.insert(schema.orderEvents).values({ orderId: o.id, status: "received", byName: "Customer" });
+    /* the orders board hears about it when the transaction commits */
+    await notifyOrder(tx, o.id);
     return o;
   });
 
   return { ok: true, id: order.id, code: order.code };
+}
+
+/** The delivery fee to show at checkout for a place and this much food. */
+export async function deliveryFee(placeId: string, subtotal: number): Promise<{ fee: number; quoted: boolean } | null> {
+  if (typeof placeId !== "string" || !Number.isFinite(subtotal) || subtotal < 0 || subtotal > 10_000_000) return null;
+  const [place] = await db.select().from(schema.deliveryPlaces).where(eq(schema.deliveryPlaces.id, placeId)).limit(1);
+  if (!place) return null;
+  const quoted = place.lat != null && place.lng != null ? await quoteDeliveryFee({ lat: place.lat, lng: place.lng }, Math.round(subtotal)) : null;
+  return quoted != null ? { fee: quoted, quoted: true } : { fee: fareFor(place.km), quoted: false };
 }

@@ -261,10 +261,40 @@ export const orders = pgTable(
     paymentStatus: paymentStatus("payment_status").default("unpaid").notNull(),
     mpesaCheckoutRequestId: text("mpesa_checkout_request_id").unique(),
     mpesaReceipt: text("mpesa_receipt"),
+    cancelReason: text("cancel_reason"),
+    /* The rider, through TumaBoda's partner API (src/lib/tumaboda.ts) */
+    tumabodaDeliveryId: text("tumaboda_delivery_id").unique(),
+    tumabodaDeliveryNumber: text("tumaboda_delivery_number"),
+    tumabodaStatus: text("tumaboda_status"),
+    tumabodaTrackingUrl: text("tumaboda_tracking_url"),
+    tumabodaError: text("tumaboda_error"),
     ...timestamps,
   },
   (t) => [index("orders_user_idx").on(t.userId), index("orders_status_idx").on(t.status)],
 );
+
+/* Each step an order took, and who moved it: the times on the tracking page and the order's
+   history in the admin. */
+export const orderEvents = pgTable(
+  "order_events",
+  {
+    id: serial("id").primaryKey(),
+    orderId: uuid("order_id")
+      .notNull()
+      .references(() => orders.id, { onDelete: "cascade" }),
+    status: orderStatus("status").notNull(),
+    byName: text("by_name").notNull(), // a staff member's name, "Customer", or "TumaBoda"
+    note: text("note"),
+    at: timestamp("at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [index("order_events_order_idx").on(t.orderId)],
+);
+
+/* TumaBoda webhook ids already handled: they retry, so each event may arrive more than once. */
+export const tumabodaEvents = pgTable("tumaboda_events", {
+  id: text("id").primaryKey(),
+  receivedAt: timestamp("received_at", { withTimezone: true }).defaultNow().notNull(),
+});
 
 export const orderLines = pgTable(
   "order_lines",
@@ -324,6 +354,10 @@ export const ordersRelations = relations(orders, ({ one, many }) => ({
   user: one(user, { fields: [orders.userId], references: [user.id] }),
   place: one(deliveryPlaces, { fields: [orders.placeId], references: [deliveryPlaces.id] }),
   lines: many(orderLines),
+  events: many(orderEvents),
+}));
+export const orderEventsRelations = relations(orderEvents, ({ one }) => ({
+  order: one(orders, { fields: [orderEvents.orderId], references: [orders.id] }),
 }));
 export const orderLinesRelations = relations(orderLines, ({ one }) => ({
   order: one(orders, { fields: [orderLines.orderId], references: [orders.id] }),

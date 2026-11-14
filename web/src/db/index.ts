@@ -14,3 +14,5 @@ if (process.env.NODE_ENV !== "production") g.__bcSql = sql;
 
 export const db = drizzle(sql, { schema });
 export { schema };
+/** The raw postgres-js client, for LISTEN (src/lib/order-feed.ts). */
+export const pg = sql;

@@ -29,7 +29,14 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
     .limit(1);
   if (!order) notFound();
   const o = order.o;
-  const lines = await db.select().from(schema.orderLines).where(eq(schema.orderLines.orderId, o.id)).orderBy(asc(schema.orderLines.id));
+  const [lines, events] = await Promise.all([
+    db.select().from(schema.orderLines).where(eq(schema.orderLines.orderId, o.id)).orderBy(asc(schema.orderLines.id)),
+    db.select({ status: schema.orderEvents.status, at: schema.orderEvents.at }).from(schema.orderEvents).where(eq(schema.orderEvents.orderId, o.id)).orderBy(asc(schema.orderEvents.at)),
+  ]);
+  const when = (status: string) => {
+    const e = events.findLast((x) => x.status === status);
+    return e ? e.at.toLocaleTimeString("en-KE", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Africa/Nairobi" }) : null;
+  };
 
   const steps = stepsFor(o.mode);
   const cancelled = o.status === "cancelled";
@@ -40,7 +47,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <>
-      <KeepFresh active={!done} />
+      <KeepFresh id={o.id} active={!done} />
       <header className="grove-bg text-on-grove">
         <div className="mx-auto flex max-w-2xl flex-col gap-3.5 px-4 pt-4 pb-7">
           <div className="flex items-center justify-between">
@@ -52,7 +59,9 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
           </h1>
           <p className="font-serif text-lead text-lime italic">
             {cancelled
-              ? "This order was cancelled. Call the lounge if that's a surprise."
+              ? o.cancelReason
+                ? `Cancelled by the lounge: ${o.cancelReason}`
+                : "This order was cancelled. Call the lounge if that's a surprise."
               : o.mode === "delivery"
                 ? `Placed at ${placed}, for delivery to ${order.place}.`
                 : `Placed at ${placed}, to collect at the counter.`}
@@ -79,7 +88,15 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
                     />
                     {!last && <span className={cn("my-0.5 w-0.5 flex-1", i < at ? "bg-action" : "bg-line")} />}
                   </div>
-                  <span className={cn("pb-3", state === "todo" ? "text-ink-2" : "font-bold")}>{s.label}</span>
+                  <span className="flex flex-col pb-3">
+                    <span className={state === "todo" ? "text-ink-2" : "font-bold"}>{s.label}</span>
+                    {state !== "todo" && when(s.status) && <span className="text-fine text-ink-2">{when(s.status)}</span>}
+                    {s.status === "out_for_delivery" && state === "now" && o.tumabodaTrackingUrl && (
+                      <a href={o.tumabodaTrackingUrl} target="_blank" rel="noreferrer" className="text-fine font-semibold text-action underline">
+                        Follow the rider on the map
+                      </a>
+                    )}
+                  </span>
                 </li>
               );
             })}

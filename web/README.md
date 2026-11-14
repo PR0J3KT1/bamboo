@@ -50,6 +50,30 @@ numbers and reports). Nobody can impersonate anybody.
 
 Testing the site on another address or port: add it to `BETTER_AUTH_TRUSTED_ORIGINS`.
 
+## The orders board and riders
+
+`/admin` is the ticket rail: New, Preparing, Ready, With the rider. Each ticket shows its age
+(the clip turns amber at 15 minutes and red at 30), the lines, the kitchen note, an 18+ tag for
+alcohol, and one button for the next step. The board and each customer's tracking page update
+live: every order change runs `pg_notify('orders', id)` inside its transaction, and
+`src/lib/order-feed.ts` streams it to browsers as Server-Sent Events (`/api/admin/orders/stream`,
+`/api/orders/<id>/stream`). Staff can turn on a chime for new orders.
+
+Riders come from TumaBoda's partner API (`src/lib/tumaboda.ts`), when `TUMABODA_API_KEY` is set:
+- Checkout shows TumaBoda's cash-on-delivery fee for the place (falling back to the fare rule).
+- **Mark ready** on a delivery order books a rider, cash at the door, with the order code as the
+  reference, so a retry never books two. If booking fails (a low wallet, say), the order is still
+  ready, the ticket says "Rider not booked", and the order page has **Call a rider again**.
+- TumaBoda's webhooks (`/api/tumaboda/webhook`, signed with `TUMABODA_WEBHOOK_SECRET`) move the
+  order to "With the rider" at pickup and complete it at drop-off. Old or repeated events are
+  ignored; nothing moves an order backwards.
+- TumaBoda's partner API can't cancel a delivery: cancel the rider in the TumaBoda business app.
+
+Without a key, staff press **Hand to rider** and **Delivered** themselves. To try riders locally:
+`pnpm tumaboda:mock` (a stand-in for the partner API on port 4010 that walks each delivery through
+its statuses), and run the app with `TUMABODA_API_KEY=tuma_test_mock`,
+`TUMABODA_BASE_URL=http://localhost:4010/api/v1/partner` and `TUMABODA_WEBHOOK_SECRET=whsec_mock`.
+
 ## Changing the schema
 
 Edit `src/db/schema.ts`, then `pnpm db:generate --name <what-changed>` and `pnpm db:migrate`.
