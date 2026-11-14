@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import { getMenu, toCatalog, type MenuItem } from "@/db/queries/menu";
@@ -55,7 +56,10 @@ export async function Menu() {
               {c.note && <p className="mt-1 font-serif text-[1rem] text-ink-2 italic">{c.note}</p>}
               <ul className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-[repeat(auto-fill,minmax(210px,1fr))] md:gap-4">
                 {list.map((it) => (
-                  <li key={it.id} className="relative flex flex-col gap-1.5 rounded-2xl border border-line bg-card p-3 has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-action md:p-3.5">
+                  <li key={it.id} className="relative flex flex-col gap-1.5 overflow-hidden rounded-2xl border border-line bg-card p-3 has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-action md:p-3.5">
+                    {it.image && (
+                      <Image src={it.image} alt="" width={420} height={315} sizes="(min-width: 768px) 240px, 45vw" className="-mx-3 -mt-3 mb-1 aspect-[4/3] w-[calc(100%+1.5rem)] max-w-none object-cover md:-mx-3.5 md:-mt-3.5 md:w-[calc(100%+1.75rem)]" />
+                    )}
                     <h3 className="font-display text-[1.25rem] leading-[1.05] font-extrabold uppercase">
                       <OpenItemButton id={it.id}>{it.familyId ? families.get(it.familyId)?.name : it.name}</OpenItemButton>
                     </h3>

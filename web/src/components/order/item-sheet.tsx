@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 import { Plus } from "lucide-react";
 import { Sheet } from "@/components/ui/sheet";
 import { ChoicePill } from "@/components/ui/pill";
@@ -49,6 +50,7 @@ function ItemSheetBody({ id, onClose }: { id: string; onClose: () => void }) {
       open
       onClose={onClose}
       title={title}
+      media={opened.image ? <Image src={opened.image} alt={title} width={880} height={440} sizes="(min-width: 768px) 440px, 100vw" className="h-[220px] w-full object-cover" /> : undefined}
       footer={
         <div className="flex items-center gap-3">
           <Stepper value={qty} onChange={setQty} label={title} min={1} />

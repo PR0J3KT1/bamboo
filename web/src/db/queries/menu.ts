@@ -49,6 +49,7 @@ export type CatalogItem = {
   kind: string | null;
   size: string | null;
   serve: string | null;
+  image: string | null;
 };
 export type CatalogFamily = { id: string; name: string; sizeLabel: string; leadItemId: string | null };
 export type Catalog = { items: CatalogItem[]; families: CatalogFamily[]; pairs: Record<string, string[]> };
@@ -59,14 +60,16 @@ export function toCatalog(menu: Menu, adult: boolean): Catalog {
     .filter((i) => !i.alcohol || adult)
     .map((i) => ({
       id: i.id, name: i.name, description: i.description, price: i.price, alcohol: i.alcohol, familyId: i.familyId,
-      portion: i.portion, tag: i.tag, options: i.options, optionLabel: i.optionLabel, kind: i.kind, size: i.size, serve: i.serve,
+      portion: i.portion, tag: i.tag, options: i.options, optionLabel: i.optionLabel, kind: i.kind, size: i.size, serve: i.serve, image: i.image,
     }));
   const visible = new Set(items.map((i) => i.id));
   const pairs: Record<string, string[]> = {};
   for (const p of menu.pairings) if (visible.has(p.itemId)) (pairs[p.subjectId] ??= []).push(p.itemId);
   return {
     items,
-    families: menu.families.map((f) => ({ id: f.id, name: f.name, sizeLabel: f.sizeLabel, leadItemId: f.leadItemId })),
+    families: menu.families
+      .filter((f) => items.some((i) => i.familyId === f.id))
+      .map((f) => ({ id: f.id, name: f.name, sizeLabel: f.sizeLabel, leadItemId: f.leadItemId })),
     pairs,
   };
 }

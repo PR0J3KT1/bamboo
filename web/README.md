@@ -74,6 +74,31 @@ Without a key, staff press **Hand to rider** and **Delivered** themselves. To tr
 its statuses), and run the app with `TUMABODA_API_KEY=tuma_test_mock`,
 `TUMABODA_BASE_URL=http://localhost:4010/api/v1/partner` and `TUMABODA_WEBHOOK_SECRET=whsec_mock`.
 
+## Menu and prices (/admin/menu)
+
+- **Staff** switch dishes between "On the menu" and "Sold out".
+- **Admins** also change prices in place (a bar collects the changes; nothing is saved until
+  **Save prices**), edit or add dishes and drinks with their sizes, choices and photos, and edit a
+  section's name and note. A size that's no longer sold is switched off, not deleted, so old
+  orders keep it.
+- Every save refreshes the cached customer menu at once (`updateTag("menu")`) and is written to
+  `audit_events`.
+
+### Photos: Cloudflare R2
+
+Photos are shrunk in the browser (to about 0.5 MB), then on the server to at most 1600 px WebP
+with the phone's metadata (GPS) removed, and stored in R2 under a new name each time. Set up:
+
+1. In Cloudflare, create an R2 bucket (e.g. `bamboo-cask-photos`) and give it a public address:
+   the r2.dev URL, or better a custom domain such as `photos.bamboocask.co.ke`.
+2. Create an R2 API token with **Object Read & Write** on that bucket only.
+3. Set `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` and
+   `R2_PUBLIC_URL` (the public address). `next.config.ts` allows that host for `next/image`, so
+   rebuild after changing it.
+
+Without R2, development saves photos in `public/uploads`; production refuses uploads with a clear
+message. Any S3-compatible store works with `R2_ENDPOINT` in place of `R2_ACCOUNT_ID`.
+
 ## Changing the schema
 
 Edit `src/db/schema.ts`, then `pnpm db:generate --name <what-changed>` and `pnpm db:migrate`.
