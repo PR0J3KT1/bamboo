@@ -1,0 +1,601 @@
+{
+ "lounge": {
+  "hero": {
+   "src": "/photos/hero.webp",
+   "alt": ""
+  },
+  "kienyeji": {
+   "src": "/photos/kienyeji.webp",
+   "alt": "Kienyeji chicken from the Bamboo Cask grill"
+  },
+  "pork": {
+   "src": "/photos/pork.webp",
+   "alt": "Pork choma, chopped on the board"
+  },
+  "tilapia": {
+   "src": "/photos/tilapia.webp",
+   "alt": "Grilled tilapia with chips, kachumbari and lime"
+  },
+  "fishchips": {
+   "src": "/photos/fishchips.webp",
+   "alt": "Tilapia with chips, kachumbari and lime"
+  },
+  "chips": {
+   "src": "/photos/chips.webp",
+   "alt": "Chips tossed with sausage on a white plate"
+  },
+  "fry": {
+   "src": "/photos/fry.webp",
+   "alt": "Meat wet fry with peppers and marrow bones"
+  },
+  "ribs": {
+   "src": "/photos/ribs.webp",
+   "alt": "Pork off the grill, on the bone"
+  },
+  "breakfast": {
+   "src": "/photos/breakfast.webp",
+   "alt": "A Bamboo Cask breakfast with tea"
+  },
+  "whisky": {
+   "src": "/photos/whisky.webp",
+   "alt": "A bottle of Macallan 12 on the bar, bamboo behind it"
+  },
+  "cognac": {
+   "src": "/photos/cognac.webp",
+   "alt": "A bottle of Courvoisier on the bar"
+  },
+  "sports": {
+   "src": "/photos/sports.webp",
+   "alt": ""
+  },
+  "rooms": {
+   "src": "/photos/rooms.webp",
+   "alt": ""
+  },
+  "events": {
+   "src": "/photos/events.webp",
+   "alt": ""
+  },
+  "carwash": {
+   "src": "/photos/carwash.webp",
+   "alt": ""
+  },
+  "lounge": {
+   "src": "/photos/lounge.webp",
+   "alt": ""
+  }
+ },
+ "food": {
+  "omelette": {
+   "src": "/photos/food/omelette.webp",
+   "alt": "A folded omelette on a plate",
+   "credit": [
+    "MaedaAkihiko",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Omelette-Plate.jpg"
+   ]
+  },
+  "eggs": {
+   "src": "/photos/food/eggs.webp",
+   "alt": "Two fried eggs in a pan",
+   "credit": [
+    "E4024",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Fried_eggs_in_a_sahan.jpg"
+   ]
+  },
+  "sausages": {
+   "src": "/photos/food/sausages.webp",
+   "alt": "Fried sausages and eggs on a breakfast plate",
+   "credit": [
+    "Vyacheslav Argenberg",
+    "CC BY 4.0",
+    "https://commons.wikimedia.org/wiki/File:Breakfast_with_fried_eggs_and_sausages,_Rostov-on-Don,_Russia.jpg"
+   ]
+  },
+  "chicken-sausage": {
+   "src": "/photos/food/chicken-sausage.webp",
+   "alt": "Two grilled sausages on a plate",
+   "credit": [
+    "Daderot",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Chicken_and_mushroom_sausage_-_Massachusetts.jpg"
+   ]
+  },
+  "bacon": {
+   "src": "/photos/food/bacon.webp",
+   "alt": "Fried bacon with eggs",
+   "credit": [
+    "Jon Sullivan",
+    "Public domain",
+    "https://commons.wikimedia.org/wiki/File:Eggs_and_bacon.jpg"
+   ]
+  },
+  "toast": {
+   "src": "/photos/food/toast.webp",
+   "alt": "Two slices of toast",
+   "credit": [
+    "LogoFever",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:2_Slices_of_Toast_in_the_kitchen.jpg"
+   ]
+  },
+  "coffee": {
+   "src": "/photos/food/coffee.webp",
+   "alt": "A cup of black coffee",
+   "credit": [
+    "Julius Schorzman",
+    "CC BY-SA 2.0",
+    "https://commons.wikimedia.org/wiki/File:A_small_cup_of_coffee.JPG"
+   ]
+  },
+  "dawa": {
+   "src": "/photos/food/dawa.webp",
+   "alt": "A hot ginger and lemon drink in a glass mug",
+   "credit": [
+    "AyyanD",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Lemongrass_ginger_tea.jpg"
+   ]
+  },
+  "milk": {
+   "src": "/photos/food/milk.webp",
+   "alt": "A mug of milk",
+   "credit": [
+    "Mapegi8",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Cozy_Coffee_and_Milk.jpg"
+   ]
+  },
+  "tikka": {
+   "src": "/photos/food/tikka.webp",
+   "alt": "Chicken tikka on skewers",
+   "credit": [
+    "Satdeep Gill",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Chicken_tikka_in_Araku_Valley,_Andhra_Pradesh_01.jpg"
+   ]
+  },
+  "choma-sausage": {
+   "src": "/photos/food/choma-sausage.webp",
+   "alt": "Sausages over a charcoal grill",
+   "credit": [
+    "AlphaLemur",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Charcoal_BBQ.jpg"
+   ]
+  },
+  "sausage-saute": {
+   "src": "/photos/food/sausage-saute.webp",
+   "alt": "Sausages in a pan with peppers and onion",
+   "credit": [
+    "jeffreyw",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Sausages_cooking_with_peppers_and_onion.jpg"
+   ]
+  },
+  "goat-choma": {
+   "src": "/photos/food/goat-choma.webp",
+   "alt": "Nyama choma at Bamboo Cask Lounge",
+   "credit": null
+  },
+  "ribs": {
+   "src": "/photos/food/ribs.webp",
+   "alt": "Grilled ribs on a plate",
+   "credit": [
+    "Marcelo Teson from Los Angeles, CA, USA",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Two_pieces_of_grilled_short_ribs_served_on_a_plate,_2007.jpg"
+   ]
+  },
+  "beef-choma": {
+   "src": "/photos/food/beef-choma.webp",
+   "alt": "Beef grilled over charcoal",
+   "credit": [
+    "safaritravelplus",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Nyama_choma_barbeque.jpg"
+   ]
+  },
+  "chops": {
+   "src": "/photos/food/chops.webp",
+   "alt": "A grilled chop on a plate",
+   "credit": [
+    "Shixart1985",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Grilled_steak_served_on_a_plate_with_avocado_and_sauce.jpg"
+   ]
+  },
+  "tbone": {
+   "src": "/photos/food/tbone.webp",
+   "alt": "A grilled T-bone steak",
+   "credit": [
+    "Bob n Renee",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Vegas_2016_-_28804449366.jpg"
+   ]
+  },
+  "hump": {
+   "src": "/photos/food/hump.webp",
+   "alt": "Sliced roast beef",
+   "credit": [
+    "Acabashi",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Roast_topside_of_beef.jpg"
+   ]
+  },
+  "sufuria": {
+   "src": "/photos/food/sufuria.webp",
+   "alt": "Meat cooking in a pot",
+   "credit": [
+    "E4024",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Veal_or_beef_stew.jpg"
+   ]
+  },
+  "wings": {
+   "src": "/photos/food/wings.webp",
+   "alt": "Chicken wings with a dip",
+   "credit": [
+    "Paul Lowry",
+    "CC BY 4.0",
+    "https://commons.wikimedia.org/wiki/File:Chicken_Wings-_It%27s_been_a_while._Baton_Rouge_LA_2026.jpg"
+   ]
+  },
+  "stew-chicken": {
+   "src": "/photos/food/stew-chicken.webp",
+   "alt": "Chicken stewed with vegetables",
+   "credit": [
+    "FBenjr123",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Chicken_stew_with_mixed_vegetables.jpg"
+   ]
+  },
+  "stew-beef": {
+   "src": "/photos/food/stew-beef.webp",
+   "alt": "Beef stewed with vegetables",
+   "credit": [
+    "Andre",
+    "CC BY-SA 3.0",
+    "https://commons.wikimedia.org/wiki/File:Pot-au-feu2.jpg"
+   ]
+  },
+  "stew-goat": {
+   "src": "/photos/food/stew-goat.webp",
+   "alt": "Goat stew with potatoes",
+   "credit": [
+    "Gerda Arendt",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Goat_stew_with_papas_arrugadas,_Puntagorda,_La_Palma.jpg"
+   ]
+  },
+  "broiler": {
+   "src": "/photos/food/broiler.webp",
+   "alt": "A roast chicken",
+   "credit": [
+    "Evan Swigart from Chicago, USA",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Max%27s_Roasted_Chicken_-_Evan_Swigart.jpg"
+   ]
+  },
+  "beef-fry": {
+   "src": "/photos/food/beef-fry.webp",
+   "alt": "Beef with potatoes and carrots",
+   "credit": [
+    "Daderot",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Beef_stew_with_potatoes_and_carrots_-_Massachusetts.jpg"
+   ]
+  },
+  "beef-nduma": {
+   "src": "/photos/food/beef-nduma.webp",
+   "alt": "Beef with boiled arrowroot",
+   "credit": [
+    "Asamboi",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Vanuatu_Beef_Curry_with_Boiled_Taro.jpg"
+   ]
+  },
+  "matumbo": {
+   "src": "/photos/food/matumbo.webp",
+   "alt": "Tripe in a bowl",
+   "credit": [
+    "Olgatladi2020",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:A_traditional_cuisine_%22tripe%22.jpg"
+   ]
+  },
+  "liver": {
+   "src": "/photos/food/liver.webp",
+   "alt": "Liver with onions",
+   "credit": [
+    "Joe Foodie",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Chicken_Livers.jpg"
+   ]
+  },
+  "biryani": {
+   "src": "/photos/food/biryani.webp",
+   "alt": "Chicken biriani",
+   "credit": [
+    "Subhrajyoti07",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:A_home_made_plate_of_mutton_biryani_served_with_chicken_kassa_cooked_in_the_bengali_style.jpg"
+   ]
+  },
+  "pilau": {
+   "src": "/photos/food/pilau.webp",
+   "alt": "Rice cooked with beef in a pot",
+   "credit": [
+    "Cmwaura",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Pilau_Food_in_Kenya.jpg"
+   ]
+  },
+  "ossobuco": {
+   "src": "/photos/food/ossobuco.webp",
+   "alt": "Ossobuco with mash",
+   "credit": [
+    "E4024",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Ossobuco_with_boiled_potatoes.jpg"
+   ]
+  },
+  "soup-chicken": {
+   "src": "/photos/food/soup-chicken.webp",
+   "alt": "A bowl of chicken soup",
+   "credit": [
+    "Nichijyou123",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Chicken_Noodle_Soup_US.jpg"
+   ]
+  },
+  "soup-beef": {
+   "src": "/photos/food/soup-beef.webp",
+   "alt": "A bowl of beef soup",
+   "credit": [
+    "Peachyeung316",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:A_Bowl_of_Beef_Noodle_Soup_from_The_Modern_Shanghai.jpg"
+   ]
+  },
+  "soup-fish": {
+   "src": "/photos/food/soup-fish.webp",
+   "alt": "A bowl of fish soup",
+   "credit": [
+    "Neodymium+Nd",
+    "CC BY 4.0",
+    "https://commons.wikimedia.org/wiki/File:Lettuce_Fish_Soup.jpg"
+   ]
+  },
+  "soup-oxtail": {
+   "src": "/photos/food/soup-oxtail.webp",
+   "alt": "A bowl of oxtail stew",
+   "credit": [
+    "Raimond Spekking",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Oxtail_soup-93323.jpg"
+   ]
+  },
+  "masala-chips": {
+   "src": "/photos/food/masala-chips.webp",
+   "alt": "Masala chips with a cabbage salad",
+   "credit": [
+    "Samuel Kiongo",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Chips_Masala,_Cabbage_Salad_and_tomato_sauce.jpg"
+   ]
+  },
+  "fries": {
+   "src": "/photos/food/fries.webp",
+   "alt": "A plate of chips",
+   "credit": [
+    "JIP",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Hesburger_French_fries_on_a_plate.jpg"
+   ]
+  },
+  "wedges": {
+   "src": "/photos/food/wedges.webp",
+   "alt": "Potato wedges",
+   "credit": [
+    "Gpkp",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Potato_wedges,_Bengaluru_(2026).jpg"
+   ]
+  },
+  "roast-potatoes": {
+   "src": "/photos/food/roast-potatoes.webp",
+   "alt": "Roast potatoes",
+   "credit": [
+    "Punker1999",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Roasted_potatoes_in_bowl.jpg"
+   ]
+  },
+  "mash": {
+   "src": "/photos/food/mash.webp",
+   "alt": "A bowl of mashed potatoes",
+   "credit": [
+    "sousvideguy",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Sous_vide_mashed_potatoes.jpg"
+   ]
+  },
+  "saute-potatoes": {
+   "src": "/photos/food/saute-potatoes.webp",
+   "alt": "Sautéed potatoes in a bowl",
+   "credit": [
+    "Alikiiaa",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Sweet_Potato_Sauteed_With_Honey.jpg"
+   ]
+  },
+  "ugali": {
+   "src": "/photos/food/ugali.webp",
+   "alt": "Ugali on a plate",
+   "credit": [
+    "safaritravelplus",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Ugali_Posho.jpg"
+   ]
+  },
+  "rice": {
+   "src": "/photos/food/rice.webp",
+   "alt": "A plate of white rice",
+   "credit": [
+    "Afifa Afrin",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Boiled_rice_in_a_bowl.jpg"
+   ]
+  },
+  "sukuma": {
+   "src": "/photos/food/sukuma.webp",
+   "alt": "Sukuma wiki in a pan",
+   "credit": [
+    "Nana Pearls",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:East_African_Vegetable_(Sukuma_wiki).jpg"
+   ]
+  },
+  "managu": {
+   "src": "/photos/food/managu.webp",
+   "alt": "Kienyeji greens in a bowl",
+   "credit": [
+    "Roxanne.heston",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Kenyan_meal.jpg"
+   ]
+  },
+  "spinach": {
+   "src": "/photos/food/spinach.webp",
+   "alt": "Creamed spinach",
+   "credit": [
+    "Arnold Gatilao",
+    "CC BY 2.0",
+    "https://commons.wikimedia.org/wiki/File:Creamed_Spinach_with_Nueske%27s_Bacon.jpg"
+   ]
+  },
+  "plantain": {
+   "src": "/photos/food/plantain.webp",
+   "alt": "Fried plantain",
+   "credit": [
+    "ChimaBee",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Fried_Plantain,_Moimoi_and_cabbage.jpg"
+   ]
+  },
+  "arrowroot": {
+   "src": "/photos/food/arrowroot.webp",
+   "alt": "Boiled arrowroot",
+   "credit": [
+    "Rtnf",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Boiled_taro.png"
+   ]
+  },
+  "sweet-potato": {
+   "src": "/photos/food/sweet-potato.webp",
+   "alt": "Boiled sweet potato",
+   "credit": [
+    "Halima Waziri",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Boiled_sweet_Potatoes_and_carrot_with_vegetable_fish_sauce.jpg"
+   ]
+  },
+  "beans": {
+   "src": "/photos/food/beans.webp",
+   "alt": "Beans stewed with tomato",
+   "credit": [
+    "Horacio Cambeiro",
+    "CC BY-SA 3.0",
+    "https://commons.wikimedia.org/wiki/File:Argentine_red_kidney_bean_stew_with_smoked_sausage_and_white_rice.jpg"
+   ]
+  },
+  "peas": {
+   "src": "/photos/food/peas.webp",
+   "alt": "Green peas",
+   "credit": [
+    "Daderot",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Peas_(cooked_okay)_-_Massachusetts.jpg"
+   ]
+  },
+  "groundnuts": {
+   "src": "/photos/food/groundnuts.webp",
+   "alt": "Roasted groundnuts in a bowl",
+   "credit": [
+    "Gogerr",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Dry_Roasted_Virginia_Peanuts.jpg"
+   ]
+  },
+  "honey": {
+   "src": "/photos/food/honey.webp",
+   "alt": "Honey running into a jar",
+   "credit": [
+    "Tasmanianbeekeepers",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Jar_and_honey_stick.jpg"
+   ]
+  }
+ },
+ "dishes": {
+  "om": "omelette",
+  "eg": "eggs",
+  "sg": "sausages",
+  "cs": "chicken-sausage",
+  "bc": "bacon",
+  "tt": "toast",
+  "cf": "coffee",
+  "dw": "dawa",
+  "mk": "milk",
+  "ct": "tikka",
+  "chs": "choma-sausage",
+  "scs": "sausage-saute",
+  "mbc": "goat-choma",
+  "mbr": "ribs",
+  "bfc": "beef-choma",
+  "bch": "chops",
+  "tb": "tbone",
+  "hmp": "hump",
+  "csf": "sufuria",
+  "cw": "wings",
+  "kt": "stew-chicken",
+  "btz": "stew-beef",
+  "mtz": "stew-goat",
+  "br": "broiler",
+  "bdv": "beef-fry",
+  "bnd": "beef-nduma",
+  "mtb": "matumbo",
+  "mtm": "matumbo",
+  "lv": "liver",
+  "kb": "biryani",
+  "mnb": "pilau",
+  "mnm": "pilau",
+  "os": "ossobuco",
+  "s1": "soup-chicken",
+  "s2": "soup-beef",
+  "s7": "soup-fish",
+  "s4": "soup-oxtail",
+  "mc": "masala-chips",
+  "bcp": "fries",
+  "wd": "wedges",
+  "rp": "roast-potatoes",
+  "mp": "mash",
+  "sp": "saute-potatoes",
+  "ug": "ugali",
+  "rc": "rice",
+  "gr": "sukuma",
+  "kg": "managu",
+  "csp": "spinach",
+  "pl": "plantain",
+  "nd": "arrowroot",
+  "ng": "sweet-potato",
+  "bn": "beans",
+  "mj": "peas",
+  "gn": "groundnuts",
+  "hn": "honey",
+  "x5": "goat-choma"
+ }
+}

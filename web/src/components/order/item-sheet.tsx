@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import { Plus } from "lucide-react";
 import { Sheet } from "@/components/ui/sheet";
 import { ChoicePill } from "@/components/ui/pill";
@@ -11,6 +10,7 @@ import { useToast } from "@/components/ui/toast";
 import { basket } from "@/lib/basket";
 import { useCatalog } from "./catalog";
 import { cn } from "@/lib/utils";
+import { Pic, PhotoCredit } from "@/components/ui/picture";
 
 export function ItemSheet({ id, onClose }: { id: string | null; onClose: () => void }) {
   const { byId } = useCatalog();
@@ -34,6 +34,8 @@ function ItemSheetBody({ id, onClose }: { id: string; onClose: () => void }) {
 
   const item = byId.get(sizeId) ?? opened;
   const title = family?.name ?? item.name;
+  /* the size picked may have its own bottle; a dish keeps the photo it opened with */
+  const pic = item.picture ?? opened.picture;
   const goes = (catalog.pairs[family?.id ?? item.id] ?? catalog.pairs[item.id] ?? []).map((g) => byId.get(g)).filter((g) => !!g).slice(0, 4);
 
   function add() {
@@ -51,7 +53,13 @@ function ItemSheetBody({ id, onClose }: { id: string; onClose: () => void }) {
       open
       onClose={onClose}
       title={title}
-      media={opened.image ? <Image src={opened.image} alt={title} width={880} height={440} sizes="(min-width: 768px) 440px, 100vw" className="h-[220px] w-full object-cover" /> : undefined}
+      media={
+        pic ? (
+          <div className={cn("relative w-full", pic.kind === "bottle" ? "bottle-stage h-[260px]" : "h-[220px]")}>
+            <Pic picture={pic} alt={pic.kind === "photo" ? pic.alt : title} sizes="(min-width: 768px) 440px, 100vw" priority />
+          </div>
+        ) : undefined
+      }
       footer={
         <div className="flex items-center gap-3">
           <Stepper value={qty} onChange={setQty} label={title} min={1} />
@@ -133,6 +141,8 @@ function ItemSheetBody({ id, onClose }: { id: string; onClose: () => void }) {
           </div>
         </div>
       )}
+
+      {pic && <PhotoCredit picture={pic} className="mt-auto pt-2" />}
     </Sheet>
   );
 }

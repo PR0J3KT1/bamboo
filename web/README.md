@@ -42,7 +42,16 @@ Alcohol is filtered on the server: it is never sent to a guest or to an account 
   price and style filters and a sort, and the search looks across every shelf. Guests, unfinished
   accounts and under-18s get the closed door instead, and no drink ever reaches their browser.
   The old site's animated bottle wall needs the drink photos, which haven't moved over yet.
-- `LOUNGE_PHONE` shows a "Call the lounge" button on the tracking page; it's hidden when unset.
+- **Pictures** (`src/lib/pictures.ts`): an uploaded photo first, then the lounge's own photo,
+  then a free-licensed photo of the dish (credited in its sheet, as the licences ask), then the
+  bottle cut from a sheet of 6 × 5 bottle photos. The photos and sheets came from the old site
+  with `node scripts/export-photos.mjs ../bamboo-cask.html` and live in `public/`.
+- **The Cask Room wall**: a row of bottles per shelf, drifting; hover or focus holds a row, Pause
+  holds them all, reduced motion keeps them still. Shelves with fewer than four bottle photos
+  get a rail instead.
+- The lounge's facts (address, hours, phone, Google rating) are in `src/lib/lounge.ts`. The
+  rating stays hidden until it's set there. `LOUNGE_PHONE` overrides the phone, which is used for
+  "Call the lounge", the WhatsApp button and the WhatsApp links.
 
 ## The admin (/admin)
 

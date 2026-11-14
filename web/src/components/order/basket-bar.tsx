@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Pic } from "@/components/ui/picture";
+import { cn } from "@/lib/utils";
 import { Sheet } from "@/components/ui/sheet";
 import { Stepper } from "@/components/ui/stepper";
 import { Price } from "@/components/ui/price";
@@ -92,7 +93,11 @@ export function BasketBar() {
             <ul className="-mt-1 flex flex-col">
               {lines.filter((l) => l.item).map((l) => (
                 <li key={lineKey(l.itemId, l.option)} className="flex items-center gap-3 border-b border-line-2 py-3.5">
-                  {l.item!.image && <Image src={l.item!.image} alt="" width={112} height={112} className="size-14 shrink-0 rounded-[10px] object-cover" />}
+                  {l.item!.picture && (
+                    <span className={cn("relative size-14 shrink-0 overflow-hidden rounded-[10px]", l.item!.picture.kind === "bottle" && "bottle-stage")}>
+                      <Pic picture={l.item!.picture} alt="" sizes="56px" />
+                    </span>
+                  )}
                   <div className="flex min-w-0 flex-1 flex-col">
                     <span className="font-display text-[1.1875rem] leading-tight font-extrabold uppercase">{lineName(l.item, l.option)}</span>
                     <span className="text-fine text-ink-2">KES {l.item!.price.toLocaleString("en-KE")} each</span>

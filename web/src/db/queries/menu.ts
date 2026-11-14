@@ -2,6 +2,7 @@ import "server-only";
 import { asc, eq } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db, schema } from "@/db";
+import { pictureFor, type Picture } from "@/lib/pictures";
 
 /* The whole menu, cached across requests. Admin edits call updateTag("menu"). */
 export async function getMenu() {
@@ -49,7 +50,7 @@ export type CatalogItem = {
   kind: string | null;
   size: string | null;
   serve: string | null;
-  image: string | null;
+  picture: Picture | null;
   categoryId: string;
   shelfId: string | null;
   brand: string | null;
@@ -66,7 +67,7 @@ export function toCatalog(menu: Menu, adult: boolean): Catalog {
     .filter((i) => !i.alcohol || adult)
     .map((i) => ({
       id: i.id, name: i.name, description: i.description, price: i.price, alcohol: i.alcohol, familyId: i.familyId,
-      portion: i.portion, tag: i.tag, options: i.options, optionLabel: i.optionLabel, kind: i.kind, size: i.size, serve: i.serve, image: i.image,
+      portion: i.portion, tag: i.tag, options: i.options, optionLabel: i.optionLabel, kind: i.kind, size: i.size, serve: i.serve, picture: pictureFor(i),
       categoryId: i.categoryId, shelfId: i.shelfId, brand: i.brand, abv: i.abv, origin: i.origin,
     }));
   const visible = new Set(items.map((i) => i.id));

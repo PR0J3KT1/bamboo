@@ -5,6 +5,7 @@ import type { CatalogItem } from "@/db/queries/menu";
 import { AddButton, OpenItemButton } from "@/components/order/add-button";
 import { useCatalog } from "@/components/order/catalog";
 import { cn } from "@/lib/utils";
+import { Pic } from "@/components/ui/picture";
 
 /* The Cask Room, for adults: the bar's shelves on the dark board. With no shelf picked and no
    search, each shelf is a rail you scroll along; "See all" opens the whole shelf with filters for
@@ -44,7 +45,12 @@ function ranges(list: CatalogItem[]) {
 function Bottle({ it }: { it: CatalogItem }) {
   const sub = [it.kind, it.size && !it.name.includes(it.size) ? it.size : null].filter(Boolean).join(", ");
   return (
-    <li className="relative flex flex-col gap-1 rounded-2xl bg-on-grove/[0.06] p-3 ring-1 ring-on-grove/10 has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-lime">
+    <li className="relative flex flex-col gap-1 overflow-hidden rounded-2xl bg-on-grove/[0.06] p-3 ring-1 ring-on-grove/10 has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-lime">
+      {it.picture && (
+        <div className="bottle-stage relative -mx-3 -mt-3 mb-1.5 aspect-[4/3]">
+          <Pic picture={it.picture} alt={it.name} sizes="180px" />
+        </div>
+      )}
       {sub && <span className="text-fine text-on-grove-2">{sub}</span>}
       <h4 className="font-display text-[1.1875rem] leading-[1.05] font-extrabold text-on-grove uppercase">
         <OpenItemButton id={it.id}>{it.name}</OpenItemButton>
@@ -124,10 +130,72 @@ function Rail({ name, all, onSeeAll }: { name: string; all: CatalogItem[]; onSee
   );
 }
 
+/* The wall: a row of bottles per shelf, drifting one way then the other, like walking along the
+   bar. Each row is its bottles twice over, slid by half its width, so it loops without a seam.
+   Hover or focus holds a row; Pause holds them all; with reduced motion nothing moves and the rows
+   scroll by hand. Only bottles with a photo go on the wall. A tap opens the bottle. */
+const WALL_N = 14;
+const WALL_MIN = 4; // fewer bottles with a photo than this, and the shelf keeps its rail
+const ROW_FILL = 14; // a row repeats its bottles to at least this many, wider than any screen
+
+export function wallShelves(shelves: { id: string; name: string }[], bar: CatalogItem[]) {
+  return shelves
+    .map((s) => ({ ...s, all: bar.filter((i) => i.shelfId === s.id).length, bottles: bar.filter((i) => i.shelfId === s.id && i.picture?.kind === "bottle").slice(0, WALL_N) }))
+    .filter((r) => r.bottles.length >= WALL_MIN);
+}
+
+function BottleWall({ rows, onSeeAll }: { rows: ReturnType<typeof wallShelves>; onSeeAll: (shelf: string) => void }) {
+  const { openItem } = useCatalog();
+  const [paused, setPaused] = useState(false);
+  if (!rows.length) return null;
+  return (
+    <div className="bottle-wall overflow-hidden rounded-2xl bg-[radial-gradient(90%_60%_at_50%_0%,rgb(232_170_69/0.18),transparent_70%),#0c1a12] ring-1 ring-on-grove/10" data-paused={paused || undefined}>
+      <div className="flex items-center justify-between gap-3 px-4 pt-3">
+        <p className="text-fine text-on-grove-2">Every shelf, lit. Tap a bottle for its price and notes.</p>
+        <button type="button" onClick={() => setPaused((p) => !p)} aria-pressed={paused} className="h-9 shrink-0 rounded-full bg-on-grove/10 px-3.5 text-fine font-semibold text-on-grove motion-reduce:hidden">
+          {paused ? "Play" : "Pause"}
+        </button>
+      </div>
+      <div className="flex flex-col py-2">
+        {rows.map((r, ri) => (
+          <div key={r.id} className="wall-row group/row relative overflow-x-auto [scrollbar-width:none] motion-safe:overflow-hidden" aria-label={r.name} role="group">
+            <div
+              className="wall-track flex w-max motion-safe:animate-[wall-drift_var(--dur)_linear_infinite] motion-safe:group-hover/row:[animation-play-state:paused] motion-safe:group-focus-within/row:[animation-play-state:paused]"
+              style={{ "--dur": `${Math.ceil(ROW_FILL / r.bottles.length) * r.bottles.length * 4.5}s`, animationDirection: ri % 2 ? "reverse" : "normal" } as React.CSSProperties}
+            >
+              {[0, 1].map((copy) => (
+                <ul key={copy} aria-hidden={copy === 1 || undefined} className="flex shrink-0">
+                  {Array.from({ length: Math.ceil(ROW_FILL / r.bottles.length) }, () => r.bottles).flat().map((b, n) => (
+                    <li key={`${b.id}-${n}`} className="bottle-stage relative h-[132px] w-[96px] shrink-0 md:h-[150px] md:w-[108px]">
+                      <button
+                        type="button"
+                        tabIndex={copy === 1 || n >= r.bottles.length ? -1 : undefined}
+                        onClick={() => openItem(b.id)}
+                        aria-label={`${b.name}, KES ${kes(b.price)}`}
+                        className="absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-inset"
+                      >
+                        <Pic picture={b.picture!} alt="" sizes="108px" className="transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.04] motion-reduce:transition-none" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+            <button type="button" onClick={() => onSeeAll(r.id)} className="absolute bottom-2 left-3 rounded-full bg-grove/85 px-3 py-1 text-[0.8125rem] font-semibold text-on-grove hover:bg-grove focus-visible:ring-2 focus-visible:ring-lime">
+              {r.name} <span className="text-lime">See all {r.all}</span>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function CaskRoom({ id, title }: { id: string; title: string }) {
   const { catalog } = useCatalog();
   const bar = useMemo(() => catalog.items.filter((i) => i.alcohol && i.shelfId), [catalog]);
   const shelves = useMemo(() => catalog.shelves.filter((s) => bar.some((i) => i.shelfId === s.id)), [catalog, bar]);
+  const wall = useMemo(() => wallShelves(shelves, bar), [shelves, bar]);
   const hay = useMemo(() => new Map(bar.map((i) => [i.id, fold([i.name, i.brand, i.kind, i.origin, i.size].filter(Boolean).join(" "))])), [bar]);
 
   const [shelf, setShelf] = useState("all");
@@ -228,7 +296,8 @@ export function CaskRoom({ id, title }: { id: string; title: string }) {
 
       {rails ? (
         <div className="mt-8 flex flex-col gap-9">
-          {shelves.map((s) => (
+          <BottleWall rows={wall} onSeeAll={pickShelf} />
+          {shelves.filter((s) => !wall.some((w) => w.id === s.id)).map((s) => (
             <Rail key={s.id} name={s.name} all={bar.filter((i) => i.shelfId === s.id)} onSeeAll={() => pickShelf(s.id)} />
           ))}
         </div>
