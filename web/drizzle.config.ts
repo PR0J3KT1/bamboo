@@ -10,6 +10,7 @@ export default defineConfig({
   schema: "./src/db/schema.ts",
   out: "./drizzle",
   dialect: "postgresql",
-  dbCredentials: { url: process.env.DATABASE_URL! },
+  /* migrations run on a direct connection when there is one (Neon: DATABASE_URL_UNPOOLED) */
+  dbCredentials: { url: (process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL)! },
   strict: true,
 });

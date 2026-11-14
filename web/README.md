@@ -143,6 +143,20 @@ Nairobi time, by when the order was placed.
 Edit `src/db/schema.ts`, then `pnpm db:generate --name <what-changed>` and `pnpm db:migrate`.
 Don't edit a generated migration after it has been applied anywhere.
 
+## On Vercel
+
+The app is its own Vercel project, `bamboo-cask-app` (https://bamboo-cask-app.vercel.app),
+deployed from this folder with `vercel deploy --prod`. The static site stays a separate project.
+
+- **Database:** Neon, from the Vercel Marketplace. It sets `DATABASE_URL` (pooled; prepared
+  statements are switched off for it) and `DATABASE_URL_UNPOOLED` (direct; used for LISTEN and for
+  migrations). Migrate and seed from here with the production values in the environment, e.g.
+  `DATABASE_URL=… DATABASE_URL_UNPOOLED=… pnpm db:migrate && pnpm db:seed`.
+- **Set in the project:** `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `BETTER_AUTH_TRUSTED_ORIGINS`.
+- **Still to add:** `AT_API_KEY`, `AT_USERNAME`, `AT_SENDER_ID` (sign-in codes), the `R2_*`
+  values (photos), the `TUMABODA_*` values (riders) and `LOUNGE_PHONE`. Then make the first
+  admin: `pnpm admin:grant +2547… admin` with the production database in the environment.
+
 ## Self-hosting
 
 `next.config.ts` sets `output: "standalone"`: `pnpm build` produces `.next/standalone/server.js`,

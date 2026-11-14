@@ -1,0 +1,6 @@
+# Uploaded with `vercel deploy` from web/: never local builds, secrets or photos uploaded in development
+.next
+node_modules
+.env*
+!.env.example
+public/uploads
