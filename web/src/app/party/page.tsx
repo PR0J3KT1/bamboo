@@ -8,6 +8,7 @@ import { getSettings } from "@/lib/settings";
 import { CatalogProvider } from "@/components/order/catalog";
 import { Brand } from "@/components/brand";
 import { Planner } from "./planner";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = {
   title: "Plan a party",
@@ -34,7 +35,7 @@ export default function PartyPage(props: PageProps<"/party">) {
           </Link>
         </div>
       </header>
-      <Suspense fallback={<p className="mx-auto w-full max-w-[1100px] px-4 py-8 text-ink-2 md:px-8">Loading the planner…</p>}>
+      <Suspense fallback={<Loader label="Setting up the planner" />}>
         <Party searchParams={props.searchParams} />
       </Suspense>
     </>

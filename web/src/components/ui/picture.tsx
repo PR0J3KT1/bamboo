@@ -28,8 +28,8 @@ export function Pic({ picture, alt, sizes, className, priority }: { picture: Pic
     illustration. Nothing for the lounge's own photos. */
 export function PhotoCredit({ picture, className }: { picture: Picture; className?: string }) {
   if (!picture.credit) return null;
-  const [author, licence, page] = picture.credit;
-  const lead = picture.kind === "photo" && picture.illustration ? "A photo for illustration; the lounge’s plate may look different. " : "";
+  const [author, licence, page, note] = picture.credit;
+  const lead = note ? `${note} ` : picture.kind === "photo" && picture.illustration ? "A photo for illustration; the lounge’s plate may look different. " : "";
   return (
     <p className={cn("text-fine text-ink-3", className)}>
       {lead}Photo: {author}, {licence},{" "}

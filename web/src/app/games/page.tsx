@@ -9,6 +9,7 @@ import { pictureFor } from "@/lib/pictures";
 import { GAMES, STAGE_BOTTLE, type GameId } from "@/lib/games/core";
 import { Brand } from "@/components/brand";
 import { GameHub, type HubGame } from "./hub";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = {
   title: "Games",
@@ -40,7 +41,7 @@ export default function GamesPage() {
           <p className="max-w-lg font-serif text-lead text-lime italic">Quizzes, party games and skill games for the table. Solo, or in teams on one phone.</p>
         </div>
       </header>
-      <Suspense fallback={<p className="mx-auto max-w-[1100px] px-4 py-6 text-ink-2 md:px-8">Loading the games…</p>}>
+      <Suspense fallback={<Loader label="Racking up the games" />}>
         <Hub />
       </Suspense>
     </>

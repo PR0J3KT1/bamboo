@@ -8,6 +8,7 @@ import { mpesaEnabled } from "@/lib/mpesa";
 import { displayPhone } from "@/lib/phone";
 import { CatalogProvider } from "@/components/order/catalog";
 import { CheckoutForm } from "./checkout-form";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Checkout" };
 
@@ -30,7 +31,7 @@ async function Checkout() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={<p className="p-6 text-ink-2">Loading your order…</p>}>
+    <Suspense fallback={<Loader label="Getting your order ready" />}>
       <Checkout />
     </Suspense>
   );

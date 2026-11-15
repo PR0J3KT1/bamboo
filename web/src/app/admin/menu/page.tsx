@@ -5,6 +5,7 @@ import { can } from "@/lib/permissions";
 import { getAdminMenu } from "@/db/queries/admin-menu";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { MenuAdmin } from "./menu-admin";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Menu and prices" };
 
@@ -17,7 +18,7 @@ async function Menu() {
 
 export default function MenuPage() {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading the menu…</p>}>
+    <Suspense fallback={<Loader label="Loading the menu" />}>
       <Menu />
     </Suspense>
   );

@@ -10,6 +10,7 @@ import { requestTime } from "@/lib/clock";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { Tag } from "@/components/ui/pill";
 import { cn } from "@/lib/utils";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Bookings" };
 
@@ -85,7 +86,7 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/admin/book
 
 export default function BookingsPage(props: PageProps<"/admin/bookings">) {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading bookings…</p>}>
+    <Suspense fallback={<Loader label="Loading bookings" />}>
       <Bookings searchParams={props.searchParams} />
     </Suspense>
   );

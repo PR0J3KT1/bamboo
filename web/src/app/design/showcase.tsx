@@ -8,6 +8,7 @@ import { TextAreaField, TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/toast";
 import { ThemePicker } from "@/components/ui/theme-picker";
+import { Loader, MenuSkeleton } from "@/components/ui/loader";
 import { Button as AdminButton } from "@/components/admin/button";
 import { Switch } from "@/components/admin/switch";
 import { Badge } from "@/components/admin/badge";
@@ -93,6 +94,20 @@ export function Showcase() {
           <TextAreaField label="A note for the kitchen" defaultValue="Choma well done, please. Extra kachumbari." className="md:col-span-2" />
         </section>
 
+        <section className="flex flex-col gap-4">
+          <h2 className="font-display text-h2 font-extrabold uppercase">Loading</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-3xl border border-line bg-panel">
+              <Loader label="Finding your order" className="min-h-0" />
+            </div>
+            <div className="grove-bg rounded-3xl">
+              <Loader tone="grove" label="Setting the table" className="min-h-0" />
+            </div>
+          </div>
+          <div className="-mx-4 md:-mx-8">
+            <MenuSkeleton />
+          </div>
+        </section>
         <section className="flex flex-col gap-4">
           <h2 className="font-display text-h2 font-extrabold uppercase">Sheet</h2>
           <div><Button onClick={() => setOpen(true)}>Open the Mbuzi choma sheet</Button></div>

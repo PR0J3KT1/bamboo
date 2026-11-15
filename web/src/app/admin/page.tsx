@@ -5,6 +5,7 @@ import { getBoard } from "@/db/queries/orders";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { Board } from "./board";
 import { requestTime } from "@/lib/clock";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Orders" };
 
@@ -17,7 +18,7 @@ async function BoardData() {
 
 export default function AdminHome() {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading orders…</p>}>
+    <Suspense fallback={<Loader label="Loading orders" />}>
       <BoardData />
     </Suspense>
   );

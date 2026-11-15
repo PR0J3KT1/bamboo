@@ -8,6 +8,7 @@ import { checkPermission } from "@/lib/session";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import photos from "@/db/seed-data/photos.json";
 import { PlatesEditor } from "./plates-editor";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Who's eating? plates" };
 
@@ -35,7 +36,7 @@ async function Plates() {
 
 export default function PlatesPage() {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading the plates…</p>}>
+    <Suspense fallback={<Loader label="Loading the plates" />}>
       <Plates />
     </Suspense>
   );

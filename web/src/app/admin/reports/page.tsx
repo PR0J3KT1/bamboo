@@ -11,6 +11,7 @@ import { parsePeriod, percentChange, previousPeriod, type Period } from "@/lib/r
 import { getAreas, getCancellations, getMix, getPayments, getSalesOverTime, getSellers, getTotals } from "@/db/queries/reports";
 import { BarList, ColumnChart, SplitBar, TableView, type Column } from "./charts";
 import { cn } from "@/lib/utils";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Reports" };
 
@@ -222,7 +223,7 @@ async function Reports({ searchParams }: { searchParams: PageProps<"/admin/repor
 
 export default function ReportsPage(props: PageProps<"/admin/reports">) {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading reports…</p>}>
+    <Suspense fallback={<Loader label="Loading reports" />}>
       <Reports searchParams={props.searchParams} />
     </Suspense>
   );

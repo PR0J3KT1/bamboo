@@ -12,6 +12,7 @@ import { displayPhone } from "@/lib/phone";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { Tag } from "@/components/ui/pill";
 import { BookingActions } from "./booking-actions";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Booking" };
 
@@ -80,7 +81,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
 
 export default function BookingPage(props: PageProps<"/admin/bookings/[id]">) {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading the booking…</p>}>
+    <Suspense fallback={<Loader label="Loading the booking" />}>
       <Detail params={props.params} />
     </Suspense>
   );

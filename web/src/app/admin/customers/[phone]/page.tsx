@@ -16,6 +16,7 @@ import { formatKes } from "@/components/ui/price";
 import { RoleSelect } from "../../team/team-forms";
 import { AGE } from "../age-status";
 import { BlockForm } from "./block-form";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Customer" };
 
@@ -123,7 +124,7 @@ async function Customer({ params }: { params: Promise<{ phone: string }> }) {
 
 export default function CustomerPage(props: PageProps<"/admin/customers/[phone]">) {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading…</p>}>
+    <Suspense fallback={<Loader label="Loading the customer" />}>
       <Customer params={props.params} />
     </Suspense>
   );

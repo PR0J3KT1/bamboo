@@ -10,6 +10,7 @@ import { getSettings } from "@/lib/settings";
 import { LoungeFooter } from "@/components/menu/more-at-lounge";
 import { loungePhoto } from "@/lib/pictures";
 import { LOUNGE } from "@/lib/lounge";
+import { MenuSkeleton } from "@/components/ui/loader";
 
 export default async function Home() {
   const settings = await getSettings();
@@ -53,7 +54,7 @@ export default async function Home() {
           </ul>
         </div>
       </header>
-      <Suspense fallback={<p className="mx-auto w-full max-w-[1360px] px-4 py-6 text-ink-2 md:px-8">Loading the menu…</p>}>
+      <Suspense fallback={<MenuSkeleton />}>
         <Menu />
       </Suspense>
       <LoungeFooter />

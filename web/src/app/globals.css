@@ -409,3 +409,32 @@
     }
   }
 }
+
+/* the loading barrel (src/components/ui/loader.tsx): it fills, settles, fills again */
+.cask-fill {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  transform: scaleY(0.55);
+  animation: cask-fill 1.9s cubic-bezier(0.45, 0, 0.3, 1) infinite;
+}
+@keyframes cask-fill {
+  0% { transform: scaleY(0.04); }
+  65% { transform: scaleY(1); }
+  85% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+.cask-leaf {
+  transform-box: fill-box;
+  transform-origin: 0% 0%;
+  animation: cask-leaf 1.9s ease-in-out infinite;
+}
+@keyframes cask-leaf {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-9deg); }
+}
+/* shown only if loading takes a moment */
+.loader-in { animation: loader-in 0.25s ease-out 0.3s both; }
+@keyframes loader-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

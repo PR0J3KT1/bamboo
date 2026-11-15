@@ -6,6 +6,7 @@ import { checkPermission } from "@/lib/session";
 import { getSettings } from "@/lib/settings";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { SettingsForm } from "./settings-form";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -27,7 +28,7 @@ async function Settings() {
 
 export default function SettingsPage() {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading settings…</p>}>
+    <Suspense fallback={<Loader label="Loading settings" />}>
       <Settings />
     </Suspense>
   );

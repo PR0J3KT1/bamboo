@@ -10,6 +10,7 @@ import { NoAccess } from "@/components/admin-shell/no-access";
 import { Tag } from "@/components/ui/pill";
 import { formatKes } from "@/components/ui/price";
 import { cn } from "@/lib/utils";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Customers" };
 
@@ -84,7 +85,7 @@ async function Customers({ searchParams }: { searchParams: PageProps<"/admin/cus
 
 export default function CustomersPage(props: PageProps<"/admin/customers">) {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading customers…</p>}>
+    <Suspense fallback={<Loader label="Loading customers" />}>
       <Customers searchParams={props.searchParams} />
     </Suspense>
   );

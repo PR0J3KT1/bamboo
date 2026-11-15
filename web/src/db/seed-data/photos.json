@@ -538,6 +538,96 @@
     "CC BY-SA 4.0",
     "https://commons.wikimedia.org/wiki/File:Jar_and_honey_stick.jpg"
    ]
+  },
+  "drink-tonic": {
+   "src": "/photos/food/drink-tonic.webp",
+   "alt": "A bottle of Schweppes tonic water",
+   "credit": [
+    "Reedy",
+    "CC BY-SA 3.0",
+    "https://commons.wikimedia.org/wiki/File:Schweppes_Indian_Tonic_Water_(front).jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-soda-glass": {
+   "src": "/photos/food/drink-soda-glass.webp",
+   "alt": "A glass bottle of Coca-Cola",
+   "credit": [
+    "Oleg Yunakov",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Coca-Cola_glass_bottle.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-soda-pet": {
+   "src": "/photos/food/drink-soda-pet.webp",
+   "alt": "Plastic bottles of Coca-Cola and Fanta in a fridge",
+   "credit": [
+    "Bjørn Erik Pedersen",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:Coca_Cola_og_Fanta_i_en_kj%C3%B8ledisk.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-juice-carton": {
+   "src": "/photos/food/drink-juice-carton.webp",
+   "alt": "A jug of mango juice",
+   "credit": [
+    "Mx. Granger",
+    "CC0",
+    "https://commons.wikimedia.org/wiki/File:Rubicon_mango_drink.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-sparkling": {
+   "src": "/photos/food/drink-sparkling.webp",
+   "alt": "A bottle of San Pellegrino sparkling water",
+   "credit": [
+    "Jabbyjobber",
+    "CC BY-SA 4.0",
+    "https://commons.wikimedia.org/wiki/File:San_Pellegrino_bottle_for_sparkling_water_.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-grenadine": {
+   "src": "/photos/food/drink-grenadine.webp",
+   "alt": "A bottle of grenadine syrup and a glass",
+   "credit": [
+    "Badagnani",
+    "CC BY 3.0",
+    "https://commons.wikimedia.org/wiki/File:Grenadinesyrup.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-juice": {
+   "src": "/photos/food/drink-juice.webp",
+   "alt": "A glass of mango juice",
+   "credit": [
+    "Lisa Pinehill",
+    "CC BY-SA 2.0",
+    "https://commons.wikimedia.org/wiki/File:Glass_of_Mango_Juice.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-lemonade": {
+   "src": "/photos/food/drink-lemonade.webp",
+   "alt": "Lemonade in a jug and two glasses",
+   "credit": [
+    "Shisma",
+    "CC BY 4.0",
+    "https://commons.wikimedia.org/wiki/File:Lemonade_2.jpg",
+    "A photo for illustration; the brand served may differ."
+   ]
+  },
+  "drink-cordial": {
+   "src": "/photos/food/drink-cordial.webp",
+   "alt": "A bottle of Rose's lime juice cordial",
+   "credit": [
+    "H005",
+    "Public domain",
+    "https://commons.wikimedia.org/wiki/File:Rose%27s_Lime_Juice.JPG",
+    "A photo for illustration; the brand served may differ."
+   ]
   }
  },
  "dishes": {
@@ -596,6 +686,16 @@
   "mj": "peas",
   "gn": "groundnuts",
   "hn": "honey",
-  "x5": "goat-choma"
+  "x5": "goat-choma",
+  "dr-tonic-water": "drink-tonic",
+  "dr-soda-glass-bottle": "drink-soda-glass",
+  "dr-soda-plastic-bottle": "drink-soda-pet",
+  "dr-del-monte-juice": "drink-juice-carton",
+  "dr-sparkling-water-1l": "drink-sparkling",
+  "dr-grenadine-syrup-750ml": "drink-grenadine",
+  "dr-jaba-juice": "drink-juice",
+  "dr-jaba-juice-250ml": "drink-juice",
+  "dr-lemonade": "drink-lemonade",
+  "dr-lime-cordial-1-5l": "drink-cordial"
  }
 }

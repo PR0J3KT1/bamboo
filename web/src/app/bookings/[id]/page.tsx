@@ -12,6 +12,7 @@ import { bookingSummary, STATUS_LABEL } from "@/lib/bookings";
 import { WhatsAppIcon } from "@/components/brand";
 import { buttonStyles } from "@/components/ui/button";
 import { CancelBooking } from "./cancel-booking";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Your booking", robots: { index: false } };
 
@@ -90,7 +91,7 @@ async function Booking({ params }: { params: Promise<{ id: string }> }) {
 
 export default function BookingPage(props: PageProps<"/bookings/[id]">) {
   return (
-    <Suspense fallback={<p className="p-6 text-ink-2">Loading your booking…</p>}>
+    <Suspense fallback={<Loader label="Finding your booking" />}>
       <Booking params={props.params} />
     </Suspense>
   );

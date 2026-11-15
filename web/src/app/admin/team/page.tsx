@@ -6,6 +6,7 @@ import { checkPermission } from "@/lib/session";
 import { displayPhone } from "@/lib/phone";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { AddToTeam, RoleSelect } from "./team-forms";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Team" };
 
@@ -77,7 +78,7 @@ async function Team() {
 
 export default function TeamPage() {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading the team…</p>}>
+    <Suspense fallback={<Loader label="Loading the team" />}>
       <Team />
     </Suspense>
   );

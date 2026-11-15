@@ -7,6 +7,7 @@ import { getViewer } from "@/lib/session";
 import { game, GAMES, type GameId } from "@/lib/games/core";
 import { CatalogProvider } from "@/components/order/catalog";
 import { Play } from "./play";
+import { Loader } from "@/components/ui/loader";
 
 export async function generateMetadata({ params }: PageProps<"/games/[id]">): Promise<Metadata> {
   const g = game((await params).id);
@@ -42,7 +43,7 @@ async function Game({ params }: { params: PageProps<"/games/[id]">["params"] }) 
 
 export default function GamePage(props: PageProps<"/games/[id]">) {
   return (
-    <Suspense fallback={<div className="grove-bg min-h-dvh" />}>
+    <Suspense fallback={<div className="grove-bg min-h-dvh"><Loader tone="grove" label="Setting the table" className="min-h-dvh" /></div>}>
       <Game params={props.params} />
     </Suspense>
   );

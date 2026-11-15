@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { KeepFresh } from "./keep-fresh";
 import { PayActions } from "./pay-actions";
 import { checkPending } from "@/lib/payments";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Your order", robots: { index: false } };
 
@@ -157,7 +158,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
 
 export default function OrderPage(props: PageProps<"/orders/[id]">) {
   return (
-    <Suspense fallback={<p className="p-6 text-ink-2">Loading your order…</p>}>
+    <Suspense fallback={<Loader label="Finding your order" />}>
       <Tracking params={props.params} />
     </Suspense>
   );

@@ -15,6 +15,7 @@ import { requestTime } from "@/lib/clock";
 import { Tag } from "@/components/ui/pill";
 import { formatKes, Price } from "@/components/ui/price";
 import { CallRider, CancelOrder, LiveRefresh, NextStep } from "./order-actions";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = { title: "Order" };
 
@@ -146,7 +147,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
 
 export default function OrderDetailPage(props: PageProps<"/admin/orders/[id]">) {
   return (
-    <Suspense fallback={<p className="p-5 text-ink-2">Loading the order…</p>}>
+    <Suspense fallback={<Loader label="Loading the order" />}>
       <Detail params={props.params} />
     </Suspense>
   );
