@@ -79,7 +79,7 @@ async function Reports({ searchParams }: { searchParams: PageProps<"/admin/repor
   const download = "inline-flex h-11 items-center gap-2 rounded-full border-[1.5px] border-line bg-panel px-4 font-semibold hover:bg-panel-2";
 
   return (
-    <main className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-4 py-5 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-4 py-5 md:px-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="font-display text-h2 font-extrabold uppercase">Reports</h1>

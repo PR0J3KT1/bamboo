@@ -255,3 +255,32 @@ export async function saveSection(id: string, name: string, note: string): Promi
     return { ok: true, message: `${n} saved` };
   });
 }
+
+/* ───────── admins: the order dishes appear in, within a section ───────── */
+
+/** Put a section's dishes in this order (dish keys: a family's id, or a single item's). A family's
+    sizes keep their own order. Only the dishes in that section; others keep their places. */
+export async function reorderDishes(categoryId: string, keys: string[]): Promise<MenuResult> {
+  return guarded("edit", async (me) => {
+    if (!Array.isArray(keys) || keys.length === 0 || keys.length > 500) return { ok: false, error: "Nothing to put in order." };
+    const items = await db
+      .select({ id: schema.items.id, familyId: schema.items.familyId, sort: schema.items.sort })
+      .from(schema.items)
+      .where(eq(schema.items.categoryId, String(categoryId)));
+    if (!items.length) return { ok: false, error: "That section has nothing in it." };
+    const keyOf = (i: { id: string; familyId: string | null }) => i.familyId ?? i.id;
+    const known = new Set(items.map(keyOf));
+    if (keys.length !== known.size || keys.some((k) => !known.has(k)) || new Set(keys).size !== keys.length) {
+      return { ok: false, error: "The menu changed while you were sorting. It's been refreshed; sort again." };
+    }
+    const start = Math.min(...items.map((i) => i.sort));
+    let n = start;
+    const next: { id: string; sort: number }[] = [];
+    for (const k of keys) for (const i of items.filter((x) => keyOf(x) === k).sort((a, b) => a.sort - b.sort)) next.push({ id: i.id, sort: n++ });
+    await db.transaction(async (tx) => {
+      for (const x of next) await tx.update(schema.items).set({ sort: x.sort }).where(eq(schema.items.id, x.id));
+      await audit(tx, me, "category.order", { type: "category", id: categoryId }, null, { order: keys });
+    });
+    return { ok: true, message: "New order saved" };
+  });
+}

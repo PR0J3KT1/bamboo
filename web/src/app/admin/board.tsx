@@ -91,7 +91,7 @@ export function Board({ tickets, serverNow, doneToday, cancelledToday }: { ticke
 
   const open = tickets.length;
   return (
-    <main className="flex flex-1 flex-col gap-0 px-4 pt-3 pb-6 md:px-5">
+    <main id="main" tabIndex={-1} className="flex flex-1 flex-col gap-0 px-4 pt-3 pb-6 md:px-5">
       <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         <h1 className="font-display text-h3 font-extrabold uppercase">Service</h1>
         <span className="text-ink-2">

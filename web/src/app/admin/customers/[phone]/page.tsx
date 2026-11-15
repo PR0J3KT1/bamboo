@@ -41,7 +41,7 @@ async function Customer({ params }: { params: Promise<{ phone: string }> }) {
         {c.blocked ? <Tag tone="grove">Blocked</Tag> : <Tag tone={AGE[c.age].tone}>{AGE[c.age].label}</Tag>}
       </div>
 
-      <main className="flex flex-wrap items-start gap-5 p-4 md:p-5">
+      <main id="main" tabIndex={-1} className="flex flex-wrap items-start gap-5 p-4 md:p-5">
         <div className="flex max-w-[400px] flex-[1_1_320px] flex-col gap-3.5">
           <section className={card}>
             <div className="flex justify-between gap-3"><span className="text-ink-2">Phone</span><a href={`tel:${phone}`} className="font-semibold text-action underline">{displayPhone(phone)}</a></div>

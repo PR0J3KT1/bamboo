@@ -23,7 +23,7 @@ async function Game({ params }: { params: PageProps<"/games/[id]">["params"] }) 
   const [menu, viewer] = await Promise.all([getMenu(), getViewer()]);
   if (g.adult && !viewer.adult) {
     return (
-      <main className="grove-bg flex min-h-dvh flex-col items-center justify-center gap-4 px-4 text-center text-on-grove">
+      <main id="main" tabIndex={-1} className="grove-bg flex min-h-dvh flex-col items-center justify-center gap-4 px-4 text-center text-on-grove">
         <h1 className="font-stencil text-h1 font-black uppercase">{g.name}</h1>
         <p className="max-w-prose">This is one of the Cask Room games, for accounts aged 18 or over. {viewer.user ? "" : "Sign in with your phone number to play it."}</p>
         <div className="flex flex-wrap justify-center gap-2">

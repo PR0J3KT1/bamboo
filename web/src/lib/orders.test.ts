@@ -77,3 +77,11 @@ test("a game reward takes a share off the food only", async () => {
   assert.equal(rewardDiscount(3600, 5), 180);
   assert.equal(rewardDiscount(1990, 5), 100); // rounded to the shilling
 });
+
+test("one number can't flood the kitchen", async () => {
+  const { orderLimit } = await import("./orders");
+  assert.equal(orderLimit(0, 0), null);
+  assert.equal(orderLimit(2, 9), null);
+  assert.match(orderLimit(3, 3)!, /3 orders on the way/);
+  assert.match(orderLimit(0, 10)!, /a lot of orders/);
+});

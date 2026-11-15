@@ -36,7 +36,7 @@ export default async function RoomsPage() {
           {from && <p className="mt-1 font-semibold">From KES {from.toLocaleString("en-KE")} a night</p>}
         </div>
       </header>
-      <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 py-6 md:px-8 md:py-10">
+      <main id="main" tabIndex={-1} className="mx-auto w-full max-w-[1200px] flex-1 px-4 py-6 md:px-8 md:py-10">
         <RoomsView terms={settings.rooms} phone={settings.phone} />
       </main>
       <LoungeFooter />

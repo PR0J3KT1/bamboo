@@ -101,12 +101,12 @@ export function SignInFlow({ signedIn, profileComplete, next }: { signedIn: bool
 
   if (signedIn && profileComplete) {
     return (
-      <>
+      <main id="main" tabIndex={-1} className="outline-none">
         <SignInHeader title="You're signed in" note="Your account is ready." />
         <div className="mx-auto w-full max-w-md px-4 py-6">
           <Link href={next} className={buttonStyles({ variant: "main", size: "lg", block: true })}>{next === "/" ? "Back to the menu" : "Carry on"}</Link>
         </div>
-      </>
+      </main>
     );
   }
 
@@ -152,13 +152,13 @@ export function SignInFlow({ signedIn, profileComplete, next }: { signedIn: bool
 
   if (message) {
     return (
-      <>
+      <main id="main" tabIndex={-1} className="outline-none">
         <SignInHeader title="You're in" note="Food, soft drinks and the games are open to you." />
         <div className="mx-auto flex w-full max-w-md flex-col gap-5 px-4 py-6">
           <p className="text-body">{message}</p>
           <Link href="/" className={buttonStyles({ variant: "main", size: "lg", block: true })}>To the menu</Link>
         </div>
-      </>
+      </main>
     );
   }
 
@@ -170,7 +170,7 @@ export function SignInFlow({ signedIn, profileComplete, next }: { signedIn: bool
         : { title: "About you", note: "Set once. The Cask Room opens for accounts aged 18 or over." };
 
   return (
-    <>
+    <main id="main" tabIndex={-1} className="outline-none">
       <SignInHeader {...head} />
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 px-4 py-5">
         <Steps step={step} />
@@ -225,6 +225,6 @@ export function SignInFlow({ signedIn, profileComplete, next }: { signedIn: bool
           The Cask Room opens for accounts aged 18 or over. The rider still checks ID when alcohol is handed over.
         </p>
       </div>
-    </>
+    </main>
   );
 }

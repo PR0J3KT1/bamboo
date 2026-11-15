@@ -48,7 +48,7 @@ export async function Menu() {
       <SectionBar sections={nav} />
       <div className="mx-auto grid w-full max-w-[1360px] flex-1 gap-7 px-4 pt-5 pb-10 md:px-8 lg:grid-cols-[200px_minmax(0,1fr)_300px] lg:pt-7 lg:pb-12">
         <SectionStalk sections={nav} />
-        <div className="flex min-w-0 flex-col gap-6">
+        <main id="main" tabIndex={-1} className="flex min-w-0 flex-col gap-6 outline-none">
           {!settings.ordering.open && (
             <div role="status" className="flex flex-col gap-1 rounded-2xl border-[1.5px] border-warn bg-warn-soft p-4 text-warn-ink">
               <p className="font-bold">Not taking orders online just now.</p>
@@ -109,7 +109,7 @@ export async function Menu() {
             );
           })}
           <MoreAtLounge />
-        </div>
+        </main>
         <OrderPanel />
       </div>
     </CatalogProvider>

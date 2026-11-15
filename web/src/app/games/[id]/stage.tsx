@@ -278,10 +278,10 @@ export function Stage({ id, children }: { id: GameId; children: React.ReactNode 
 
   return (
     <div className="grove-bg min-h-dvh text-on-grove">
-      <div className="mx-auto flex min-h-dvh w-full max-w-[760px] flex-col gap-4 px-4 pt-3 pb-8">
+      <main id="main" tabIndex={-1} className="mx-auto flex min-h-dvh w-full max-w-[760px] flex-col gap-4 px-4 pt-3 pb-8 outline-none">
         <div className="flex items-center justify-between gap-3">
           <Link href="/games" className="flex h-11 items-center gap-1.5 rounded-full px-2 font-semibold hover:bg-on-grove/10"><X aria-hidden className="size-5" /> Games</Link>
-          <span className="font-display text-[1.25rem] font-extrabold uppercase">{g.name}</span>
+          <h1 className="font-display text-[1.25rem] font-extrabold uppercase">{g.name}</h1>
           <button
             type="button"
             aria-pressed={muted}
@@ -311,7 +311,7 @@ export function Stage({ id, children }: { id: GameId; children: React.ReactNode 
             {phase === "team-end" && <TeamEnd unit={unit} onAgain={start} />}
           </Ctx.Provider>
         )}
-      </div>
+      </main>
     </div>
   );
 }

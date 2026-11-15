@@ -279,7 +279,7 @@ export function Planner({ start, phone, ordering }: { start: string | null; phon
   ];
 
   return (
-    <div ref={top} className="mx-auto flex w-full max-w-[1100px] scroll-mt-4 flex-col gap-5 px-4 py-6 md:px-8">
+    <main id="main" tabIndex={-1} ref={top} className="mx-auto flex w-full max-w-[1100px] scroll-mt-4 flex-col gap-5 px-4 py-6 outline-none md:px-8">
       <div className="relative overflow-hidden rounded-3xl text-white" style={{ background: o.hue }}>
         <Image src={occasionPhoto(o.id, adult).src} alt="" fill priority sizes="(min-width: 1100px) 1040px, 100vw" className="object-cover opacity-45" />
         <div className="relative flex flex-col gap-1 p-5 md:p-7">
@@ -319,6 +319,6 @@ export function Planner({ start, phone, ordering }: { start: string | null; phon
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }

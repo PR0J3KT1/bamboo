@@ -15,7 +15,7 @@ async function Settings() {
   const [settings, [row]] = await Promise.all([getSettings(), db.select({ by: schema.settings.updatedBy, at: schema.settings.updatedAt }).from(schema.settings).where(eq(schema.settings.key, "lounge")).limit(1)]);
   const last = row ? `Last saved by ${row.by ?? "an admin"}, ${row.at.toLocaleString("en-KE", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Africa/Nairobi" })}.` : "Not saved yet: these are the starting values.";
   return (
-    <main className="mx-auto flex w-full max-w-[860px] flex-col gap-4 px-4 py-5 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[860px] flex-col gap-4 px-4 py-5 md:px-5">
       <div>
         <h1 className="font-display text-h2 font-extrabold uppercase">Settings</h1>
         <p className="text-ink-2">What customers see about the lounge, and what&rsquo;s open online. {last}</p>

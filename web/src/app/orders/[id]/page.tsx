@@ -15,7 +15,7 @@ import { KeepFresh } from "./keep-fresh";
 import { PayActions } from "./pay-actions";
 import { checkPending } from "@/lib/payments";
 
-export const metadata: Metadata = { title: "Your order" };
+export const metadata: Metadata = { title: "Your order", robots: { index: false } };
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -88,7 +88,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-2xl flex-col gap-5 px-4 py-5">
+      <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-2xl flex-col gap-5 px-4 py-5">
         {paying && !cancelled && <PayActions id={o.id} failed={o.paymentStatus === "failed"} cash={o.mode === "delivery" ? "Pay the rider instead" : "Pay at the counter instead"} />}
         {!cancelled && (
           <ol aria-label="Order progress" className="flex flex-col">

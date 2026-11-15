@@ -3,7 +3,7 @@ import { buttonStyles } from "@/components/ui/button";
 
 export function NoAccess({ reason, path = "/admin" }: { reason: "signed-out" | "forbidden"; path?: string }) {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-4 px-4 py-16">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-4 px-4 py-16">
       <h1 className="font-display text-h2 font-extrabold uppercase">{reason === "signed-out" ? "Sign in to continue" : "Not for this account"}</h1>
       <p className="text-body text-ink-2">
         {reason === "signed-out"

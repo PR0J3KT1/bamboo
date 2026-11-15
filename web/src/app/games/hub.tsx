@@ -16,7 +16,7 @@ export function GameHub({ games, adult, reward }: { games: HubGame[]; adult: boo
   const shown = games.filter((g) => kind === "all" || g.kind === kind);
   const tab = (on: boolean) => cn("h-10 rounded-full px-4 font-semibold", on ? "bg-action text-on-action" : "bg-ground-2 text-ink-2 hover:text-ink");
   return (
-    <main className="mx-auto flex w-full max-w-[1100px] flex-col gap-5 px-4 py-6 md:px-8">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1100px] flex-col gap-5 px-4 py-6 md:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div role="group" aria-label="Kind of game" className="flex flex-wrap gap-2">
           <button type="button" aria-pressed={kind === "all"} onClick={() => setKind("all")} className={tab(kind === "all")}>All {games.length}</button>

@@ -38,7 +38,7 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/admin/book
   const now = requestTime();
 
   return (
-    <main className="mx-auto flex w-full max-w-[1100px] flex-col gap-4 px-4 py-5 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1100px] flex-col gap-4 px-4 py-5 md:px-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <h1 className="font-display text-h2 font-extrabold uppercase">Bookings</h1>
         <p className="text-fine text-ink-2">Rooms and tables. Confirming or declining texts the customer.</p>

@@ -104,3 +104,13 @@ export function foodSubtotal(lines: { itemId: string; unitPrice: number; qty: nu
 
 /** A percent off the food, in whole shillings. */
 export const rewardDiscount = (food: number, percent: number) => Math.round((food * percent) / 100);
+
+/* ── how many orders one number may place: a stop for floods and pranks, not for regulars ── */
+export const OPEN_PER_HOUR = 3;
+export const PER_DAY = 10;
+/** Why a number can't order just now, or null if it can. */
+export function orderLimit(openLastHour: number, lastDay: number): string | null {
+  if (openLastHour >= OPEN_PER_HOUR) return `This number already has ${openLastHour} orders on the way. Call the lounge to add to one.`;
+  if (lastDay >= PER_DAY) return "That's a lot of orders from one number today. Call the lounge to order more.";
+  return null;
+}

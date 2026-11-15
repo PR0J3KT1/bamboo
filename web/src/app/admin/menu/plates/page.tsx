@@ -22,7 +22,7 @@ async function Plates() {
   const plates = bundles.map((b) => ({ id: b.id, name: b.name, who: b.who as "one" | "two" | "table", photoKey: b.photoKey, parts: parts.filter((p) => p.bundleId === b.id).map((p) => ({ itemId: p.itemId, qty: p.qty })) }));
   const lounge = Object.entries(photos.lounge).map(([key, p]) => ({ key, src: p.src, alt: p.alt }));
   return (
-    <main className="mx-auto flex w-full max-w-[1000px] flex-col gap-4 px-4 py-5 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1000px] flex-col gap-4 px-4 py-5 md:px-5">
       <Link href="/admin/menu" className="-ml-2 flex h-10 items-center gap-1 self-start rounded-full px-2 font-semibold"><ChevronLeft aria-hidden className="size-5" /> Menu and prices</Link>
       <div>
         <h1 className="font-display text-h2 font-extrabold uppercase">Who&rsquo;s eating? plates</h1>

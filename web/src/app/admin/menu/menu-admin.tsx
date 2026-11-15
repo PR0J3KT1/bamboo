@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import type { AdminDish, AdminMenuData } from "@/db/queries/admin-menu";
@@ -10,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
 import { Switch } from "@/components/admin/switch";
 import { cn } from "@/lib/utils";
+import { Pic } from "@/components/ui/picture";
+import { Reorder } from "./reorder";
 import { savePrices, saveSection, setAvailability } from "./actions";
 import { DishEditor } from "./dish-editor";
 
@@ -27,6 +28,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
   const [prices, setPrices] = useState<Record<string, string>>({}); // item id → typed price
   const [editing, setEditing] = useState<AdminDish | "new" | null>(null);
   const [saving, startSave] = useTransition();
+  const [ordering, setOrdering] = useState(false);
 
   const shelvesHere = useMemo(() => {
     const ids = new Set(data.dishes.filter((d) => d.categoryId === category && d.shelfId).map((d) => d.shelfId));
@@ -60,7 +62,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-[1400px] flex-col gap-3.5 px-4 py-5 pb-28 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1400px] flex-col gap-3.5 px-4 py-5 pb-28 md:px-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h1 className="font-display text-h2 font-extrabold uppercase">Menu and prices</h1>
         {canEdit && <Link href="/admin/menu/plates" className="text-fine font-semibold text-action underline underline-offset-2">Who&rsquo;s eating? plates</Link>}
@@ -97,6 +99,24 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
         </div>
       )}
 
+      {canEdit && !query && !ordering && (
+        <button type="button" disabled={!!shelf || onlySoldOut} onClick={() => setOrdering(true)} className="self-start text-fine font-semibold text-action underline underline-offset-2 disabled:text-ink-3 disabled:no-underline">
+          {shelf || onlySoldOut ? "Show the whole section to change its order" : "Change the order"}
+        </button>
+      )}
+      {ordering && category && (
+        <Reorder
+          key={category}
+          categoryId={category}
+          name={data.categories.find((c) => c.id === category)?.name ?? "this section"}
+          dishes={data.dishes.filter((d) => d.categoryId === category).sort((a, b) => a.sort - b.sort)}
+          onDone={(saved) => {
+            setOrdering(false);
+            if (saved) router.refresh();
+          }}
+        />
+      )}
+      {!ordering && (
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
         <table className="w-full min-w-[820px] border-collapse text-left">
           <thead>
@@ -117,6 +137,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
           </tbody>
         </table>
       </div>
+      )}
 
       {changed.length > 0 && (
         <div role="status" className="fixed inset-x-4 bottom-4 z-40 mx-auto flex max-w-xl items-center justify-between gap-3 rounded-full bg-grove py-2 pr-2 pl-5 text-on-grove shadow-lift">
@@ -161,8 +182,10 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
     <tr className={cn("border-b border-line-2 last:border-0", !on && "bg-panel-2")}>
       <td className="px-4 py-2.5">
         <div className="flex items-center gap-3">
-          {d.image ? (
-            <Image src={d.image} alt="" width={52} height={40} className="h-10 w-[52px] rounded-lg object-cover" />
+          {d.picture ? (
+            <span className={cn("relative h-10 w-[52px] shrink-0 overflow-hidden rounded-lg", d.picture.kind === "bottle" && "bottle-stage")}>
+              <Pic picture={d.picture} alt="" sizes="52px" />
+            </span>
           ) : (
             <span aria-hidden className="flex h-10 w-[52px] items-center justify-center rounded-lg bg-ground-2 text-fine font-bold text-ink-3">{d.name.slice(0, 2).toUpperCase()}</span>
           )}

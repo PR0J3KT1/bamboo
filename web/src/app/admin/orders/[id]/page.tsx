@@ -54,7 +54,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
         )}
       </div>
 
-      <main className="flex flex-wrap items-start gap-5 p-4 md:p-5">
+      <main id="main" tabIndex={-1} className="flex flex-wrap items-start gap-5 p-4 md:p-5">
         <section aria-label="Ticket" className="flex max-w-[440px] flex-[1_1_340px] flex-col gap-2.5 rounded-t-[4px] rounded-b-2xl bg-card px-5 py-5 shadow-[0_1px_0_var(--line),0_8px_18px_rgb(20_41_28/.12)]">
           <ul className="flex flex-col gap-2.5">
             {lines.map((l) => (

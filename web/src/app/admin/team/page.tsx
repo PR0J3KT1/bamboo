@@ -32,7 +32,7 @@ async function Team() {
   ]);
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-5 px-4 py-5 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-4xl flex-col gap-5 px-4 py-5 md:px-5">
       <div className="flex flex-col gap-1">
         <h1 className="font-display text-h2 font-extrabold uppercase">Team</h1>
         <p className="text-ink-2">{WHAT.staff} {WHAT.admin}</p>

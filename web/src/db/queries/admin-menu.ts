@@ -1,6 +1,7 @@
 import "server-only";
 import { asc } from "drizzle-orm";
 import { db, schema } from "@/db";
+import { pictureFor, type Picture } from "@/lib/pictures";
 
 export type AdminSize = { id: string; portion: string | null; price: number; active: boolean };
 
@@ -24,6 +25,8 @@ export type AdminDish = {
   origin: string | null;
   serve: string | null;
   image: string | null;
+  /** what the menu shows: an uploaded photo, the lounge's, a credited dish photo or the bottle */
+  picture: Picture | null;
   hasOldPhoto: boolean; // a photo from the old site's sprite sheets or the lounge's photo set
   sort: number;
   sizes: AdminSize[];
@@ -73,6 +76,7 @@ export async function getAdminMenu(): Promise<AdminMenuData> {
       origin: i.origin,
       serve: i.serve,
       image: i.image,
+      picture: pictureFor(i),
       hasOldPhoto: !!(i.sprite || i.photoKey),
       sort: i.sort,
       sizes: [size],

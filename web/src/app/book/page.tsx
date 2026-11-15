@@ -34,7 +34,7 @@ export default async function BookPage() {
           <p className="max-w-md font-serif text-lead italic md:text-[1.25rem]">For dinner, the big match or a birthday. Groups for the derby: book ahead.</p>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-[1100px] flex-1 px-4 py-6 md:px-8 md:py-10">
+      <main id="main" tabIndex={-1} className="mx-auto w-full max-w-[1100px] flex-1 px-4 py-6 md:px-8 md:py-10">
         <TableForm tables={settings.tables} phone={settings.phone} />
       </main>
       <LoungeFooter />

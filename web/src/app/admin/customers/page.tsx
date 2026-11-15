@@ -26,7 +26,7 @@ async function Customers({ searchParams }: { searchParams: PageProps<"/admin/cus
 
   const tab = (on: boolean) => cn("flex h-10 items-center rounded-full px-4 font-semibold", on ? "bg-panel shadow-sm" : "text-ink-2");
   return (
-    <main className="mx-auto flex w-full max-w-[1400px] flex-col gap-3.5 px-4 py-5 md:px-5">
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1400px] flex-col gap-3.5 px-4 py-5 md:px-5">
       <h1 className="font-display text-h2 font-extrabold uppercase">Customers</h1>
       <div className="flex flex-wrap items-center gap-2.5">
         <nav aria-label="Who to show" className="flex rounded-full bg-ground p-1">

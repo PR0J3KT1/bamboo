@@ -32,7 +32,7 @@ export function Showcase() {
         </div>
       </header>
 
-      <main className="mx-auto grid w-full max-w-5xl gap-10 px-4 py-8 md:px-8">
+      <main id="main" tabIndex={-1} className="mx-auto grid w-full max-w-5xl gap-10 px-4 py-8 md:px-8">
         <section className="flex flex-col gap-4">
           <h2 className="font-display text-h2 font-extrabold uppercase">Type</h2>
           <p className="font-stencil text-h1 font-black">ON THE COALS</p>

@@ -40,7 +40,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
         <h1 className="figures text-h3">{b.code}</h1>
         <Tag tone={status === "requested" ? "warn" : status === "confirmed" ? "ok" : status === "declined" ? "danger" : "neutral"}>{STATUS_LABEL[status]}</Tag>
       </div>
-      <main className="mx-auto grid w-full max-w-[1000px] gap-5 p-4 md:grid-cols-[minmax(0,1fr)_340px] md:p-5">
+      <main id="main" tabIndex={-1} className="mx-auto grid w-full max-w-[1000px] gap-5 p-4 md:grid-cols-[minmax(0,1fr)_340px] md:p-5">
         <div className="flex flex-col gap-4">
           <section className={card} aria-label="The booking">
             <h2 className="font-display text-[1.5rem] font-extrabold uppercase">{b.kind === "room" ? "Room" : "Table"}</h2>

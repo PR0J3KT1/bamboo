@@ -112,7 +112,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
       </header>
 
       {!lines.length ? (
-        <main className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-8">
+        <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-8">
           <p className="text-lead">Your order is empty.</p>
           <Link href="/" className={buttonStyles({ variant: "main", size: "lg" })}>See the menu</Link>
         </main>

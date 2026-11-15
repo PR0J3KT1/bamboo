@@ -5,7 +5,8 @@ import { db, schema } from "@/db";
 import { getViewer, isPhoneBlocked } from "@/lib/session";
 import { BLOCKED_MESSAGE } from "@/lib/blocked";
 import { normalizeKenyanPhone } from "@/lib/phone";
-import { fareFor, foodSubtotal, MAX_LINES, MAX_QTY, priceOrder, rewardDiscount, type PricedItem } from "@/lib/orders";
+import { fareFor, foodSubtotal, MAX_LINES, MAX_QTY, orderLimit, priceOrder, rewardDiscount, type PricedItem } from "@/lib/orders";
+import { can } from "@/lib/permissions";
 import { notifyOrder } from "@/lib/order-feed";
 import { quoteDeliveryFee } from "@/lib/tumaboda";
 import { getSettings } from "@/lib/settings";
@@ -79,6 +80,18 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
 
   const [viewer, blocked] = await Promise.all([getViewer(), isPhoneBlocked(phone)]);
   if (blocked) return { ok: false, error: BLOCKED_MESSAGE };
+  /* staff ordering for walk-ins aren't limited; everyone else is, per number */
+  if (!viewer.user || !can(viewer.user.role, { order: ["update"] })) {
+    const [{ open, day }] = await db
+      .select({
+        open: sql<number>`count(*) filter (where ${schema.orders.createdAt} > now() - interval '1 hour' and ${schema.orders.status} in ('awaiting_payment', 'received', 'preparing', 'ready', 'out_for_delivery'))::int`,
+        day: sql<number>`count(*) filter (where ${schema.orders.createdAt} > now() - interval '1 day')::int`,
+      })
+      .from(schema.orders)
+      .where(eq(schema.orders.phone, phone));
+    const limit = orderLimit(open, day);
+    if (limit) return { ok: false, error: limit };
+  }
 
   const ids = [...new Set(input.lines.map((l) => l.itemId))];
   const [rows, place] = await Promise.all([

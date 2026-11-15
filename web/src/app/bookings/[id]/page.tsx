@@ -55,7 +55,7 @@ async function Booking({ params }: { params: Promise<{ id: string }> }) {
           <p className="font-serif text-lead text-lime italic">{lede}</p>
         </div>
       </header>
-      <main className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-6">
+      <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-6">
         <section className="flex flex-col gap-2 rounded-2xl border border-line bg-panel p-4">
           <div className="flex justify-between gap-3"><span className="text-ink-2">Status</span><span className="font-semibold">{STATUS_LABEL[b.status]}</span></div>
           <div className="flex justify-between gap-3"><span className="text-ink-2">Booking</span><span className="text-right">{bookingSummary(b)}</span></div>
