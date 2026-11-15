@@ -18,12 +18,13 @@ import { PlacePicker } from "./place-picker";
 
 const card = "flex flex-col gap-3 rounded-2xl border border-line bg-panel p-4";
 
-export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, closed }: {
+export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, closed, mpesa }: {
   places: DeliveryPlace[];
   signedIn: boolean;
   defaultName: string;
   defaultPhone: string;
   closed: string | null;
+  mpesa: boolean;
 }) {
   const router = useRouter();
   const { basket: b, lines, unavailable, subtotal } = useBasketTotals();
@@ -55,6 +56,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
   const won = useReward();
   const food = ok.reduce((s, l) => s + (NOT_FOOD.has(l.item!.categoryId) ? 0 : l.qty * l.item!.price), 0);
   const discount = won ? rewardDiscount(food, won.percent) : 0;
+  const [pay, setPay] = useState<"mpesa" | "cash">("mpesa");
   const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
   const [codeError, setCodeError] = useState<string | null>(null);
@@ -85,6 +87,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
         name,
         phone,
         rewardCode: won?.code ?? null,
+        pay: mpesa ? pay : "cash",
       });
       if (!r.ok) {
         setError(r.error);
@@ -172,9 +175,23 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
 
           <section className={card}>
             <h2 className="font-bold">How you&rsquo;ll pay</h2>
-            <p className="text-body">
-              {b.mode === "delivery" ? "Pay the rider at the door, cash or M-Pesa." : "Pay at the counter when you collect, cash or M-Pesa."}
-            </p>
+            {mpesa ? (
+              <div role="radiogroup" aria-label="How you'll pay" className="flex flex-col gap-2">
+                {([
+                  ["mpesa", "M-Pesa now", "A prompt comes to your phone; enter your PIN. The kitchen starts once it's paid."],
+                  ["cash", b.mode === "delivery" ? "Pay the rider" : "Pay at the counter", b.mode === "delivery" ? "Cash or M-Pesa at the door." : "Cash or M-Pesa when you collect."],
+                ] as const).map(([v, label, sub]) => (
+                  <label key={v} className={cn("flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border-[1.5px] px-3 py-2", pay === v ? "border-action bg-action-soft" : "border-line bg-card")}>
+                    <input type="radio" name="pay" value={v} checked={pay === v} onChange={() => setPay(v)} className="size-5 accent-[var(--action)]" />
+                    <span className="flex flex-col"><span className="font-semibold">{label}</span><span className="text-fine text-ink-2">{sub}</span></span>
+                  </label>
+                ))}
+              </div>
+            ) : (
+              <p className="text-body">
+                {b.mode === "delivery" ? "Pay the rider at the door, cash or M-Pesa." : "Pay at the counter when you collect, cash or M-Pesa."}
+              </p>
+            )}
             {hasAlcohol && (
               <p className="text-fine text-ink-2">
                 {b.mode === "delivery" ? "The rider checks ID and can't leave alcohol with anyone under 18." : "Show your ID at the counter when you collect."}
@@ -241,7 +258,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
             {closed && <p role="status" className="rounded-xl bg-warn-soft p-3 font-semibold text-warn-ink">{closed}</p>}
             {error && <p role="alert" className="rounded-xl bg-danger-soft p-3 font-semibold text-danger-ink">{error}</p>}
             <Button type="submit" variant="main" size="lg" block disabled={pending || !ok.length || !!closed} className="mt-1.5">
-              {pending ? "Placing your order…" : "Place order"}
+              {pending ? "Placing your order…" : mpesa && pay === "mpesa" ? "Place order and pay" : "Place order"}
             </Button>
           </div>
         </form>

@@ -186,7 +186,7 @@ function TicketCard({ t, now }: { t: Ticket; now: number }) {
       <div className="relative z-10 flex items-center justify-between gap-2">
         <span className="flex flex-col leading-tight">
           <span className="figures text-[1.25rem]">KES {formatKes(t.total)}</span>
-          <span className="text-fine text-ink-2">{PAYMENT_LABEL[t.paymentMethod]}</span>
+          <span className="text-fine text-ink-2">{t.paymentStatus === "paid" ? "Paid by M-Pesa" : PAYMENT_LABEL[t.paymentMethod]}</span>
         </span>
         {action && !riderLeads && (
           <button

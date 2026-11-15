@@ -9,6 +9,32 @@ import { fareFor, foodSubtotal, MAX_LINES, MAX_QTY, priceOrder, rewardDiscount, 
 import { notifyOrder } from "@/lib/order-feed";
 import { quoteDeliveryFee } from "@/lib/tumaboda";
 import { getSettings } from "@/lib/settings";
+import { mpesaEnabled } from "@/lib/mpesa";
+import { requestPayment, switchToCash } from "@/lib/payments";
+import { headers } from "next/headers";
+
+/** This site's address as the customer reached it (for Daraja's callback). */
+async function siteOrigin() {
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
+  return host ? `${proto}://${host}` : (process.env.BETTER_AUTH_URL ?? "http://localhost:3000");
+}
+
+const UUID = z.uuid();
+
+/** From the tracking page (its address is the order's random id): send the prompt again. */
+export async function payAgain(orderId: string) {
+  if (!UUID.safeParse(orderId).success) return { ok: false as const, error: "That order no longer exists." };
+  return requestPayment(orderId, await siteOrigin());
+}
+
+/** From the tracking page: give up on M-Pesa and pay on delivery or at the counter instead. */
+export async function payInCashInstead(orderId: string) {
+  if (!UUID.safeParse(orderId).success) return { ok: false as const, error: "That order no longer exists." };
+  const ok = await switchToCash(orderId);
+  return ok ? { ok: true as const } : { ok: false as const, error: "This order isn't waiting for a payment any more." };
+}
 
 const Input = z.object({
   lines: z
@@ -22,6 +48,8 @@ const Input = z.object({
   name: z.string().trim().min(1).max(80),
   phone: z.string().max(20),
   rewardCode: z.string().trim().toUpperCase().max(20).nullable().optional(),
+  /* "mpesa": a PIN prompt now, and the kitchen starts once it's paid; otherwise pay on the spot */
+  pay: z.enum(["mpesa", "cash"]).optional(),
 });
 
 export type PlaceOrderInput = z.input<typeof Input>;
@@ -44,6 +72,8 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
     return { ok: false, error: settings.ordering.note || "The kitchen isn't taking orders online just now. Call or WhatsApp the lounge." };
   }
 
+  const byMpesa = input.pay === "mpesa";
+  if (byMpesa && !mpesaEnabled()) return { ok: false, error: "M-Pesa isn't set up yet. Pay on delivery or at the counter." };
   const phone = normalizeKenyanPhone(input.phone);
   if (!phone) return { ok: false, error: "Enter a Kenyan mobile number, like 0712 345 678, so the rider can call." };
 
@@ -97,7 +127,7 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
         code: `BC-${n}`,
         userId: viewer.user?.id ?? null,
         mode: input.mode,
-        status: "received",
+        status: byMpesa ? "awaiting_payment" : "received",
         customerName: input.name,
         phone,
         placeId: input.mode === "delivery" ? place!.id : null,
@@ -109,18 +139,21 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
         deliveryFee: priced.deliveryFee,
         discount,
         total: priced.total - discount,
-        paymentMethod: input.mode === "delivery" ? "pay_on_delivery" : "pay_at_counter",
-        paymentStatus: "unpaid",
+        paymentMethod: byMpesa ? "mpesa" : input.mode === "delivery" ? "pay_on_delivery" : "pay_at_counter",
+        paymentStatus: byMpesa ? "pending" : "unpaid",
       })
       .returning({ id: schema.orders.id, code: schema.orders.code });
     await tx.insert(schema.orderLines).values(priced.lines.map((l) => ({ orderId: o.id, ...l })));
     if (reward) await tx.update(schema.rewardCodes).set({ usedAt: new Date(), orderId: o.id }).where(eq(schema.rewardCodes.code, reward));
-    await tx.insert(schema.orderEvents).values({ orderId: o.id, status: "received", byName: "Customer" });
+    await tx.insert(schema.orderEvents).values({ orderId: o.id, status: byMpesa ? "awaiting_payment" : "received", byName: "Customer" });
     /* the orders board hears about it when the transaction commits */
     await notifyOrder(tx, o.id);
     return o;
   });
   if ("error" in order) return { ok: false, error: order.error! };
+  /* the PIN prompt goes out once the order is saved; if it fails, the tracking page offers a
+     retry or paying in cash */
+  if (byMpesa) await requestPayment(order.id, await siteOrigin());
 
   return { ok: true, id: order.id, code: order.code };
 }

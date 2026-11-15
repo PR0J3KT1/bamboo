@@ -12,6 +12,8 @@ import { displayPhone } from "@/lib/phone";
 import { getSettings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { KeepFresh } from "./keep-fresh";
+import { PayActions } from "./pay-actions";
+import { checkPending } from "@/lib/payments";
 
 export const metadata: Metadata = { title: "Your order" };
 
@@ -31,7 +33,14 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
     .where(eq(schema.orders.id, id))
     .limit(1);
   if (!order) notFound();
+  /* an M-Pesa prompt still out after a while: ask Daraja, in case its callback is late */
+  if (order.o.paymentStatus === "pending") {
+    await checkPending(order.o);
+    const [fresh] = await db.select().from(schema.orders).where(eq(schema.orders.id, id)).limit(1);
+    if (fresh) order.o = fresh;
+  }
   const o = order.o;
+  const paying = o.status === "awaiting_payment";
   const [lines, events] = await Promise.all([
     db.select().from(schema.orderLines).where(eq(schema.orderLines.orderId, o.id)).orderBy(asc(schema.orderLines.id)),
     db.select({ status: schema.orderEvents.status, at: schema.orderEvents.at }).from(schema.orderEvents).where(eq(schema.orderEvents.orderId, o.id)).orderBy(asc(schema.orderEvents.at)),
@@ -51,7 +60,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <>
-      <KeepFresh id={o.id} active={!done} />
+      <KeepFresh id={o.id} active={!done} fast={paying && o.paymentStatus === "pending"} />
       <header className="grove-bg relative text-on-grove">
         {/* the glow of the coals */}
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_70%_at_85%_0%,rgb(201_138_30/0.32),rgb(201_138_30/0)_60%)]" />
@@ -61,10 +70,14 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
             <Link href="/" className="flex h-11 items-center font-semibold text-on-grove">Menu</Link>
           </div>
           <h1 className="font-stencil text-[3.5rem] leading-[.9] font-black uppercase" aria-live="polite">
-            {cancelled ? "Cancelled" : current!.headline}
+            {cancelled ? "Cancelled" : paying ? (o.paymentStatus === "failed" ? "Not paid yet" : "Pay on your phone") : current!.headline}
           </h1>
           <p className="font-serif text-lead text-lime italic">
-            {cancelled
+            {paying && !cancelled
+              ? o.paymentStatus === "failed"
+                ? o.paymentError ?? "The M-Pesa payment didn't go through."
+                : `An M-Pesa prompt for KES ${formatKes(o.total)} went to ${displayPhone(o.phone)}. Enter your PIN; the kitchen starts as soon as it's paid.`
+              : cancelled
               ? o.cancelReason
                 ? `Cancelled by the lounge: ${o.cancelReason}`
                 : "This order was cancelled. Call the lounge if that's a surprise."
@@ -76,6 +89,7 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
       </header>
 
       <main className="mx-auto flex w-full max-w-2xl flex-col gap-5 px-4 py-5">
+        {paying && !cancelled && <PayActions id={o.id} failed={o.paymentStatus === "failed"} cash={o.mode === "delivery" ? "Pay the rider instead" : "Pay at the counter instead"} />}
         {!cancelled && (
           <ol aria-label="Order progress" className="flex flex-col">
             {steps.map((s, i) => {
@@ -123,7 +137,9 @@ async function Tracking({ params }: { params: Promise<{ id: string }> }) {
             <div className="flex justify-between text-action"><span>Game reward, off the food</span><span>−{formatKes(o.discount)}</span></div>
           )}
           <div className="mt-1 flex items-baseline justify-between border-t border-line pt-2">
-            <span className="font-bold">{PAYMENT_LABEL[o.paymentMethod]}</span>
+            <span className="font-bold">
+              {o.paymentStatus === "paid" ? `Paid by M-Pesa${o.mpesaReceipt ? `, ${o.mpesaReceipt}` : ""}` : PAYMENT_LABEL[o.paymentMethod]}
+            </span>
             <Price amount={o.total} size="lg" />
           </div>
         </section>

@@ -108,7 +108,17 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
           <section className={card}>
             <h2 className="mb-1 font-bold text-ink-2">Payment</h2>
             <span className="text-lead font-bold">{PAYMENT_LABEL[o.paymentMethod]}</span>
-            <span className="text-ink-2">{o.paymentStatus === "paid" ? "Paid" : o.paymentMethod === "pay_on_delivery" ? `The rider collects KES ${formatKes(o.total)}` : `KES ${formatKes(o.total)} at the counter`}</span>
+            <span className="text-ink-2">
+              {o.paymentStatus === "paid"
+                ? `Paid, KES ${formatKes(o.total)}${o.mpesaReceipt ? `. M-Pesa receipt ${o.mpesaReceipt}` : ""}`
+                : o.paymentMethod === "mpesa"
+                  ? o.paymentStatus === "failed"
+                    ? `Not paid: ${o.paymentError ?? "the M-Pesa payment didn't go through"}. Don't start it until it's paid; the customer can try again or switch to cash.`
+                    : `Waiting for the customer to enter their M-Pesa PIN (KES ${formatKes(o.total)}). It moves to New once paid.`
+                  : o.paymentMethod === "pay_on_delivery"
+                    ? `The rider collects KES ${formatKes(o.total)}`
+                    : `KES ${formatKes(o.total)} at the counter`}
+            </span>
           </section>
 
           <section className={card}>

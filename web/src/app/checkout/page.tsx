@@ -4,6 +4,7 @@ import { connection } from "next/server";
 import { getMenu, getPlaces, toCatalog } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
 import { getSettings } from "@/lib/settings";
+import { mpesaEnabled } from "@/lib/mpesa";
 import { displayPhone } from "@/lib/phone";
 import { CatalogProvider } from "@/components/order/catalog";
 import { CheckoutForm } from "./checkout-form";
@@ -20,6 +21,7 @@ async function Checkout() {
         signedIn={!!viewer.user}
         defaultName={viewer.profileComplete ? (viewer.user?.name ?? "") : ""}
         defaultPhone={viewer.user?.phoneNumber ? displayPhone(viewer.user.phoneNumber) : ""}
+        mpesa={mpesaEnabled()}
         closed={settings.ordering.open ? null : settings.ordering.note || "The kitchen isn't taking orders online just now. Call or WhatsApp the lounge."}
       />
     </CatalogProvider>

@@ -4,6 +4,7 @@
 services:
   db:
     image: postgres:17-alpine
+    restart: unless-stopped # comes back when Docker restarts
     environment:
       POSTGRES_USER: bamboo
       POSTGRES_PASSWORD: bamboo

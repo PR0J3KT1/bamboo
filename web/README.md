@@ -51,6 +51,17 @@ Alcohol is filtered on the server: it is never sent to a guest or to an account 
   get a rail instead.
 - The lounge's hours, phone and Google rating come from Settings in the admin.
 
+## M-Pesa (STK push)
+
+With the `MPESA_*` values set (see `.env.example`), checkout offers **M-Pesa now**: the order waits
+as "awaiting payment" (on the board with a tag, and the kitchen doesn't start it) while a PIN
+prompt goes to the customer's phone. Daraja calls back to `/api/mpesa/callback/<secret>`; because
+its callbacks aren't signed, a "paid" is only believed once Daraja's own status check agrees, and
+then the order goes to the kitchen with the receipt. If the callback is late, the tracking page
+asks Daraja itself every 15 seconds. A failed or cancelled prompt says why, and the customer can
+send it again or pay on the spot instead. Try it all locally with `pnpm mpesa:mock` (the phone's
+last digit picks the outcome: 1 cancelled, 7 timed out, otherwise paid).
+
 ## Plates and parties
 
 - **Who's eating?** plates on the menu: dishes put together for one, two or the table, each at the
@@ -205,9 +216,9 @@ deployed from this folder with `vercel deploy --prod`. The static site stays a s
   migrations). Migrate and seed from here with the production values in the environment, e.g.
   `DATABASE_URL=… DATABASE_URL_UNPOOLED=… pnpm db:migrate && pnpm db:seed`.
 - **Set in the project:** `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `BETTER_AUTH_TRUSTED_ORIGINS`.
-- **Still to add:** `AT_API_KEY`, `AT_USERNAME`, `AT_SENDER_ID` (sign-in codes), the `R2_*`
-  values (photos), the `TUMABODA_*` values (riders) Then make the first
-  admin: `pnpm admin:grant +2547… admin` with the production database in the environment.
+- **Set later:** the `R2_*` values (photo uploads), the `TUMABODA_*` values (riders) and the
+  `MPESA_*` values (M-Pesa at checkout). Each takes effect on the next deploy. The first admin
+  was made with `pnpm admin:grant +2547… admin` against the production database.
 
 ## Self-hosting
 

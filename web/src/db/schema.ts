@@ -261,6 +261,8 @@ export const orders = pgTable(
     paymentStatus: paymentStatus("payment_status").default("unpaid").notNull(),
     mpesaCheckoutRequestId: text("mpesa_checkout_request_id").unique(),
     mpesaReceipt: text("mpesa_receipt"),
+    /* why the last M-Pesa prompt didn't go through, as the customer reads it */
+    paymentError: text("payment_error"),
     cancelReason: text("cancel_reason"),
     /* The rider, through TumaBoda's partner API (src/lib/tumaboda.ts) */
     tumabodaDeliveryId: text("tumaboda_delivery_id").unique(),
