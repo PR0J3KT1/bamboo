@@ -13,7 +13,8 @@ import { stepsFor } from "@/lib/order-status";
 import { NoAccess } from "@/components/admin-shell/no-access";
 import { Tag } from "@/components/ui/pill";
 import { formatKes } from "@/components/ui/price";
-import { RoleSelect } from "../../team/team-forms";
+import { MemberControls } from "../../team/team-forms";
+import { getLocations } from "@/lib/locations";
 import { AGE } from "../age-status";
 import { BlockForm } from "./block-form";
 import { Loader } from "@/components/ui/loader";
@@ -60,9 +61,16 @@ async function Customer({ params }: { params: Promise<{ phone: string }> }) {
             <section className={card}>
               <h2 className="font-bold">Access</h2>
               {c.user && (
-                <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <span className="text-ink-2">Role</span>
-                  <RoleSelect userId={c.user.id} role={c.user.role} name={c.name ?? ""} self={c.user.id === me.id} />
+                  <MemberControls
+                    userId={c.user.id}
+                    role={c.user.role}
+                    locationId={c.user.locationId ?? null}
+                    name={c.name ?? ""}
+                    self={c.user.id === me.id}
+                    grant={{ roles: ["staff", "manager", "admin"], locations: (await getLocations()).map((l) => ({ id: l.id, name: l.name })), ownLocation: null }}
+                  />
                 </div>
               )}
               {c.blocked && c.blockReason && <p className="rounded-xl bg-ground-2 p-2.5 text-fine">Blocked: {c.blockReason}</p>}

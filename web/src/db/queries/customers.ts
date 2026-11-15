@@ -75,7 +75,7 @@ export async function listCustomers(opts: { q?: string; team?: boolean; limit?: 
   const q = opts.q?.trim().toLowerCase();
   const digits = q?.replace(/\D/g, "");
   return rows
-    .filter((r) => (opts.team ? r.role === "staff" || r.role === "admin" : true))
+    .filter((r) => (opts.team ? r.role !== "customer" : true))
     .filter((r) => {
       if (!q) return true;
       if (r.name?.toLowerCase().includes(q)) return true;

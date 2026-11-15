@@ -49,7 +49,7 @@ async function Customers({ searchParams }: { searchParams: PageProps<"/admin/cus
             <Link href={`/admin/customers/${r.phone.slice(1)}`} className="flex flex-col gap-2.5 rounded-2xl border border-line bg-panel p-3.5 active:border-action">
               <span className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1.5">
                 <span className="flex min-w-0 flex-col">
-                  <span className="font-bold">{r.name || displayPhone(r.phone)}{r.role === "admin" || r.role === "staff" ? <span className="font-normal text-ink-2"> ({r.role})</span> : null}</span>
+                  <span className="font-bold">{r.name || displayPhone(r.phone)}{r.role !== "customer" ? <span className="font-normal text-ink-2"> ({r.role})</span> : null}</span>
                   {r.name && <span className="text-fine text-ink-2">{displayPhone(r.phone)}</span>}
                 </span>
                 <span className="whitespace-nowrap">{r.blocked ? <Tag tone="grove">Blocked</Tag> : <Tag tone={AGE[r.age].tone}>{AGE[r.age].label}</Tag>}</span>
@@ -83,7 +83,7 @@ async function Customers({ searchParams }: { searchParams: PageProps<"/admin/cus
               <tr key={r.phone} className="border-b border-line-2 last:border-0">
                 <td className="px-4 py-3">
                   <Link href={`/admin/customers/${r.phone.slice(1)}`} className="flex flex-col">
-                    <span className="font-bold">{r.name || displayPhone(r.phone)}{r.role === "admin" || r.role === "staff" ? <span className="font-normal text-ink-2"> ({r.role})</span> : null}</span>
+                    <span className="font-bold">{r.name || displayPhone(r.phone)}{r.role !== "customer" ? <span className="font-normal text-ink-2"> ({r.role})</span> : null}</span>
                     <span className="text-fine text-ink-2">{displayPhone(r.phone)}</span>
                   </Link>
                 </td>

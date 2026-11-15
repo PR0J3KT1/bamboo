@@ -1,4 +1,4 @@
-import { getSettings } from "@/lib/settings";
+import { hereFacts } from "@/lib/locations";
 import { whatsapp } from "@/lib/lounge";
 import { displayPhone } from "@/lib/phone";
 import { WhatsAppIcon } from "@/components/brand";
@@ -6,7 +6,7 @@ import { WhatsAppIcon } from "@/components/brand";
 /** WhatsApp the lounge: a round green button, low on the right. On phones it sits above the
     basket bar. */
 export async function WhatsAppButton() {
-  const { phone } = await getSettings();
+  const { phone } = await hereFacts();
   return (
     <a
       href={whatsapp(phone, "Hello Bamboo Cask, ")}

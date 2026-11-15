@@ -6,6 +6,7 @@ import { ChevronLeft } from "lucide-react";
 import { checkPermission } from "@/lib/session";
 import { can } from "@/lib/permissions";
 import { getOrderDetail } from "@/db/queries/orders";
+import { worksAt } from "@/lib/scope";
 import { nextAction, OPEN, PAYMENT_LABEL, stepsFor, TUMABODA_STATUS } from "@/lib/order-status";
 import { needsAttention } from "@/lib/tumaboda-core";
 import { tumabodaEnabled } from "@/lib/tumaboda";
@@ -30,7 +31,8 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
   if (!UUID.test(id)) notFound();
   const d = await getOrderDetail(id);
   if (!d) notFound();
-  const { o, place, customer, lines, events } = d;
+  if (!worksAt(me, d.o.locationId)) return <NoAccess reason="forbidden" path={`/admin/orders/${id}`} />;
+  const { o, place, location, customer, lines, events } = d;
 
   const canUpdate = can(me.role, { order: ["update"] });
   const step = nextAction(o.mode, o.status);
@@ -91,6 +93,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
               <>
                 <span className="text-lead font-bold">{place?.name}</span>
                 {o.directions && <span>{o.directions}</span>}
+                <span className="text-fine text-ink-2">From Bamboo Cask {location.name}</span>
                 {o.tumabodaStatus && <Tag tone={needsAttention(o.tumabodaStatus) ? "danger" : "ok"} className="self-start">{TUMABODA_STATUS[o.tumabodaStatus] ?? o.tumabodaStatus}</Tag>}
                 {o.tumabodaDeliveryNumber && <span className="text-fine text-ink-2">TumaBoda {o.tumabodaDeliveryNumber}</span>}
                 {o.tumabodaTrackingUrl && <a href={o.tumabodaTrackingUrl} target="_blank" rel="noreferrer" className="text-fine font-semibold text-action underline">Follow the rider</a>}
@@ -102,7 +105,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
                 )}
               </>
             ) : (
-              <span>At the counter, Keiyo Road</span>
+              <span>At the counter, {location.area}</span>
             )}
           </section>
 

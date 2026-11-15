@@ -13,7 +13,7 @@ export type BookingTab = "requests" | "upcoming" | "past";
 
 /** Requests waiting (oldest first, so nobody waits long), upcoming confirmed bookings (soonest
     first), or everything else (newest first). */
-export async function listBookings(tab: BookingTab) {
+export async function listBookings(tab: BookingTab, locationId: string | null) {
   const today = todayInNairobi();
   const where =
     tab === "requests"
@@ -22,11 +22,21 @@ export async function listBookings(tab: BookingTab) {
         ? and(eq(b.status, "confirmed"), gte(day, today))
         : or(inArray(b.status, ["declined", "cancelled", "completed"]), and(eq(b.status, "confirmed"), lt(day, today)));
   const order = tab === "requests" ? [asc(b.createdAt)] : tab === "upcoming" ? [asc(day), asc(b.at)] : [desc(b.updatedAt)];
-  return db.select().from(b).where(where).orderBy(...order).limit(200);
+  return db
+    .select({ b, location: schema.locations.name })
+    .from(b)
+    .innerJoin(schema.locations, eq(b.locationId, schema.locations.id))
+    .where(and(where, locationId ? eq(b.locationId, locationId) : undefined))
+    .orderBy(...order)
+    .limit(200)
+    .then((rows) => rows.map((r) => ({ ...r.b, location: r.location })));
 }
 
-export async function countRequests() {
-  const [{ n }] = await db.select({ n: sql<number>`count(*)::int` }).from(b).where(eq(b.status, "requested"));
+export async function countRequests(locationId: string | null) {
+  const [{ n }] = await db
+    .select({ n: sql<number>`count(*)::int` })
+    .from(b)
+    .where(and(eq(b.status, "requested"), locationId ? eq(b.locationId, locationId) : undefined));
   return n;
 }
 

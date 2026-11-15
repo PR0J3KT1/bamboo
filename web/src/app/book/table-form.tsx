@@ -27,7 +27,7 @@ export function slots(from: string, to: string, isToday: boolean, now: string) {
   return out;
 }
 
-export function TableForm({ tables, phone }: { tables: { open: boolean; from: string; to: string; maxPeople: number }; phone: string }) {
+export function TableForm({ tables, phone, locationId }: { tables: { open: boolean; from: string; to: string; maxPeople: number }; phone: string; locationId: string }) {
   const router = useRouter();
   const today = useSyncExternalStore(noop, () => todayInNairobi(), () => "");
   const now = useSyncExternalStore(noop, nowHHMM, () => "00:00");
@@ -69,7 +69,7 @@ export function TableForm({ tables, phone }: { tables: { open: boolean; from: st
         setError(null);
         if (!chosen) return setError("Pick a time.");
         start(async () => {
-          const r = await requestTable({ date: day, time: chosen, people, occasion, name: nameValue, phone: telValue, note: note || null });
+          const r = await requestTable({ locationId, date: day, time: chosen, people, occasion, name: nameValue, phone: telValue, note: note || null });
           if (!r.ok) return setError(r.error);
           rememberBooking(r.id, r.code);
           router.push(`/bookings/${r.id}`);

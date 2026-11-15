@@ -9,13 +9,16 @@ import { dayList, type Period } from "@/lib/reports-core";
 
 const o = schema.orders;
 const NAIROBI = sql`'Africa/Nairobi'`;
-const inPeriod = (p: Period) => and(gte(o.createdAt, p.start), lt(o.createdAt, p.end));
-const completed = (p: Period) => and(inPeriod(p), eq(o.status, "completed"));
+/** A period, at one location or (no locationId) all of them. */
+export type ReportScope = Period & { locationId?: string | null };
+
+const inPeriod = (p: ReportScope) => and(gte(o.createdAt, p.start), lt(o.createdAt, p.end), p.locationId ? eq(o.locationId, p.locationId) : undefined);
+const completed = (p: ReportScope) => and(inPeriod(p), eq(o.status, "completed"));
 const sales = sql<number>`coalesce(sum(${o.subtotal} - ${o.discount}), 0)::int`;
 
 export type Totals = { sales: number; orders: number; deliveryFees: number; cancelled: number; cancelledValue: number; open: number };
 
-export async function getTotals(p: Period): Promise<Totals> {
+export async function getTotals(p: ReportScope): Promise<Totals> {
   const [r] = await db
     .select({
       sales: sql<number>`coalesce(sum(${o.subtotal} - ${o.discount}) filter (where ${o.status} = 'completed'), 0)::int`,
@@ -33,7 +36,7 @@ export async function getTotals(p: Period): Promise<Totals> {
 export type Bucket = { key: string; sales: number; orders: number };
 
 /** Sales for each day, or each hour when the period is one day. Empty days are included. */
-export async function getSalesOverTime(p: Period): Promise<{ unit: "day" | "hour"; buckets: Bucket[] }> {
+export async function getSalesOverTime(p: ReportScope): Promise<{ unit: "day" | "hour"; buckets: Bucket[] }> {
   const hourly = p.days === 1;
   const key = hourly
     ? sql<string>`to_char(${o.createdAt} at time zone ${NAIROBI}, 'HH24')`
@@ -60,7 +63,7 @@ export type Share = { key: string; label: string; value: number; orders?: number
 const lineValue = sql<number>`coalesce(sum(${schema.orderLines.unitPrice} * ${schema.orderLines.qty}), 0)::int`;
 
 /** Kitchen, soft drinks and the Cask Room, by the value of the lines (before any discount). */
-export async function getMix(p: Period): Promise<Share[]> {
+export async function getMix(p: ReportScope): Promise<Share[]> {
   const i = schema.items;
   const kind = sql<MixKey>`case when ${i.alcohol} then 'bar' when ${i.shelfId} is not null then 'soft' else 'kitchen' end`;
   const rows = await db
@@ -80,7 +83,7 @@ export async function getMix(p: Period): Promise<Share[]> {
 
 const PAYMENT: Record<string, string> = { pay_on_delivery: "Paid at the door", pay_at_counter: "Paid at the counter", mpesa: "M-Pesa online" };
 
-export async function getPayments(p: Period): Promise<Share[]> {
+export async function getPayments(p: ReportScope): Promise<Share[]> {
   const rows = await db
     .select({ method: o.paymentMethod, value: sales, orders: sql<number>`count(*)::int` })
     .from(o)
@@ -99,7 +102,7 @@ export type Seller = { itemId: string; name: string; section: string; qty: numbe
 
 /** Every item sold, best first by quantity. The name is the one on its latest order, with the
     bottle size added, since a whisky's sizes are separate items with the same name. */
-export async function getSellers(p: Period): Promise<Seller[]> {
+export async function getSellers(p: ReportScope): Promise<Seller[]> {
   const l = schema.orderLines;
   const rows = await db
     .select({
@@ -123,7 +126,7 @@ export async function getSellers(p: Period): Promise<Seller[]> {
 export type Area = { key: string; name: string; orders: number; sales: number };
 
 /** Completed orders by where they went; collections are one row. */
-export async function getAreas(p: Period): Promise<Area[]> {
+export async function getAreas(p: ReportScope): Promise<Area[]> {
   const dp = schema.deliveryPlaces;
   const rows = await db
     .select({ mode: o.mode, placeId: o.placeId, name: dp.name, orders: sql<number>`count(*)::int`, sales })
@@ -141,7 +144,7 @@ export async function getAreas(p: Period): Promise<Area[]> {
     .sort((a, b) => b.orders - a.orders || b.sales - a.sales);
 }
 
-export async function getCancellations(p: Period) {
+export async function getCancellations(p: ReportScope) {
   return db
     .select({ id: o.id, code: o.code, createdAt: o.createdAt, reason: o.cancelReason, value: sql<number>`(${o.subtotal} - ${o.discount})::int`, customerName: o.customerName })
     .from(o)
@@ -152,7 +155,7 @@ export async function getCancellations(p: Period) {
 
 /* ── for the CSV export ── */
 
-export async function exportOrders(p: Period) {
+export async function exportOrders(p: ReportScope) {
   const dp = schema.deliveryPlaces;
   return db
     .select({

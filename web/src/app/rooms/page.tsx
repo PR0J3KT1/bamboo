@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Brand } from "@/components/brand";
 import { LoungeFooter } from "@/components/menu/more-at-lounge";
-import { LOUNGE } from "@/lib/lounge";
-import { getSettings } from "@/lib/settings";
+import { getSettings, type LoungeSettings } from "@/lib/settings";
+import { hereFacts } from "@/lib/locations";
+import { LocationPicker } from "@/components/location/here";
+import { Loader } from "@/components/ui/loader";
 import { ROOMS } from "@/lib/rooms";
 import { RoomsView } from "./rooms-view";
 
@@ -13,6 +16,16 @@ export const metadata: Metadata = {
   title: "Rooms",
   description: "Standard and Deluxe rooms upstairs at Bamboo Cask, Keiyo Road, Ngara. From KES 3,500 a night, with room service from the kitchen, 24 hours.",
 };
+
+async function UpstairsAt() {
+  const f = await hereFacts();
+  return <>Upstairs at {f.where}</>;
+}
+
+async function RoomsHere({ terms }: { terms: LoungeSettings["rooms"] }) {
+  const f = await hereFacts();
+  return <RoomsView key={f.loc.id} terms={terms} phone={f.phone} locationId={f.loc.id} where={f.where} />;
+}
 
 export default async function RoomsPage() {
   const settings = await getSettings();
@@ -30,16 +43,27 @@ export default async function RoomsPage() {
           </Link>
         </div>
         <div className="mx-auto flex max-w-[1200px] flex-col gap-3 px-4 pt-12 pb-10 md:px-8 md:pt-20 md:pb-16">
-          <p className="font-semibold text-lime">Upstairs at {LOUNGE.where}</p>
+          <p className="font-semibold text-lime">
+            <Suspense fallback={<>Upstairs at the lounge</>}>
+              <UpstairsAt />
+            </Suspense>
+          </p>
           <h1 className="font-stencil text-h1 font-black md:text-[5rem]">ROOMS UPSTAIRS</h1>
           <p className="max-w-md font-serif text-lead italic md:text-[1.25rem]">Sleep upstairs from the grill. Order dinner to the room, and breakfast in the morning.</p>
           {from && <p className="mt-1 font-semibold">From KES {from.toLocaleString("en-KE")} a night</p>}
+          <Suspense fallback={null}>
+            <LocationPicker label="Rooms at" />
+          </Suspense>
         </div>
       </header>
       <main id="main" tabIndex={-1} className="mx-auto w-full max-w-[1200px] flex-1 px-4 py-6 md:px-8 md:py-10">
-        <RoomsView terms={settings.rooms} phone={settings.phone} />
+        <Suspense fallback={<Loader label="Opening the rooms" />}>
+          <RoomsHere terms={settings.rooms} />
+        </Suspense>
       </main>
-      <LoungeFooter />
+      <Suspense fallback={<div className="grove-bg h-64" />}>
+        <LoungeFooter />
+      </Suspense>
     </>
   );
 }

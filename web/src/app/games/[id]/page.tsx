@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getMenu, toCatalog } from "@/db/queries/menu";
+import { menuHere, toCatalog } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
 import { game, GAMES, type GameId } from "@/lib/games/core";
 import { CatalogProvider } from "@/components/order/catalog";
@@ -21,7 +21,7 @@ async function Game({ params }: { params: PageProps<"/games/[id]">["params"] }) 
   const { id } = await params;
   const g = game(id);
   if (!g) notFound();
-  const [menu, viewer] = await Promise.all([getMenu(), getViewer()]);
+  const [menu, viewer] = await Promise.all([menuHere(), getViewer()]);
   if (g.adult && !viewer.adult) {
     return (
       <main id="main" tabIndex={-1} className="grove-bg flex min-h-dvh flex-col items-center justify-center gap-4 px-4 text-center text-on-grove">

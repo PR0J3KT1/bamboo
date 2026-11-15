@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronLeft } from "lucide-react";
-import { getMenu } from "@/db/queries/menu";
+import { menuHere } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
 import { getSettings } from "@/lib/settings";
 import { pictureFor } from "@/lib/pictures";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 async function Hub() {
-  const [menu, viewer, settings] = await Promise.all([getMenu(), getViewer(), getSettings()]);
+  const [menu, viewer, settings] = await Promise.all([menuHere(), getViewer(), getSettings()]);
   /* the bottle that stands on each bottle game's card */
   const bottle = (id: GameId) => {
     const s = STAGE_BOTTLE[id];

@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { Download } from "lucide-react";
 import { checkPermission } from "@/lib/session";
-import { NoAccess } from "@/components/admin-shell/no-access";
+import { NoAccess, Unassigned } from "@/components/admin-shell/no-access";
+import { adminScope } from "@/lib/scope";
 import { formatKes, Price } from "@/components/ui/price";
 import { todayInNairobi } from "@/lib/age";
 import { requestTime } from "@/lib/clock";
@@ -45,13 +46,17 @@ function Panel({ title, note, children, className }: { title: string; note?: str
 }
 
 async function Reports({ searchParams }: { searchParams: PageProps<"/admin/reports">["searchParams"] }) {
-  const { denied } = await checkPermission({ report: ["view"] });
+  const { user, denied } = await checkPermission({ report: ["view"] });
   if (denied) return <NoAccess reason={denied} path="/admin/reports" />;
+  const scope = await adminScope(user);
+  if (scope.unassigned) return <Unassigned />;
   const sp = await searchParams;
   const today = todayInNairobi(new Date(requestTime()));
-  const { period: p, problem } = parsePeriod(sp, today);
+  const parsed = parsePeriod(sp, today);
+  const problem = parsed.problem;
+  const p = { ...parsed.period, locationId: scope.locationId };
   const byKes = sp.by === "kes";
-  const before = previousPeriod(p);
+  const before = { ...previousPeriod(p), locationId: scope.locationId };
 
   const [totals, prior, overTime, mix, payments, sellers, areas, cancelled] = await Promise.all([
     getTotals(p),
@@ -83,7 +88,7 @@ async function Reports({ searchParams }: { searchParams: PageProps<"/admin/repor
     <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-4 py-5 md:px-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-h2 font-extrabold uppercase">Reports</h1>
+          <h1 className="font-display text-h2 font-extrabold uppercase">{scope.locations.length < 2 ? "Reports" : scope.location ? `Reports, ${scope.location.name}` : "Reports, every location"}</h1>
           <p className="text-ink-2">{periodText(p)}, Nairobi time. Sales count completed orders only.</p>
         </div>
         <div className="flex flex-wrap gap-2">

@@ -1,5 +1,5 @@
 "use server";
-import { eq, inArray, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db, schema } from "@/db";
 import { getViewer, isPhoneBlocked } from "@/lib/session";
@@ -12,7 +12,16 @@ import { quoteDeliveryFee } from "@/lib/tumaboda";
 import { getSettings } from "@/lib/settings";
 import { mpesaEnabled } from "@/lib/mpesa";
 import { requestPayment, switchToCash } from "@/lib/payments";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { getOpenLocations, LOCATION_COOKIE, type Location } from "@/lib/locations";
+import { nearest, roadKm } from "@/lib/locations-core";
+
+/** The location that delivers to a place: the nearest one taking orders. */
+async function deliveringLocation(place: { lat: number | null; lng: number | null }): Promise<Location | null> {
+  const open = (await getOpenLocations()).filter((l) => l.orderingOpen);
+  if (place.lat == null || place.lng == null) return open[0] ?? null;
+  return nearest(open, { lat: place.lat, lng: place.lng });
+}
 
 /** This site's address as the customer reached it (for Daraja's callback). */
 async function siteOrigin() {
@@ -43,6 +52,8 @@ const Input = z.object({
     .min(1)
     .max(MAX_LINES),
   mode: z.enum(["delivery", "collect"]),
+  /* the location whose menu the customer ordered from */
+  locationId: z.string().min(1).max(60),
   placeId: z.string().max(60).nullable(),
   directions: z.string().trim().max(300).nullable(),
   note: z.string().trim().max(300).nullable(),
@@ -54,7 +65,11 @@ const Input = z.object({
 });
 
 export type PlaceOrderInput = z.input<typeof Input>;
-export type PlaceOrderResult = { ok: true; id: string; code: string } | { ok: false; error: string };
+export type PlaceOrderResult =
+  | { ok: true; id: string; code: string }
+  /* moved: the order comes from another location (the nearest), with its own prices; the
+     checkout switches to it and asks the customer to look again */
+  | { ok: false; error: string; moved?: { id: string; name: string } };
 
 /* Places an order. Nothing the browser sends is trusted: every price comes from the menu in the
    database, sold-out items are refused, alcohol is refused unless the signed-in account is 18 or
@@ -71,6 +86,21 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   const settings = await getSettings();
   if (!settings.ordering.open) {
     return { ok: false, error: settings.ordering.note || "The kitchen isn't taking orders online just now. Call or WhatsApp the lounge." };
+  }
+
+  /* where it comes from: a delivery from the nearest location taking orders, a collection from
+     the one the customer chose */
+  const place =
+    input.mode === "delivery" && input.placeId
+      ? ((await db.select().from(schema.deliveryPlaces).where(eq(schema.deliveryPlaces.id, input.placeId)).limit(1))[0] ?? null)
+      : null;
+  if (input.mode === "delivery" && !place) return { ok: false, error: "Choose where we're delivering to." };
+  const location = place ? await deliveringLocation(place) : (await getOpenLocations()).find((l) => l.id === input.locationId) ?? null;
+  if (!location) return { ok: false, error: "That lounge isn't taking orders online just now. Call or WhatsApp us." };
+  if (!location.orderingOpen) return { ok: false, error: `Bamboo Cask ${location.name} isn't taking orders online just now. Call or WhatsApp the lounge.` };
+  if (location.id !== input.locationId) {
+    (await cookies()).set(LOCATION_COOKIE, location.id, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+    return { ok: false, error: `Bamboo Cask ${location.name} is nearest, so your order comes from there. Check the prices, then place it.`, moved: { id: location.id, name: location.name } };
   }
 
   const byMpesa = input.pay === "mpesa";
@@ -94,15 +124,12 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   }
 
   const ids = [...new Set(input.lines.map((l) => l.itemId))];
-  const [rows, place] = await Promise.all([
-    db
-      .select({ id: schema.items.id, name: schema.items.name, price: schema.items.price, alcohol: schema.items.alcohol, active: schema.items.active, options: schema.items.options, categoryId: schema.items.categoryId })
-      .from(schema.items)
-      .where(inArray(schema.items.id, ids)),
-    input.mode === "delivery" && input.placeId
-      ? db.select().from(schema.deliveryPlaces).where(eq(schema.deliveryPlaces.id, input.placeId)).limit(1).then((r) => r[0] ?? null)
-      : Promise.resolve(null),
-  ]);
+  /* this location's price for each item; an item it doesn't sell counts as sold out */
+  const rows = await db
+    .select({ id: schema.items.id, name: schema.items.name, price: schema.locationItems.price, alcohol: schema.items.alcohol, active: sql<boolean>`${schema.items.active} and ${schema.locationItems.active}`, options: schema.items.options, categoryId: schema.items.categoryId })
+    .from(schema.items)
+    .innerJoin(schema.locationItems, and(eq(schema.locationItems.itemId, schema.items.id), eq(schema.locationItems.locationId, location.id)))
+    .where(inArray(schema.items.id, ids));
 
   const itemMap = new Map<string, PricedItem>(rows.map((r) => [r.id, r]));
   const priced = priceOrder({
@@ -110,13 +137,13 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
     items: itemMap,
     adult: viewer.adult,
     mode: input.mode,
-    place: place,
+    place: place && place.lat != null && place.lng != null ? { ...place, km: roadKm(location, { lat: place.lat, lng: place.lng }) } : place,
   });
   if (!priced.ok) return priced;
 
   /* The delivery fee: TumaBoda's quote for this drop-off when it's set up, else the fare rule. */
   if (input.mode === "delivery" && place?.lat != null && place.lng != null) {
-    const quoted = await quoteDeliveryFee({ lat: place.lat, lng: place.lng }, priced.subtotal);
+    const quoted = await quoteDeliveryFee({ lat: place.lat, lng: place.lng }, priced.subtotal, location.tumabodaLocationId);
     if (quoted != null) {
       priced.deliveryFee = quoted;
       priced.total = priced.subtotal + quoted;
@@ -138,6 +165,7 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
       .insert(schema.orders)
       .values({
         code: `BC-${n}`,
+        locationId: location.id,
         userId: viewer.user?.id ?? null,
         mode: input.mode,
         status: byMpesa ? "awaiting_payment" : "received",
@@ -171,11 +199,27 @@ export async function placeOrder(raw: PlaceOrderInput): Promise<PlaceOrderResult
   return { ok: true, id: order.id, code: order.code };
 }
 
-/** The delivery fee to show at checkout for a place and this much food. */
-export async function deliveryFee(placeId: string, subtotal: number): Promise<{ fee: number; quoted: boolean } | null> {
+/** The delivery fee to show at checkout for a place and this much food, and which location
+    delivers there (the nearest taking orders). */
+export async function deliveryFee(placeId: string, subtotal: number): Promise<{ fee: number; quoted: boolean; location: { id: string; name: string } } | null> {
   if (typeof placeId !== "string" || !Number.isFinite(subtotal) || subtotal < 0 || subtotal > 10_000_000) return null;
   const [place] = await db.select().from(schema.deliveryPlaces).where(eq(schema.deliveryPlaces.id, placeId)).limit(1);
   if (!place) return null;
-  const quoted = place.lat != null && place.lng != null ? await quoteDeliveryFee({ lat: place.lat, lng: place.lng }, Math.round(subtotal)) : null;
-  return quoted != null ? { fee: quoted, quoted: true } : { fee: fareFor(place.km), quoted: false };
+  const location = await deliveringLocation(place);
+  if (!location) return null;
+  const at = { id: location.id, name: location.name };
+  const quoted = place.lat != null && place.lng != null ? await quoteDeliveryFee({ lat: place.lat, lng: place.lng }, Math.round(subtotal), location.tumabodaLocationId) : null;
+  if (quoted != null) return { fee: quoted, quoted: true, location: at };
+  const km = place.lat != null && place.lng != null ? roadKm(location, { lat: place.lat, lng: place.lng }) : place.km;
+  return { fee: fareFor(km), quoted: false, location: at };
+}
+
+/** The customer picked a location (or checkout moved them to the nearest): remember it, so the
+    menu shows its prices. */
+export async function chooseLocation(id: string) {
+  if (typeof id !== "string") return { ok: false as const };
+  const loc = (await getOpenLocations()).find((l) => l.id === id);
+  if (!loc) return { ok: false as const };
+  (await cookies()).set(LOCATION_COOKIE, loc.id, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+  return { ok: true as const };
 }

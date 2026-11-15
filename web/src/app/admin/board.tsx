@@ -60,7 +60,15 @@ function useLiveBoard() {
   return live;
 }
 
-export function Board({ tickets, serverNow, doneToday, cancelledToday }: { tickets: Ticket[]; serverNow: number; doneToday: number; cancelledToday: number }) {
+export function Board({ tickets, serverNow, doneToday, cancelledToday, where }: {
+  tickets: Ticket[];
+  serverNow: number;
+  doneToday: number;
+  cancelledToday: number;
+  /* the location shown; "" when there's only one; null for every location (each ticket then
+     says where it's from) */
+  where: string | null;
+}) {
   const live = useLiveBoard();
   const [now, setNow] = useState(serverNow);
   const [sound, setSound] = useState(false);
@@ -93,7 +101,7 @@ export function Board({ tickets, serverNow, doneToday, cancelledToday }: { ticke
   return (
     <main id="main" tabIndex={-1} className="flex flex-1 flex-col gap-0 px-4 pt-3 pb-6 md:px-5">
       <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <h1 className="font-display text-h3 font-extrabold uppercase">Service</h1>
+        <h1 className="font-display text-h3 font-extrabold uppercase">{where ? `Service, ${where}` : where === "" ? "Service" : "Service, every location"}</h1>
         <span className="text-ink-2">
           {open} open, {doneToday} done today{cancelledToday ? `, ${cancelledToday} cancelled` : ""}
         </span>
@@ -129,7 +137,7 @@ export function Board({ tickets, serverNow, doneToday, cancelledToday }: { ticke
                 {c.name} <span className="figures text-[1.375rem]">{list.length}</span>
               </h2>
               {list.map((t) => (
-                <TicketCard key={t.id} t={t} now={now} />
+                <TicketCard key={t.id} t={t} now={now} showLocation={where === null} />
               ))}
               {list.length === 0 && <p className="text-fine text-ink-3">None</p>}
             </section>
@@ -140,7 +148,7 @@ export function Board({ tickets, serverNow, doneToday, cancelledToday }: { ticke
   );
 }
 
-function TicketCard({ t, now }: { t: Ticket; now: number }) {
+function TicketCard({ t, now, showLocation }: { t: Ticket; now: number; showLocation: boolean }) {
   const [pending, start] = useTransition();
   const toast = useToast();
   const minutes = Math.max(0, Math.floor((now - Date.parse(t.createdAt)) / 60_000));
@@ -164,6 +172,7 @@ function TicketCard({ t, now }: { t: Ticket; now: number }) {
         </span>
       </div>
       <span className="text-[0.875rem] font-semibold text-ink-2">
+        {showLocation && <span className="text-ink">{t.location}: </span>}
         {t.mode === "delivery" ? `Delivery to ${t.place}` : "Collect at the counter"}, {t.customerName}
       </span>
       <ul className="flex flex-col gap-1 border-y border-dashed border-line py-2">

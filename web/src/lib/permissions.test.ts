@@ -33,3 +33,22 @@ test("bookings are for staff and admins; settings for admins only", () => {
   assert.ok(!can("staff", { settings: ["edit"] }));
   assert.ok(!can(null, { settings: ["edit"] }));
 });
+
+test("managers run their location but not the shared menu, roles or the brand", () => {
+  assert.ok(can("manager", { order: ["view", "update"] }));
+  assert.ok(can("manager", { menu: ["toggle", "price"] }));
+  assert.ok(can("manager", { report: ["view"] }));
+  assert.ok(can("manager", { location: ["edit"] }));
+  assert.ok(can("manager", { team: ["assign"] }));
+  assert.ok(!can("manager", { menu: ["edit"] }));
+  assert.ok(!can("manager", { location: ["create"] }));
+  assert.ok(!can("manager", { settings: ["edit"] }));
+  assert.ok(!can("manager", { user: ["set-role"] }));
+  assert.ok(!can("manager", { user: ["ban"] }));
+});
+
+test("staff can't change prices or locations", () => {
+  assert.ok(!can("staff", { menu: ["price"] }));
+  assert.ok(!can("staff", { location: ["edit"] }));
+  assert.ok(!can("staff", { team: ["assign"] }));
+});

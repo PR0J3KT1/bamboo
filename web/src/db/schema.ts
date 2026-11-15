@@ -43,6 +43,8 @@ export const user = pgTable("user", {
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires", { withTimezone: true }),
+  /* Staff work at one location and see only its orders, menu and bookings. Admins see them all. */
+  locationId: text("location_id"),
   ...timestamps,
 });
 
@@ -97,6 +99,30 @@ export const verification = pgTable(
 );
 
 /* ───────────────────────── Menu ───────────────────────── */
+
+/* ───────────────────────── Locations ─────────────────────────
+   Each Bamboo Cask lounge. The menu is shared (names, descriptions, photos), but each location
+   sets its own prices and sold-out switches (locationItems). A delivery goes to the location
+   nearest the drop-off; a collection to the one the customer picks. */
+export const locations = pgTable("locations", {
+  id: text("id").primaryKey(), // "ngara"
+  name: text("name").notNull(), // "Ngara"
+  area: text("area").notNull(), // "Keiyo Road, Ngara", shown to customers
+  lat: real("lat").notNull(),
+  lng: real("lng").notNull(),
+  /* blank: the numbers and hours in Settings */
+  phone: text("phone"),
+  hours: text("hours"),
+  mapUrl: text("map_url"),
+  /* the TumaBoda store riders collect from (GET /partner/locations); blank: the business default */
+  tumabodaLocationId: text("tumaboda_location_id"),
+  /* off: hidden from customers, no new orders or bookings */
+  active: boolean("active").default(true).notNull(),
+  /* the kitchen here isn't taking online orders just now */
+  orderingOpen: boolean("ordering_open").default(true).notNull(),
+  sort: integer("sort").default(0).notNull(),
+  ...timestamps,
+});
 
 export const categoryKind = pgEnum("category_kind", ["items", "bundles", "party", "rooms", "games"]);
 
@@ -167,6 +193,23 @@ export const items = pgTable(
     index("items_shelf_idx").on(t.shelfId),
     index("items_family_idx").on(t.familyId),
   ],
+);
+
+/* What each location sells, at its price. No row: not on that location's menu. */
+export const locationItems = pgTable(
+  "location_items",
+  {
+    locationId: text("location_id")
+      .notNull()
+      .references(() => locations.id, { onDelete: "cascade" }),
+    itemId: text("item_id")
+      .notNull()
+      .references(() => items.id, { onDelete: "cascade" }),
+    price: integer("price").notNull(),
+    /* off: sold out here today */
+    active: boolean("active").default(true).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.locationId, t.itemId] }), index("location_items_item_idx").on(t.itemId)],
 );
 
 /* "Who's eating?" plates: a fixed set of items, priced as the sum of its parts. */
@@ -243,6 +286,9 @@ export const orders = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     /* Short code read out to staff and the rider, e.g. "BC-4821". */
     code: text("code").notNull().unique(),
+    locationId: text("location_id")
+      .notNull()
+      .references(() => locations.id),
     userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
     mode: orderMode("mode").notNull(),
     status: orderStatus("status").default("received").notNull(),
@@ -272,7 +318,7 @@ export const orders = pgTable(
     tumabodaError: text("tumaboda_error"),
     ...timestamps,
   },
-  (t) => [index("orders_user_idx").on(t.userId), index("orders_status_idx").on(t.status)],
+  (t) => [index("orders_user_idx").on(t.userId), index("orders_status_idx").on(t.status), index("orders_location_idx").on(t.locationId)],
 );
 
 /* Each step an order took, and who moved it: the times on the tracking page and the order's
@@ -400,6 +446,9 @@ export const bookings = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     code: text("code").notNull().unique(),
     kind: bookingKind("kind").notNull(),
+    locationId: text("location_id")
+      .notNull()
+      .references(() => locations.id),
     status: bookingStatus("status").default("requested").notNull(),
     userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
     name: text("name").notNull(),

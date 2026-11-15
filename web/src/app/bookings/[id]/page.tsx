@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { eq } from "drizzle-orm";
 import { db, schema } from "@/db";
-import { getSettings } from "@/lib/settings";
+import { factsFor } from "@/lib/locations";
 import { whatsapp } from "@/lib/lounge";
 import { displayPhone } from "@/lib/phone";
 import { bookingSummary, STATUS_LABEL } from "@/lib/bookings";
@@ -31,14 +31,15 @@ async function Booking({ params }: { params: Promise<{ id: string }> }) {
   await connection();
   const { id } = await params;
   if (!UUID.test(id)) notFound();
-  const [[b], settings] = await Promise.all([db.select().from(schema.bookings).where(eq(schema.bookings.id, id)).limit(1), getSettings()]);
+  const [b] = await db.select().from(schema.bookings).where(eq(schema.bookings.id, id)).limit(1);
   if (!b) notFound();
+  const settings = await factsFor(b.locationId);
   const total = b.kind === "room" && b.rate && b.nights ? b.rate * b.nights : null;
   const lede =
     b.status === "requested"
       ? `The lounge will confirm by SMS to ${displayPhone(b.phone)}.`
       : b.status === "confirmed"
-        ? b.kind === "room" ? "Your room is held. See you at Keiyo Road." : "Your table is held. See you at Keiyo Road."
+        ? b.kind === "room" ? `Your room is held. See you at ${settings.where.split(",")[0]}.` : `Your table is held. See you at ${settings.where.split(",")[0]}.`
         : b.status === "declined"
           ? "The lounge couldn't take this one. Their note is below."
           : b.status === "cancelled"

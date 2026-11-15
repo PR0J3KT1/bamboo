@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { loungePhoto } from "@/lib/pictures";
-import { LOUNGE, whatsapp } from "@/lib/lounge";
-import { getSettings } from "@/lib/settings";
+import { whatsapp } from "@/lib/lounge";
+import { hereFacts } from "@/lib/locations";
 import { displayPhone } from "@/lib/phone";
 import { BarrelMark, WhatsAppIcon } from "@/components/brand";
 
@@ -18,11 +18,11 @@ const CARDS: { key: string; kicker: string; title: string; alt: string; body: st
 ];
 
 export async function MoreAtLounge() {
-  const { phone } = await getSettings();
+  const { phone, where } = await hereFacts();
   return (
     <section aria-labelledby="more-h" className="flex flex-col gap-4">
       <div>
-        <h2 id="more-h" className="font-display text-h2 font-extrabold uppercase md:text-[2.5rem]">More at Keiyo Road</h2>
+        <h2 id="more-h" className="font-display text-h2 font-extrabold uppercase md:text-[2.5rem]">More at {where.split(",")[0]}</h2>
         <p className="mt-1 font-serif text-lead text-ink-2 italic">Come for the choma. Stay for the match.</p>
       </div>
       <ul className="grid gap-3 sm:grid-cols-2 md:gap-4">
@@ -58,7 +58,7 @@ export async function MoreAtLounge() {
 }
 
 export async function LoungeFooter() {
-  const { phone, hours } = await getSettings();
+  const { phone, hours, where, map } = await hereFacts();
   return (
     <footer className="grove-bg text-on-grove">
       <div className="mx-auto flex max-w-[1360px] flex-col gap-6 px-4 py-10 pb-32 md:flex-row md:items-start md:justify-between md:px-8 lg:pb-12">
@@ -66,7 +66,7 @@ export async function LoungeFooter() {
           <BarrelMark className="size-12 shrink-0" />
           <div>
             <p className="font-stencil text-[1.75rem] leading-none font-black">BAMBOO CASK</p>
-            <p className="mt-1.5 font-serif text-lead text-lime italic">Grill, bar and lounge on Keiyo Road, Ngara.</p>
+            <p className="mt-1.5 font-serif text-lead text-lime italic">Grill, bar and lounge on {where}.</p>
             <nav aria-label="More" className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-semibold">
               <Link href="/" className="underline-offset-2 hover:underline">Menu</Link>
               <Link href="/rooms" className="underline-offset-2 hover:underline">Rooms</Link>
@@ -77,7 +77,7 @@ export async function LoungeFooter() {
         <dl className="grid gap-x-10 gap-y-4 sm:grid-cols-3">
           <div>
             <dt className="text-fine text-on-grove-2">Where</dt>
-            <dd><a href={LOUNGE.map} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">{LOUNGE.where}</a></dd>
+            <dd><a href={map} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">{where}</a></dd>
           </div>
           <div>
             <dt className="text-fine text-on-grove-2">When</dt>

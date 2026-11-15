@@ -58,6 +58,10 @@ async function main() {
         sprite: i.sprite, photoKey: i.photo, credit: i.credit, sort: n,
       })),
     ).onConflictDoNothing();
+    /* the first lounge; more are added in the admin. Every item goes on every location's menu at
+       its listed price, leaving prices already set alone */
+    await tx.insert(schema.locations).values({ id: "ngara", name: "Ngara", area: "Keiyo Road, Ngara", lat: -1.2738, lng: 36.8245, mapUrl: "https://www.google.com/maps/search/?api=1&query=Bamboo+Cask+Lounge+Keiyo+Road+Ngara" }).onConflictDoNothing();
+    await tx.execute(dsql`insert into location_items (location_id, item_id, price) select l.id, i.id, i.price from locations l cross join items i on conflict do nothing`);
     await tx.insert(schema.bundles).values(
       menu.bundles.map((b, n) => ({ id: b.id, name: b.name, who: b.who, photoKey: b.photo, sort: n })),
     ).onConflictDoNothing();

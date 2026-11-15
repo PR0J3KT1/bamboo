@@ -10,8 +10,11 @@ function fold(s: string) {
 }
 
 /* Type a name, pick the place. Popular places show before anything is typed. */
-export function PlacePicker({ places, value, onChange, error }: {
+export function PlacePicker({ places, value, onChange, error, multi = false }: {
   places: DeliveryPlace[];
+  /* more than one location: distances and fares depend on which delivers, so they're left to
+     the order summary */
+  multi?: boolean;
   value: string | null;
   onChange: (id: string) => void;
   error?: string | null;
@@ -33,7 +36,7 @@ export function PlacePicker({ places, value, onChange, error }: {
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col">
           <span className="font-display text-h3 font-extrabold uppercase">{chosen.name}</span>
-          <span className="text-body text-ink-2">{chosen.detail}. About {chosen.km} km from the lounge.</span>
+          <span className="text-body text-ink-2">{chosen.detail}.{multi ? "" : ` About ${chosen.km} km from the lounge.`}</span>
         </div>
         <button type="button" onClick={() => setEditing(true)} className="h-10 shrink-0 rounded-full border-[1.5px] border-action px-4 text-[0.875rem] font-semibold text-action">
           Change
@@ -71,7 +74,7 @@ export function PlacePicker({ places, value, onChange, error }: {
                 <span className="font-semibold">{p.name}</span>
                 <span className="truncate text-fine text-ink-2">{p.detail}</span>
               </span>
-              <span className="shrink-0 text-fine text-ink-2">KES {fareFor(p.km)}</span>
+              {!multi && <span className="shrink-0 text-fine text-ink-2">KES {fareFor(p.km)}</span>}
             </button>
           </li>
         ))}

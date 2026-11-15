@@ -23,7 +23,7 @@ function useToday() {
   return useSyncExternalStore(noop, () => todayInNairobi(), () => "");
 }
 
-export function RoomsView({ terms, phone }: { terms: RoomTerms; phone: string }) {
+export function RoomsView({ terms, phone, locationId, where }: { terms: RoomTerms; phone: string; locationId: string; where: string }) {
   const [roomId, setRoomId] = useState<Room["id"]>("std");
   const room = ROOMS.find((r) => r.id === roomId)!;
   const [open, setOpen] = useState<number | null>(null);
@@ -66,7 +66,7 @@ export function RoomsView({ terms, phone }: { terms: RoomTerms; phone: string })
             })}
           </ul>
           <div className="flex flex-wrap gap-2 text-fine">
-            {["Keiyo Road, Ngara", "Close to the CBD, Parklands and Pangani", "Secure parking"].map((t) => (
+            {[where, "Close to the CBD, Parklands and Pangani", "Secure parking"].map((t) => (
               <span key={t} className="rounded-full border border-line bg-panel px-3 py-1.5">{t}</span>
             ))}
           </div>
@@ -75,7 +75,7 @@ export function RoomsView({ terms, phone }: { terms: RoomTerms; phone: string })
             <Link href="/" className="font-semibold text-action underline underline-offset-2">See the menu</Link>
           </p>
         </section>
-        <BookingCard room={room} terms={terms} phone={phone} />
+        <BookingCard room={room} terms={terms} phone={phone} locationId={locationId} />
       </div>
 
       {open !== null && <Lightbox room={room} start={open} onClose={() => setOpen(null)} />}
@@ -188,7 +188,7 @@ function Step({ label, value, words, min, max, onChange }: { label: string; valu
 /* Check-in date, nights and guests; what the stay comes to; who's asking. "Send the request"
    saves it for the lounge, who confirm or decline in the admin and text the answer. WhatsApp
    stays as the other way to ask. Nothing is paid on this page. */
-function BookingCard({ room, terms, phone }: { room: Room; terms: RoomTerms; phone: string }) {
+function BookingCard({ room, terms, phone, locationId }: { room: Room; terms: RoomTerms; phone: string; locationId: string }) {
   const router = useRouter();
   const today = useToday();
   const session = useSession();
@@ -213,7 +213,7 @@ function BookingCard({ room, terms, phone }: { room: Room; terms: RoomTerms; pho
   function send() {
     setError(null);
     start(async () => {
-      const r = await requestRoom({ room: room.id, checkIn, nights, guests: people, name: nameValue, phone: telValue, note: note || null });
+      const r = await requestRoom({ locationId, room: room.id, checkIn, nights, guests: people, name: nameValue, phone: telValue, note: note || null });
       if (!r.ok) return setError(r.error);
       rememberBooking(r.id, r.code);
       router.push(`/bookings/${r.id}`);

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getMenu, toCatalog, type MenuItem } from "@/db/queries/menu";
+import { menuHere, toCatalog, type MenuItem } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
 import { getSettings } from "@/lib/settings";
 import { eighteenthBirthday } from "@/lib/age";
@@ -24,7 +24,7 @@ const SHORT: Record<string, string> = { who: "Who's eating?", party: "Parties", 
    order beside it. Alcohol never leaves the server for a guest or an account under 18; they get
    the closed Cask Room instead. */
 export async function Menu() {
-  const [menu, viewer, settings] = await Promise.all([getMenu(), getViewer(), getSettings()]);
+  const [menu, viewer, settings] = await Promise.all([menuHere(), getViewer(), getSettings()]);
 
   const visible = menu.items.filter((i) => !i.alcohol || viewer.adult);
   const families = new Map(menu.families.map((f) => [f.id, f]));

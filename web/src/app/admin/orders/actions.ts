@@ -8,6 +8,9 @@ import { canMove, type OrderStatus } from "@/lib/order-status";
 import { NotAllowed, requirePermission, type UserRow } from "@/lib/session";
 import { requestRider, TumabodaError, tumabodaEnabled } from "@/lib/tumaboda";
 import { needsAttention } from "@/lib/tumaboda-core";
+import { worksAt } from "@/lib/scope";
+
+const ELSEWHERE = "That order is for another location.";
 
 export type OrderActionResult = { ok: true; message: string; warning?: string } | { ok: false; error: string };
 
@@ -47,6 +50,7 @@ export async function moveOrder(orderId: string, toInput: string, reasonInput?: 
       /* lock the row, so two tablets pressing at once can't both move it */
       const [o] = await tx.select().from(schema.orders).where(eq(schema.orders.id, orderId)).for("update").limit(1);
       if (!o) return { error: "That order no longer exists." } as const;
+      if (!worksAt(me, o.locationId)) return { error: ELSEWHERE } as const;
       if (!canMove(o.mode, o.status, to.data)) {
         return { error: o.status === to.data ? `${o.code} is already ${DONE[to.data].toLowerCase()}.` : `${o.code} has moved on since this screen loaded. It's been refreshed.` } as const;
       }
@@ -85,13 +89,15 @@ export async function callRiderFor(orderId: string): Promise<OrderActionResult> 
 async function callRider(orderId: string, me: UserRow): Promise<OrderActionResult> {
   if (!tumabodaEnabled()) return { ok: false, error: "TumaBoda isn't set up yet (TUMABODA_API_KEY). Arrange the rider by phone." };
   const [row] = await db
-    .select({ o: schema.orders, place: schema.deliveryPlaces, items: sql<number>`(select coalesce(sum(ol.qty), 0)::int from order_lines ol where ol.order_id = "orders"."id")` })
+    .select({ o: schema.orders, place: schema.deliveryPlaces, store: schema.locations.tumabodaLocationId, items: sql<number>`(select coalesce(sum(ol.qty), 0)::int from order_lines ol where ol.order_id = "orders"."id")` })
     .from(schema.orders)
     .leftJoin(schema.deliveryPlaces, eq(schema.orders.placeId, schema.deliveryPlaces.id))
+    .innerJoin(schema.locations, eq(schema.orders.locationId, schema.locations.id))
     .where(eq(schema.orders.id, orderId))
     .limit(1);
   if (!row) return { ok: false, error: "That order no longer exists." };
   const { o, place } = row;
+  if (!worksAt(me, o.locationId)) return { ok: false, error: ELSEWHERE };
   if (o.mode !== "delivery") return { ok: false, error: `${o.code} is for collection.` };
   if (o.status !== "preparing" && o.status !== "ready") return { ok: false, error: `${o.code} isn't waiting for a rider.` };
   if (o.tumabodaDeliveryId && !needsAttention(o.tumabodaStatus)) return { ok: true, message: `${o.code} already has a rider booked.` };
@@ -102,6 +108,7 @@ async function callRider(orderId: string, me: UserRow): Promise<OrderActionResul
   try {
     const d = await requestRider({
       code: o.code + attempt,
+      pickupLocationId: row.store,
       customerName: o.customerName,
       phone: o.phone,
       placeName: place.name,

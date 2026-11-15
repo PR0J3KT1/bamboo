@@ -31,7 +31,7 @@ export async function blockNumber(phoneInput: string, reasonInput: string): Prom
 
     const [u] = await db.select().from(schema.user).where(eq(schema.user.phoneNumber, phone)).limit(1);
     if (u) {
-      if (u.role === "staff" || u.role === "admin") return { ok: false, error: "Take them off the team first, in Team." };
+      if (u.role !== "customer") return { ok: false, error: "Take them off the team first, in Team." };
       await auth.api.banUser({ body: { userId: u.id, banReason: reason }, headers: await headers() });
       await audit(db, me, "user.ban", { type: "user", id: u.id }, { banned: !!u.banned }, { banned: true, reason });
     } else {

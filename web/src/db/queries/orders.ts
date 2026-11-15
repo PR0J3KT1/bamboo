@@ -7,6 +7,8 @@ import { OPEN, type OrderStatus } from "@/lib/order-status";
 export type Ticket = {
   id: string;
   code: string;
+  /* the location's name, for an admin watching every location */
+  location: string;
   status: OrderStatus;
   mode: "delivery" | "collect";
   createdAt: string;
@@ -23,15 +25,18 @@ export type Ticket = {
   lines: { qty: number; name: string; option: string | null }[];
 };
 
-/** Every open order for the board, oldest first, plus how many were finished today. */
-export async function getBoard(): Promise<{ tickets: Ticket[]; doneToday: number; cancelledToday: number }> {
+/** Every open order for the board (at one location, or all), oldest first, plus how many were
+    finished today. */
+export async function getBoard(locationId: string | null): Promise<{ tickets: Ticket[]; doneToday: number; cancelledToday: number }> {
   const since = new Date(`${todayInNairobi()}T00:00:00+03:00`);
+  const here = locationId ? eq(schema.orders.locationId, locationId) : undefined;
   const [orders, [counts]] = await Promise.all([
     db
-      .select({ o: schema.orders, place: schema.deliveryPlaces.name })
+      .select({ o: schema.orders, place: schema.deliveryPlaces.name, location: schema.locations.name })
       .from(schema.orders)
       .leftJoin(schema.deliveryPlaces, eq(schema.orders.placeId, schema.deliveryPlaces.id))
-      .where(inArray(schema.orders.status, OPEN))
+      .innerJoin(schema.locations, eq(schema.orders.locationId, schema.locations.id))
+      .where(and(inArray(schema.orders.status, OPEN), here))
       .orderBy(asc(schema.orders.createdAt))
       .limit(300),
     db
@@ -40,7 +45,7 @@ export async function getBoard(): Promise<{ tickets: Ticket[]; doneToday: number
         cancelled: sql<number>`count(*) filter (where ${schema.orders.status} = 'cancelled')::int`,
       })
       .from(schema.orders)
-      .where(and(gte(schema.orders.updatedAt, since), inArray(schema.orders.status, ["completed", "cancelled"]))),
+      .where(and(gte(schema.orders.updatedAt, since), inArray(schema.orders.status, ["completed", "cancelled"]), here)),
   ]);
   const ids = orders.map((r) => r.o.id);
   const lines = ids.length
@@ -50,9 +55,10 @@ export async function getBoard(): Promise<{ tickets: Ticket[]; doneToday: number
   for (const l of lines) byOrder.set(l.orderId, [...(byOrder.get(l.orderId) ?? []), { qty: l.qty, name: l.name, option: l.option }]);
 
   return {
-    tickets: orders.map(({ o, place }) => ({
+    tickets: orders.map(({ o, place, location }) => ({
       id: o.id,
       code: o.code,
+      location,
       status: o.status,
       mode: o.mode,
       createdAt: o.createdAt.toISOString(),
@@ -76,8 +82,9 @@ export async function getBoard(): Promise<{ tickets: Ticket[]; doneToday: number
 /** One order with everything the detail page shows. */
 export async function getOrderDetail(id: string) {
   const [row] = await db
-    .select({ o: schema.orders, place: schema.deliveryPlaces, customer: { id: schema.user.id, name: schema.user.name, phone: schema.user.phoneNumber } })
+    .select({ o: schema.orders, place: schema.deliveryPlaces, location: schema.locations, customer: { id: schema.user.id, name: schema.user.name, phone: schema.user.phoneNumber } })
     .from(schema.orders)
+    .innerJoin(schema.locations, eq(schema.orders.locationId, schema.locations.id))
     .leftJoin(schema.deliveryPlaces, eq(schema.orders.placeId, schema.deliveryPlaces.id))
     .leftJoin(schema.user, eq(schema.orders.userId, schema.user.id))
     .where(eq(schema.orders.id, id))

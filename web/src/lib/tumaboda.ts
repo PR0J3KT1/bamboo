@@ -39,12 +39,14 @@ async function call<T>(path: string, init: { method?: string; body?: unknown } =
 
 /** The delivery fee the customer pays the rider at the door for this drop-off and this much food,
     in whole shillings; null if TumaBoda can't quote (the caller falls back to fareFor). */
-export async function quoteDeliveryFee(dropoff: { lat: number; lng: number }, goodsKes: number): Promise<number | null> {
+export async function quoteDeliveryFee(dropoff: { lat: number; lng: number }, goodsKes: number, pickupLocationId?: string | null): Promise<number | null> {
   if (!tumabodaEnabled() || goodsKes <= 0) return null;
   try {
     const { quote } = await call<{ quote: { goods_value_cents: number; collect_at_door_cents: number } }>("/deliveries/pod/quote", {
       method: "POST",
       body: {
+        /* the location's TumaBoda store; without one, the business's default store */
+        ...(pickupLocationId ? { pickup: { location_id: pickupLocationId } } : {}),
         dropoff: { latitude: dropoff.lat, longitude: dropoff.lng },
         package: { size: "small" },
         pod: { goodsValueKes: String(goodsKes), deliveryFeePayer: "customer" },
@@ -63,6 +65,8 @@ export type TumabodaDelivery = { id: string; deliveryNumber: string | null; stat
     reference, and a second request returns the delivery the first one made. */
 export async function requestRider(o: {
   code: string;
+  /* the location's TumaBoda store, if it has one */
+  pickupLocationId: string | null;
   customerName: string;
   phone: string;
   placeName: string;
@@ -75,6 +79,7 @@ export async function requestRider(o: {
 }): Promise<TumabodaDelivery> {
   const body = {
     reference: o.code,
+    ...(o.pickupLocationId ? { pickup: { location_id: o.pickupLocationId } } : {}),
     recipient: {
       name: o.customerName,
       phone: o.phone,
@@ -100,5 +105,20 @@ export async function requestRider(o: {
       return delivery;
     }
     throw e;
+  }
+}
+
+export type TumabodaStore = { id: string; name: string; address: string; latitude: number; longitude: number; is_default: boolean };
+
+/** The business's TumaBoda stores (pickup points), default first; [] if TumaBoda isn't set up or
+    can't be reached. Each Bamboo Cask location is linked to one in Settings. */
+export async function listStores(): Promise<TumabodaStore[]> {
+  if (!tumabodaEnabled()) return [];
+  try {
+    const { locations } = await call<{ locations: TumabodaStore[] }>("/locations");
+    return locations ?? [];
+  } catch (e) {
+    console.warn("[tumaboda] stores failed:", (e as Error).message);
+    return [];
   }
 }

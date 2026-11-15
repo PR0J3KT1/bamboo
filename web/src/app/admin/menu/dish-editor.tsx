@@ -28,7 +28,10 @@ async function shrink(file: File): Promise<Blob> {
   }
 }
 
-export function DishEditor({ dish, data, defaultCategory, onClose, onSaved }: {
+export function DishEditor({ locationId, locationName, dish, data, defaultCategory, onClose, onSaved }: {
+  locationId: string;
+  /* named when there's more than one location: the prices here are that one's */
+  locationName: string | null;
   dish: AdminDish | null;
   data: AdminMenuData;
   defaultCategory: string | undefined;
@@ -86,7 +89,7 @@ export function DishEditor({ dish, data, defaultCategory, onClose, onSaved }: {
     };
     if (sizes.some((s) => !/^\d+$/.test(s.price.replace(/[,\s]/g, "")))) return setError("Prices must be whole shillings.");
     startSave(async () => {
-      const r = await saveDish(input);
+      const r = await saveDish(input, locationId);
       if (!r.ok) return setError(r.error);
       toast(r.message);
       onSaved();
@@ -169,7 +172,8 @@ export function DishEditor({ dish, data, defaultCategory, onClose, onSaved }: {
           </div>
 
           <fieldset className="flex flex-col gap-2.5 rounded-2xl border border-line p-3.5">
-            <legend className="px-1.5 font-bold">Sizes and prices</legend>
+            <legend className="px-1.5 font-bold">Sizes and prices{locationName ? ` at ${locationName}` : ""}</legend>
+            {locationName && !dish && <p className="text-fine text-ink-2">A new dish goes on every location&rsquo;s menu at these prices; each can change its own.</p>}
             {multi && <TextField label="Question above the sizes" value={sizeLabel} onChange={(e) => setSizeLabel(e.target.value)} maxLength={40} />}
             <div className="grid grid-cols-[minmax(0,1fr)_96px_auto_44px] sm:grid-cols-[minmax(0,1fr)_120px_auto_44px] items-end gap-2 text-fine font-semibold text-ink-2">
               <span>{multi ? "Size" : isDrink ? "Bottle size" : "Size (if any)"}</span><span>Price, KES</span><span>On</span><span />

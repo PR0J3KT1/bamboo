@@ -16,3 +16,13 @@ export function NoAccess({ reason, path = "/admin" }: { reason: "signed-out" | "
     </main>
   );
 }
+
+/** A staff member or manager whose account isn't tied to a location yet. */
+export function Unassigned() {
+  return (
+    <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-4 px-4 py-16">
+      <h1 className="font-display text-h2 font-extrabold uppercase">No location yet</h1>
+      <p className="text-body text-ink-2">Your account isn&rsquo;t set to a Bamboo Cask location, so there&rsquo;s nothing to show. Ask an admin to set your location in Team.</p>
+    </main>
+  );
+}

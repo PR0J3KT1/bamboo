@@ -7,7 +7,7 @@ import type { DeliveryPlace } from "@/db/queries/menu";
 import { basket, rememberOrder, reward, useReward } from "@/lib/basket";
 import { checkReward } from "@/app/actions/rewards";
 import { fareFor, NOT_FOOD, rewardDiscount } from "@/lib/orders";
-import { deliveryFee, placeOrder } from "@/app/actions/orders";
+import { chooseLocation, deliveryFee, placeOrder } from "@/app/actions/orders";
 import { useBasketTotals } from "@/components/order/basket-bar";
 import { lineName } from "@/components/order/catalog";
 import { Button, buttonStyles } from "@/components/ui/button";
@@ -18,7 +18,13 @@ import { PlacePicker } from "./place-picker";
 
 const card = "flex flex-col gap-3 rounded-2xl border border-line bg-panel p-4";
 
-export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, closed, mpesa }: {
+export type CheckoutLocation = { id: string; name: string; area: string };
+
+export function CheckoutForm({ location, locations, places, signedIn, defaultName, defaultPhone, closed, mpesa }: {
+  /* the location whose menu and prices this page shows */
+  location: CheckoutLocation;
+  /* every location taking orders; a choice only when there's more than one */
+  locations: CheckoutLocation[];
   places: DeliveryPlace[];
   signedIn: boolean;
   defaultName: string;
@@ -33,6 +39,16 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
   const [error, setError] = useState<string | null>(null);
   const [placeError, setPlaceError] = useState<string | null>(null);
   const [pending, start] = useTransition();
+  const [switching, startSwitch] = useTransition();
+  const multi = locations.length > 1;
+  /* move the order to another location: its menu and prices come with it */
+  function switchTo(id: string) {
+    if (id === location.id) return;
+    startSwitch(async () => {
+      const r = await chooseLocation(id);
+      if (r.ok) router.refresh();
+    });
+  }
 
   const place = places.find((p) => p.id === b.placeId) ?? null;
 
@@ -44,12 +60,16 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
     if (!quoteKey || !place) return;
     let live = true;
     deliveryFee(place.id, subtotal).then((r) => {
-      if (live && r) setQuote({ key: quoteKey, fee: r.fee });
+      if (!live || !r) return;
+      setQuote({ key: quoteKey, fee: r.fee });
+      /* the nearest location delivers; show its menu and prices */
+      if (r.location.id !== location.id) switchTo(r.location.id);
     });
     return () => {
       live = false;
     };
-  }, [quoteKey, place, subtotal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- switchTo only changes with the location, already in the key's effect below
+  }, [quoteKey, place, subtotal, location.id]);
   const fee = b.mode === "delivery" && place ? (quote?.key === quoteKey ? quote.fee : fareFor(place.km)) : 0;
   const ok = lines.filter((l) => l.item);
   /* a game reward: a share off the food, the bar and soft drinks left out */
@@ -81,6 +101,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
       const r = await placeOrder({
         lines: ok.map((l) => ({ itemId: l.itemId, option: l.option, qty: l.qty })),
         mode: b.mode,
+        locationId: location.id,
         placeId: b.mode === "delivery" ? b.placeId : null,
         directions: b.directions || null,
         note: b.note || null,
@@ -91,6 +112,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
       });
       if (!r.ok) {
         setError(r.error);
+        if (r.moved) router.refresh();
         return;
       }
       rememberOrder(r.id, r.code);
@@ -149,13 +171,28 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
             {b.mode === "delivery" ? (
               <>
                 <h2 className="font-bold">Delivery to</h2>
-                <PlacePicker places={places} value={b.placeId} onChange={(id) => { basket.set({ placeId: id }); setPlaceError(null); }} error={placeError} />
+                <PlacePicker multi={multi} places={places} value={b.placeId} onChange={(id) => { basket.set({ placeId: id }); setPlaceError(null); }} error={placeError} />
+                {multi && place && (
+                  <p role="status" className="text-fine text-ink-2">
+                    {switching ? "Finding the nearest lounge…" : <>Comes from <b className="text-ink">Bamboo Cask {location.name}</b>, the nearest to you, at its prices.</>}
+                  </p>
+                )}
                 <TextField label="Directions for the rider" maxLength={300} value={b.directions} onChange={(e) => basket.set({ directions: e.target.value })} placeholder="Gate, building, floor" hint="The rider calls the number below when they're close." />
               </>
             ) : (
               <>
                 <h2 className="font-bold">Collect at the counter</h2>
-                <p className="text-body text-ink-2">Bamboo Cask, Keiyo Road, Ngara. We&rsquo;ll have it ready; this page shows when.</p>
+                {multi ? (
+                  <div role="radiogroup" aria-label="Which lounge" className="flex flex-col gap-2">
+                    {locations.map((l) => (
+                      <label key={l.id} className={cn("flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border-[1.5px] px-3 py-2", l.id === location.id ? "border-action bg-action-soft" : "border-line bg-card")}>
+                        <input type="radio" name="location" value={l.id} checked={l.id === location.id} disabled={switching} onChange={() => switchTo(l.id)} className="size-5 accent-[var(--action)]" />
+                        <span className="flex flex-col"><span className="font-semibold">Bamboo Cask {l.name}</span><span className="text-fine text-ink-2">{l.area}</span></span>
+                      </label>
+                    ))}
+                  </div>
+                ) : null}
+                <p className="text-body text-ink-2">{multi ? "Prices are that lounge’s." : `Bamboo Cask, ${location.area}.`} We&rsquo;ll have it ready; this page shows when.</p>
               </>
             )}
           </section>
@@ -216,7 +253,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
             <div className="flex justify-between text-ink-2"><span>Food and drinks</span><span>KES {formatKes(subtotal)}</span></div>
             {b.mode === "delivery" && (
               <div className="flex justify-between text-ink-2">
-                <span>Delivery{place ? `, ${place.km} km` : ""}</span>
+                <span>Delivery{place && !multi ? `, ${place.km} km` : ""}</span>
                 <span>{place ? `KES ${formatKes(fee)}` : "Choose a place"}</span>
               </div>
             )}
@@ -257,7 +294,7 @@ export function CheckoutForm({ places, signedIn, defaultName, defaultPhone, clos
             </div>
             {closed && <p role="status" className="rounded-xl bg-warn-soft p-3 font-semibold text-warn-ink">{closed}</p>}
             {error && <p role="alert" className="rounded-xl bg-danger-soft p-3 font-semibold text-danger-ink">{error}</p>}
-            <Button type="submit" variant="main" size="lg" block disabled={pending || !ok.length || !!closed} className="mt-1.5">
+            <Button type="submit" variant="main" size="lg" block disabled={pending || switching || !ok.length || !!closed} className="mt-1.5">
               {pending ? "Placing your order…" : mpesa && pay === "mpesa" ? "Place order and pay" : "Place order"}
             </Button>
           </div>

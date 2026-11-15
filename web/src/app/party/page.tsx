@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronLeft } from "lucide-react";
-import { getMenu, toCatalog } from "@/db/queries/menu";
+import { menuHere, toCatalog } from "@/db/queries/menu";
 import { getViewer } from "@/lib/session";
 import { getSettings } from "@/lib/settings";
 import { CatalogProvider } from "@/components/order/catalog";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 async function Party({ searchParams }: { searchParams: PageProps<"/party">["searchParams"] }) {
-  const [menu, viewer, settings, sp] = await Promise.all([getMenu(), getViewer(), getSettings(), searchParams]);
+  const [menu, viewer, settings, sp] = await Promise.all([menuHere(), getViewer(), getSettings(), searchParams]);
   return (
     <CatalogProvider catalog={toCatalog(menu, viewer.adult)} showBasket={false}>
       <Planner start={typeof sp.occ === "string" ? sp.occ : null} phone={settings.phone} ordering={settings.ordering.open} />

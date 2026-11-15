@@ -8,6 +8,7 @@ import { normalizeKenyanPhone } from "@/lib/phone";
 import { todayInNairobi } from "@/lib/age";
 import { getSettings } from "@/lib/settings";
 import { checkRoom, checkTable, OPEN_REQUESTS_PER_PHONE } from "@/lib/bookings";
+import { getOpenLocations } from "@/lib/locations";
 
 export type BookingResult = { ok: true; id: string; code: string } | { ok: false; error: string };
 
@@ -15,7 +16,13 @@ const Who = z.object({
   name: z.string().trim().min(1, "Enter your name.").max(80),
   phone: z.string().max(20),
   note: z.string().trim().max(300).nullable().optional(),
+  /* which lounge */
+  locationId: z.string().min(1).max(60),
 });
+
+async function openLocation(id: string) {
+  return (await getOpenLocations()).find((l) => l.id === id) ?? null;
+}
 const RoomInput = Who.extend({ room: z.string().max(8), checkIn: z.string().max(10), nights: z.number(), guests: z.number() });
 const TableInput = Who.extend({ date: z.string().max(10), time: z.string().max(5), people: z.number(), occasion: z.string().max(40).nullable().optional() });
 
@@ -58,9 +65,11 @@ export async function requestRoom(raw: z.input<typeof RoomInput>): Promise<Booki
   const settings = await getSettings();
   const room = checkRoom(p.data, todayInNairobi(), settings.rooms);
   if (!room.ok) return room;
-  const who = await checkWho(p.data);
+  const [who, location] = await Promise.all([checkWho(p.data), openLocation(p.data.locationId)]);
   if (!who.ok) return who;
+  if (!location) return { ok: false, error: "That lounge isn't taking bookings just now. Choose another, or call us." };
   const b = await insert({
+    locationId: location.id,
     kind: "room",
     userId: who.userId,
     name: p.data.name,
@@ -82,9 +91,11 @@ export async function requestTable(raw: z.input<typeof TableInput>): Promise<Boo
   const settings = await getSettings();
   const table = checkTable({ ...p.data, occasion: p.data.occasion ?? null }, todayInNairobi(), nowInNairobi(), settings.tables);
   if (!table.ok) return table;
-  const who = await checkWho(p.data);
+  const [who, location] = await Promise.all([checkWho(p.data), openLocation(p.data.locationId)]);
   if (!who.ok) return who;
+  if (!location) return { ok: false, error: "That lounge isn't taking bookings just now. Choose another, or call us." };
   const b = await insert({
+    locationId: location.id,
     kind: "table",
     userId: who.userId,
     name: p.data.name,

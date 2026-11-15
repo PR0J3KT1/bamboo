@@ -5,9 +5,10 @@ import { db, schema } from "@/db";
 import { audit } from "@/lib/audit";
 import { sendSms } from "@/lib/sms";
 import { displayPhone } from "@/lib/phone";
-import { getSettings } from "@/lib/settings";
 import { bookingSms, canMoveBooking, STATUS_LABEL, type BookingStatus } from "@/lib/bookings";
 import { NotAllowed, requirePermission, type UserRow } from "@/lib/session";
+import { worksAt } from "@/lib/scope";
+import { factsFor } from "@/lib/locations";
 
 export type BookingActionResult = { ok: true; message: string; warning?: string } | { ok: false; error: string };
 
@@ -31,6 +32,7 @@ export async function moveBooking(id: string, toInput: string, replyInput?: stri
   const moved = await db.transaction(async (tx) => {
     const [b] = await tx.select().from(schema.bookings).where(eq(schema.bookings.id, id)).for("update").limit(1);
     if (!b) return { error: "That booking no longer exists." } as const;
+    if (!worksAt(me, b.locationId)) return { error: "That booking is for another location." } as const;
     if (!canMoveBooking(b.status as BookingStatus, to.data)) return { error: `${b.code} is ${STATUS_LABEL[b.status as BookingStatus].toLowerCase()}; it can't be changed that way.` } as const;
     const by = me.name || me.phoneNumber || "Staff";
     await tx.update(schema.bookings).set({ status: to.data, reply: reply ?? b.reply, handledBy: by }).where(eq(schema.bookings.id, b.id));
@@ -42,7 +44,7 @@ export async function moveBooking(id: string, toInput: string, replyInput?: stri
 
   let warning: string | undefined;
   if (to.data === "confirmed" || to.data === "declined") {
-    const { phone } = await getSettings();
+    const { phone } = await factsFor(b.locationId);
     try {
       await sendSms(b.phone, bookingSms(b, to.data, reply, displayPhone(phone)));
     } catch (e) {

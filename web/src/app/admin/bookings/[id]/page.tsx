@@ -6,6 +6,7 @@ import { ChevronLeft } from "lucide-react";
 import { checkPermission } from "@/lib/session";
 import { can } from "@/lib/permissions";
 import { getBooking } from "@/db/queries/bookings";
+import { worksAt } from "@/lib/scope";
 import { bookingSummary, STATUS_LABEL, type BookingStatus } from "@/lib/bookings";
 import { ROOMS } from "@/lib/rooms";
 import { displayPhone } from "@/lib/phone";
@@ -27,6 +28,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
   if (!UUID.test(id)) notFound();
   const d = await getBooking(id);
   if (!d) notFound();
+  if (!worksAt(me, d.b.locationId)) return <NoAccess reason="forbidden" path={`/admin/bookings/${id}`} />;
   const { b, others } = d;
   const status = b.status as BookingStatus;
   const total = b.kind === "room" && b.rate && b.nights ? b.rate * b.nights : null;

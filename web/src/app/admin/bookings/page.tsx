@@ -7,7 +7,8 @@ import { listBookings, type BookingTab } from "@/db/queries/bookings";
 import { bookingSummary, STATUS_LABEL, type BookingStatus } from "@/lib/bookings";
 import { displayPhone } from "@/lib/phone";
 import { requestTime } from "@/lib/clock";
-import { NoAccess } from "@/components/admin-shell/no-access";
+import { NoAccess, Unassigned } from "@/components/admin-shell/no-access";
+import { adminScope } from "@/lib/scope";
 import { Tag } from "@/components/ui/pill";
 import { cn } from "@/lib/utils";
 import { Loader } from "@/components/ui/loader";
@@ -31,11 +32,14 @@ function ago(d: Date, now: number) {
 }
 
 async function Bookings({ searchParams }: { searchParams: PageProps<"/admin/bookings">["searchParams"] }) {
-  const { denied } = await checkPermission({ booking: ["view"] });
+  const { user, denied } = await checkPermission({ booking: ["view"] });
   if (denied) return <NoAccess reason={denied} path="/admin/bookings" />;
+  const scope = await adminScope(user);
+  if (scope.unassigned) return <Unassigned />;
+  const everywhere = scope.locations.length > 1 && !scope.locationId;
   const sp = await searchParams;
   const tab = (TABS.find((t) => t.id === sp.tab)?.id ?? "requests") as BookingTab;
-  const rows = await listBookings(tab);
+  const rows = await listBookings(tab, scope.locationId);
   const now = requestTime();
 
   return (
@@ -67,7 +71,7 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/admin/book
                       <span className="font-semibold">{bookingSummary(b)}</span>
                     </span>
                     <span className="block truncate text-fine text-ink-2">
-                      {b.name}, {displayPhone(b.phone)}{b.occasion ? `, ${b.occasion.toLowerCase()}` : ""}{b.note ? `. “${b.note}”` : ""}
+                      {everywhere ? `${b.location}: ` : ""}{b.name}, {displayPhone(b.phone)}{b.occasion ? `, ${b.occasion.toLowerCase()}` : ""}{b.note ? `. “${b.note}”` : ""}
                     </span>
                   </span>
                   <span className="flex flex-col items-end gap-1">

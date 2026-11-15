@@ -4,6 +4,7 @@ import { requestTime } from "@/lib/clock";
 import { parsePeriod, toCsv } from "@/lib/reports-core";
 import { exportOrders, getSellers, PAYMENT_NAMES } from "@/db/queries/reports";
 import { audit } from "@/lib/audit";
+import { adminScope } from "@/lib/scope";
 import { db } from "@/db";
 
 /* The report's period as a CSV for the bookkeeper: every order (with its status), or the items
@@ -18,7 +19,11 @@ export async function GET(req: Request) {
   }
   const url = new URL(req.url);
   const sp = Object.fromEntries(url.searchParams);
-  const { period: p, problem } = parsePeriod(sp, todayInNairobi(new Date(requestTime())));
+  const parsed = parsePeriod(sp, todayInNairobi(new Date(requestTime())));
+  const problem = parsed.problem;
+  const scope = await adminScope(me);
+  if (scope.unassigned) return new Response("Not allowed", { status: 403 });
+  const p = { ...parsed.period, locationId: scope.locationId };
   if (problem) return new Response(problem, { status: 400 });
   const kind = sp.kind === "items" ? "items" : "orders";
 

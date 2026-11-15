@@ -18,7 +18,15 @@ function fold(s: string) {
   return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
-export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boolean }) {
+export function MenuAdmin({ data, location, picked, canPrice, canEdit }: {
+  data: AdminMenuData;
+  /* prices and sold-out switches are this location's */
+  location: { id: string; name: string };
+  /* null: there's only one location */
+  picked: "one" | "all" | null;
+  canPrice: boolean;
+  canEdit: boolean;
+}) {
   const router = useRouter();
   const toast = useToast();
   const [category, setCategory] = useState(data.categories.find((c) => c.id === "grill")?.id ?? data.categories[0]?.id);
@@ -53,7 +61,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
 
   function save() {
     startSave(async () => {
-      const r = await savePrices(changed.map(([id, v]) => ({ id, price: Number(v.replace(/[,\s]/g, "")) })));
+      const r = await savePrices(changed.map(([id, v]) => ({ id, price: Number(v.replace(/[,\s]/g, "")) })), location.id);
       if (!r.ok) return toast(r.error, "danger");
       setPrices({});
       toast(r.message);
@@ -66,8 +74,14 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h1 className="font-display text-h2 font-extrabold uppercase">Menu and prices</h1>
         {canEdit && <Link href="/admin/menu/plates" className="text-fine font-semibold text-action underline underline-offset-2">Who&rsquo;s eating? plates</Link>}
-        <span className="text-ink-2">{soldOutCount} sold out</span>
+        <span className="text-ink-2">{soldOutCount} sold out{picked ? ` at ${location.name}` : ""}</span>
       </div>
+      {picked && (
+        <p className="rounded-xl bg-panel-2 px-3.5 py-2.5 text-fine text-ink-2">
+          Prices and sold-out switches are for <b className="text-ink">Bamboo Cask {location.name}</b>.
+          {picked === "all" ? " Choose a location at the top to change another’s." : canEdit ? " Names, words, photos and sections are the same everywhere." : ""}
+        </p>
+      )}
 
       <div className="flex flex-wrap items-center gap-2.5">
         <label className="flex h-12 min-w-0 flex-[1_1_260px] items-center gap-2 rounded-full border-[1.5px] border-line bg-panel px-4 md:max-w-sm">
@@ -130,7 +144,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
           </thead>
           <tbody className="max-md:flex max-md:flex-col max-md:gap-2.5">
             {rows.map((d) => (
-              <Row key={d.key} d={d} canEdit={canEdit} prices={prices} setPrice={(id, v) => setPrices((p) => ({ ...p, [id]: v }))} onEdit={() => setEditing(d)} />
+              <Row key={d.key} d={d} locationId={location.id} canPrice={canPrice} canEdit={canEdit} prices={prices} setPrice={(id, v) => setPrices((p) => ({ ...p, [id]: v }))} onEdit={() => setEditing(d)} />
             ))}
             {rows.length === 0 && (
               <tr className="max-md:block max-md:rounded-2xl max-md:border max-md:border-line max-md:bg-panel"><td colSpan={4} className="px-4 py-6 text-ink-2 max-md:block">{query ? `Nothing matches "${query}".` : "Nothing here."}</td></tr>
@@ -156,6 +170,8 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
 
       {canEdit && editing && (
         <DishEditor
+          locationId={location.id}
+          locationName={picked ? location.name : null}
           dish={editing === "new" ? null : editing}
           data={data}
           defaultCategory={category}
@@ -167,8 +183,10 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
   );
 }
 
-function Row({ d, canEdit, prices, setPrice, onEdit }: {
+function Row({ d, locationId, canPrice, canEdit, prices, setPrice, onEdit }: {
   d: AdminDish;
+  locationId: string;
+  canPrice: boolean;
   canEdit: boolean;
   prices: Record<string, string>;
   setPrice: (id: string, v: string) => void;
@@ -208,7 +226,7 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
             return (
               <label key={s.id} className={cn("flex flex-col gap-0.5 text-fine text-ink-2", !s.active && multi && "opacity-60")}>
                 {multi || s.portion ? (s.portion ?? "") : <span className="sr-only">Price</span>}
-                {canEdit ? (
+                {canPrice ? (
                   <input
                     inputMode="numeric"
                     aria-label={`Price for ${d.name}${s.portion ? `, ${s.portion}` : ""}`}
@@ -235,7 +253,7 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
             aria-label={`${d.name}: ${on ? "on the menu" : "sold out"}`}
             onCheckedChange={(v) =>
               start(async () => {
-                const r = await setAvailability(d.key, !!v);
+                const r = await setAvailability(d.key, !!v, locationId);
                 toast(r.ok ? r.message : r.error, r.ok ? "ok" : "danger");
                 router.refresh();
               })

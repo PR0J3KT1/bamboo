@@ -1,5 +1,5 @@
 import "server-only";
-import { asc } from "drizzle-orm";
+import { and, asc, eq, getTableColumns } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { pictureFor, type Picture } from "@/lib/pictures";
 
@@ -38,10 +38,17 @@ export type AdminMenuData = {
   shelves: { id: string; name: string }[];
 };
 
-/** Everything, sold-out items included, for the admin. Not cached: it's read rarely and must be current. */
-export async function getAdminMenu(): Promise<AdminMenuData> {
+/** Everything at one location, sold-out items included, for the admin: the shared dishes at that
+    location's prices. Not cached: it's read rarely and must be current. */
+export async function getAdminMenu(locationId: string): Promise<AdminMenuData> {
   const [items, families, categories, shelves] = await Promise.all([
-    db.select().from(schema.items).orderBy(asc(schema.items.sort)),
+    db
+      .select({ ...getTableColumns(schema.items), herePrice: schema.locationItems.price, hereActive: schema.locationItems.active })
+      .from(schema.items)
+      .leftJoin(schema.locationItems, and(eq(schema.locationItems.itemId, schema.items.id), eq(schema.locationItems.locationId, locationId)))
+      /* sizes taken out of a dish are kept for old orders, but not listed */
+      .where(eq(schema.items.active, true))
+      .orderBy(asc(schema.items.sort)),
     db.select().from(schema.families),
     db.select().from(schema.categories).orderBy(asc(schema.categories.sort)),
     db.select().from(schema.shelves).orderBy(asc(schema.shelves.sort)),
@@ -50,7 +57,8 @@ export async function getAdminMenu(): Promise<AdminMenuData> {
   const dishes = new Map<string, AdminDish>();
   for (const i of items) {
     const key = i.familyId ?? i.id;
-    const size: AdminSize = { id: i.id, portion: i.familyId ? i.portion : i.size, price: i.price, active: i.active };
+    /* not sold here yet: shown sold out, at the listed price */
+    const size: AdminSize = { id: i.id, portion: i.familyId ? i.portion : i.size, price: i.herePrice ?? i.price, active: !!i.hereActive };
     const existing = dishes.get(key);
     if (existing) {
       existing.sizes.push(size);

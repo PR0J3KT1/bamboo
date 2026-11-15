@@ -1,5 +1,5 @@
 "use server";
-import { eq, inArray, or } from "drizzle-orm";
+import { and, eq, inArray, or, sql } from "drizzle-orm";
 import { updateTag } from "next/cache";
 import sharp from "sharp";
 import { z } from "zod";
@@ -7,12 +7,20 @@ import { db, schema } from "@/db";
 import { audit } from "@/lib/audit";
 import { NotAllowed, requirePermission, type UserRow } from "@/lib/session";
 import { putPublic, StorageNotConfigured } from "@/lib/storage";
+import { worksAt } from "@/lib/scope";
+import { getLocations } from "@/lib/locations";
 
 export type MenuResult = { ok: true; message: string; key?: string } | { ok: false; error: string };
 
-async function guarded(perm: "toggle" | "edit", fn: (me: UserRow) => Promise<MenuResult>): Promise<MenuResult> {
+/* Every change checks the permission, and for a location's prices or sold-out switches, that the
+   person works there (admins work everywhere). */
+async function guarded(perm: "toggle" | "price" | "edit", fn: (me: UserRow) => Promise<MenuResult>, locationId?: string): Promise<MenuResult> {
   try {
     const me = await requirePermission({ menu: [perm] });
+    if (locationId !== undefined) {
+      const known = (await getLocations()).some((l) => l.id === locationId);
+      if (!known || !worksAt(me, locationId)) return { ok: false, error: "You can only change the menu at your own location." };
+    }
     const r = await fn(me);
     if (r.ok) updateTag("menu"); // the customer menu shows the change on its next load
     return r;
@@ -31,43 +39,61 @@ async function dishRows(key: string) {
   return db.select().from(schema.items).where(or(eq(schema.items.id, key), eq(schema.items.familyId, key)));
 }
 
-/* ───────── staff: on the menu, or sold out ───────── */
+/** Set a location's price or sold-out switch for some items, adding them to its menu if needed. */
+async function setHere(tx: Parameters<Parameters<typeof db.transaction>[0]>[0], locationId: string, rows: { id: string; price: number }[], set: { price?: number; active?: boolean }) {
+  if (!rows.length) return;
+  await tx
+    .insert(schema.locationItems)
+    .values(rows.map((r) => ({ locationId, itemId: r.id, price: set.price ?? r.price, active: set.active ?? true })))
+    .onConflictDoUpdate({
+      target: [schema.locationItems.locationId, schema.locationItems.itemId],
+      set: { ...(set.price !== undefined ? { price: set.price } : {}), ...(set.active !== undefined ? { active: set.active } : {}) },
+    });
+}
 
-export async function setAvailability(key: string, active: boolean): Promise<MenuResult> {
+/* ───────── staff: on the menu, or sold out, at their location ───────── */
+
+export async function setAvailability(key: string, active: boolean, locationId: string): Promise<MenuResult> {
   return guarded("toggle", async (me) => {
-    const rows = await dishRows(String(key));
+    const rows = (await dishRows(String(key))).filter((r) => r.active);
     if (!rows.length) return { ok: false, error: "That dish is no longer on the list." };
     const ids = rows.map((r) => r.id);
     await db.transaction(async (tx) => {
-      await tx.update(schema.items).set({ active: !!active }).where(inArray(schema.items.id, ids));
-      await audit(tx, me, active ? "item.on" : "item.sold_out", { type: "item", id: key }, { active: rows.map((r) => r.active) }, { active: !!active });
+      const before = await tx.select().from(schema.locationItems).where(and(eq(schema.locationItems.locationId, locationId), inArray(schema.locationItems.itemId, ids)));
+      await setHere(tx, locationId, rows, { active: !!active });
+      await audit(tx, me, active ? "item.on" : "item.sold_out", { type: "item", id: key }, { locationId, active: before.map((r) => r.active) }, { locationId, active: !!active });
     });
     const name = rows[0].familyId ? (await db.select().from(schema.families).where(eq(schema.families.id, rows[0].familyId)))[0]?.name : rows[0].name;
     return { ok: true, message: active ? `${name} is back on the menu` : `${name} is sold out` };
-  });
+  }, locationId);
 }
 
-/* ───────── admins: prices ───────── */
+/* ───────── managers and admins: a location's prices ───────── */
 
 const Price = z.number().int().min(1).max(1_000_000);
 
-export async function savePrices(changes: { id: string; price: number }[]): Promise<MenuResult> {
-  return guarded("edit", async (me) => {
+export async function savePrices(changes: { id: string; price: number }[], locationId: string): Promise<MenuResult> {
+  return guarded("price", async (me) => {
     const parsed = z.array(z.object({ id: z.string().min(1).max(80), price: Price })).min(1).max(500).safeParse(changes);
     if (!parsed.success) return { ok: false, error: "Prices must be whole shillings, from 1 to 1,000,000." };
     const ids = parsed.data.map((c) => c.id);
-    const rows = await db.select({ id: schema.items.id, name: schema.items.name, price: schema.items.price }).from(schema.items).where(inArray(schema.items.id, ids));
+    const rows = await db
+      .select({ id: schema.items.id, name: schema.items.name, price: sql<number>`coalesce(${schema.locationItems.price}, ${schema.items.price})`, here: sql<boolean>`${schema.locationItems.itemId} is not null` })
+      .from(schema.items)
+      .leftJoin(schema.locationItems, and(eq(schema.locationItems.itemId, schema.items.id), eq(schema.locationItems.locationId, locationId)))
+      .where(inArray(schema.items.id, ids));
     const before = new Map(rows.map((r) => [r.id, r]));
     const real = parsed.data.filter((c) => before.has(c.id) && before.get(c.id)!.price !== c.price);
     if (!real.length) return { ok: true, message: "No prices changed" };
     await db.transaction(async (tx) => {
       for (const c of real) {
-        await tx.update(schema.items).set({ price: c.price }).where(eq(schema.items.id, c.id));
-        await audit(tx, me, "item.price", { type: "item", id: c.id }, { price: before.get(c.id)!.price }, { price: c.price });
+        /* a dish not sold here yet gets its price, and stays sold out until switched on */
+        await setHere(tx, locationId, [{ id: c.id, price: c.price }], before.get(c.id)!.here ? { price: c.price } : { price: c.price, active: false });
+        await audit(tx, me, "item.price", { type: "item", id: c.id }, { locationId, price: before.get(c.id)!.price }, { locationId, price: c.price });
       }
     });
     return { ok: true, message: real.length === 1 ? `${before.get(real[0].id)!.name}: KES ${real[0].price.toLocaleString("en-KE")}` : `${real.length} prices saved` };
-  });
+  }, locationId);
 }
 
 /* ───────── admins: a whole dish ───────── */
@@ -96,7 +122,9 @@ const Dish = z.object({
 });
 export type DishInput = z.input<typeof Dish>;
 
-export async function saveDish(input: DishInput): Promise<MenuResult> {
+/** Save a dish: its name, words and sizes for every location, and the sizes' prices and switches at
+    this location. A new dish goes on every location's menu at the prices given. */
+export async function saveDish(input: DishInput, locationId: string): Promise<MenuResult> {
   return guarded("edit", async (me) => {
     const parsed = Dish.safeParse(input);
     if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message.startsWith("Too") || !parsed.error.issues[0] ? "Something in the form isn't right." : prettyIssue(parsed.error.issues[0]) };
@@ -149,16 +177,18 @@ export async function saveDish(input: DishInput): Promise<MenuResult> {
           portion: familyId ? s.portion : null,
           size: familyId ? existing.find((r) => r.id === s.id)?.size ?? null : s.portion,
           familyId,
-          price: s.price,
-          active: s.active,
+          active: true,
         };
         if (s.id) {
           await tx.update(schema.items).set(fields).where(eq(schema.items.id, s.id));
+          await setHere(tx, locationId, [{ id: s.id, price: s.price }], { price: s.price, active: s.active });
           kept.add(s.id);
           lead ??= s.active ? s.id : null;
         } else {
           const id = `${familyId ?? slug(d.name)}-${slug(s.portion ?? "")}-${suffix()}`.replace(/--+/g, "-");
-          await tx.insert(schema.items).values({ id, ...fields, image: existing[0]?.image ?? null, sort });
+          /* the listed price is where every other location starts */
+          await tx.insert(schema.items).values({ id, ...fields, price: s.price, image: existing[0]?.image ?? null, sort });
+          await tx.execute(sql`insert into location_items (location_id, item_id, price, active) select l.id, ${id}, ${s.price}, ${s.active} or l.id <> ${locationId} from locations l on conflict do nothing`);
           kept.add(id);
           lead ??= s.active ? id : null;
         }
@@ -179,7 +209,7 @@ export async function saveDish(input: DishInput): Promise<MenuResult> {
       return familyId ?? [...kept][0];
     });
     return { ok: true, message: d.key ? `${d.name} saved` : `${d.name} added to the menu`, key };
-  });
+  }, locationId);
 }
 
 function prettyIssue(i: z.core.$ZodIssue) {
