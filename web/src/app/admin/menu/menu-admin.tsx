@@ -70,7 +70,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
       </div>
 
       <div className="flex flex-wrap items-center gap-2.5">
-        <label className="flex h-12 min-w-60 flex-[1_1_260px] items-center gap-2 rounded-full border-[1.5px] border-line bg-panel px-4 md:max-w-sm">
+        <label className="flex h-12 min-w-0 flex-[1_1_260px] items-center gap-2 rounded-full border-[1.5px] border-line bg-panel px-4 md:max-w-sm">
           <Search aria-hidden className="size-4 text-ink-2" />
           <span className="sr-only">Search the menu</span>
           <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={`Search ${data.dishes.length} dishes and drinks`} className="flex-1 bg-transparent outline-none" />
@@ -117,9 +117,10 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
         />
       )}
       {!ordering && (
-      <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
-        <table className="w-full min-w-[820px] border-collapse text-left">
-          <thead>
+      <div className="md:overflow-x-auto md:rounded-2xl md:border md:border-line md:bg-panel">
+        {/* below md each row lays out as a card: dish and Edit on top, prices, then the switch */}
+        <table className="w-full border-collapse text-left max-md:block md:min-w-[820px]">
+          <thead className="max-md:hidden">
             <tr className="text-fine font-semibold text-ink-2">
               <th scope="col" className="border-b border-line px-4 py-3">Dish</th>
               <th scope="col" className="border-b border-line px-4 py-3">Prices, KES</th>
@@ -127,12 +128,12 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
               {canEdit && <th scope="col" className="border-b border-line px-4 py-3"><span className="sr-only">Edit</span></th>}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="max-md:flex max-md:flex-col max-md:gap-2.5">
             {rows.map((d) => (
               <Row key={d.key} d={d} canEdit={canEdit} prices={prices} setPrice={(id, v) => setPrices((p) => ({ ...p, [id]: v }))} onEdit={() => setEditing(d)} />
             ))}
             {rows.length === 0 && (
-              <tr><td colSpan={4} className="px-4 py-6 text-ink-2">{query ? `Nothing matches "${query}".` : "Nothing here."}</td></tr>
+              <tr className="max-md:block max-md:rounded-2xl max-md:border max-md:border-line max-md:bg-panel"><td colSpan={4} className="px-4 py-6 text-ink-2 max-md:block">{query ? `Nothing matches "${query}".` : "Nothing here."}</td></tr>
             )}
           </tbody>
         </table>
@@ -140,7 +141,7 @@ export function MenuAdmin({ data, canEdit }: { data: AdminMenuData; canEdit: boo
       )}
 
       {changed.length > 0 && (
-        <div role="status" className="fixed inset-x-4 bottom-4 z-40 mx-auto flex max-w-xl items-center justify-between gap-3 rounded-full bg-grove py-2 pr-2 pl-5 text-on-grove shadow-lift">
+        <div role="status" className="fixed inset-x-4 bottom-4 z-40 mx-auto flex max-w-xl flex-wrap items-center justify-between gap-x-3 gap-y-1.5 rounded-3xl bg-grove p-2 pl-5 text-on-grove shadow-lift sm:rounded-full">
           <span className="font-semibold">
             {invalid ? "A price isn't a whole number" : changed.length === 1 ? "1 price change not saved yet" : `${changed.length} price changes not saved yet`}
           </span>
@@ -179,8 +180,12 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
   const on = d.sizes.some((s) => s.active);
   const multi = d.sizes.length > 1;
   return (
-    <tr className={cn("border-b border-line-2 last:border-0", !on && "bg-panel-2")}>
-      <td className="px-4 py-2.5">
+    <tr className={cn(
+      "border-b border-line-2 last:border-0",
+      "max-md:grid max-md:grid-cols-[minmax(0,1fr)_auto] max-md:items-center max-md:gap-3 max-md:rounded-2xl max-md:border max-md:border-line max-md:bg-panel max-md:p-3.5",
+      !on && "bg-panel-2 max-md:bg-panel-2",
+    )}>
+      <td className="px-4 py-2.5 max-md:order-1 max-md:min-w-0 max-md:p-0">
         <div className="flex items-center gap-3">
           {d.picture ? (
             <span className={cn("relative h-10 w-[52px] shrink-0 overflow-hidden rounded-lg", d.picture.kind === "bottle" && "bottle-stage")}>
@@ -189,13 +194,13 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
           ) : (
             <span aria-hidden className="flex h-10 w-[52px] items-center justify-center rounded-lg bg-ground-2 text-fine font-bold text-ink-3">{d.name.slice(0, 2).toUpperCase()}</span>
           )}
-          <span className="flex flex-col">
+          <span className="flex min-w-0 flex-col">
             <span className="font-bold">{d.name}</span>
             <span className="text-fine text-ink-2">{[d.tag, d.kind, d.alcohol ? "18+" : null].filter(Boolean).join(", ")}</span>
           </span>
         </div>
       </td>
-      <td className="px-4 py-2.5">
+      <td className="px-4 py-2.5 max-md:order-3 max-md:col-span-2 max-md:p-0">
         <div className="flex flex-wrap gap-2">
           {d.sizes.map((s) => {
             const typed = prices[s.id];
@@ -222,7 +227,7 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
           })}
         </div>
       </td>
-      <td className="px-4 py-2.5">
+      <td className="px-4 py-2.5 max-md:order-4 max-md:col-span-2 max-md:border-t max-md:border-line-2 max-md:p-0 max-md:pt-2.5">
         <label className="flex items-center gap-2.5 font-semibold">
           <Switch
             checked={on}
@@ -240,7 +245,7 @@ function Row({ d, canEdit, prices, setPrice, onEdit }: {
         </label>
       </td>
       {canEdit && (
-        <td className="px-4 py-2.5 text-right">
+        <td className="px-4 py-2.5 text-right max-md:order-2 max-md:self-start max-md:p-0">
           <button type="button" onClick={onEdit} className="h-10 rounded-full border-[1.5px] border-line px-4 text-[0.875rem] font-semibold hover:border-action">
             Edit<span className="sr-only"> {d.name}</span>
           </button>

@@ -108,8 +108,8 @@ export function DishEditor({ dish, data, defaultCategory, onClose, onSaved }: {
 
   return (
     <Sheet open onOpenChange={(o) => !o && onClose()}>
-      <SheetContent side="right" className="w-full gap-0 bg-panel p-0 sm:max-w-[640px]">
-        <SheetHeader className="border-b border-line px-5 py-4">
+      <SheetContent side="right" className="w-full gap-0 bg-panel p-0 data-[side=right]:w-full sm:max-w-[640px] data-[side=right]:sm:max-w-[640px]">
+        <SheetHeader className="border-b border-line py-4 pr-12 pl-5">
           <SheetTitle className="font-display text-h3 font-extrabold uppercase">{dish ? dish.name : "A new dish or drink"}</SheetTitle>
           <SheetDescription>{dish ? "Changes show on the menu as soon as you save." : "It goes on the menu as soon as you save."}</SheetDescription>
         </SheetHeader>
@@ -171,11 +171,11 @@ export function DishEditor({ dish, data, defaultCategory, onClose, onSaved }: {
           <fieldset className="flex flex-col gap-2.5 rounded-2xl border border-line p-3.5">
             <legend className="px-1.5 font-bold">Sizes and prices</legend>
             {multi && <TextField label="Question above the sizes" value={sizeLabel} onChange={(e) => setSizeLabel(e.target.value)} maxLength={40} />}
-            <div className="grid grid-cols-[minmax(0,1fr)_120px_auto_44px] items-end gap-2 text-fine font-semibold text-ink-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_96px_auto_44px] sm:grid-cols-[minmax(0,1fr)_120px_auto_44px] items-end gap-2 text-fine font-semibold text-ink-2">
               <span>{multi ? "Size" : isDrink ? "Bottle size" : "Size (if any)"}</span><span>Price, KES</span><span>On</span><span />
             </div>
             {sizes.map((s, i) => (
-              <div key={s.rowKey} className="grid grid-cols-[minmax(0,1fr)_120px_auto_44px] items-center gap-2">
+              <div key={s.rowKey} className="grid grid-cols-[minmax(0,1fr)_96px_auto_44px] sm:grid-cols-[minmax(0,1fr)_120px_auto_44px] items-center gap-2">
                 <input aria-label="Size" value={s.portion} maxLength={30} placeholder={multi ? "½ kg" : isDrink ? "750 ml" : ""} onChange={(e) => setSizes(sizes.map((x, j) => (j === i ? { ...x, portion: e.target.value } : x)))} className="h-11 rounded-[10px] border-[1.5px] border-line bg-card px-3" />
                 <input aria-label={`Price${s.portion ? ` for ${s.portion}` : ""}`} inputMode="numeric" value={s.price} onChange={(e) => setSizes(sizes.map((x, j) => (j === i ? { ...x, price: e.target.value } : x)))} className="figures h-11 rounded-[10px] border-[1.5px] border-line bg-card px-3 text-[1.25rem]" />
                 <Switch aria-label={`${s.portion || "This size"} on the menu`} checked={s.active} onCheckedChange={(v) => setSizes(sizes.map((x, j) => (j === i ? { ...x, active: !!v } : x)))} />
