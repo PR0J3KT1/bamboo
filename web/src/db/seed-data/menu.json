@@ -10787,7 +10787,7 @@
    "id": "x5",
    "name": "Choma board",
    "who": "table",
-   "photo": null,
+   "photo": "hero",
    "parts": [
     [
      "mbc-1",

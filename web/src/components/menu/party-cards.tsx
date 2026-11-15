@@ -24,7 +24,7 @@ export function PartyCards({ id, title, note }: { id: string; title: string; not
         </div>
         <Link href="/party" className="brass-btn inline-flex h-12 items-center rounded-full px-5 font-bold">Plan a party</Link>
       </div>
-      <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {plans.map(({ o, plan }) => {
           const ph = occasionPhoto(o.id, adult);
           return (
@@ -39,12 +39,12 @@ export function PartyCards({ id, title, note }: { id: string; title: string; not
                 <h3 className="font-display text-[1.375rem] leading-none font-extrabold uppercase">{o.name}</h3>
                 <p className="text-[0.875rem] text-ink-2">{o.line}</p>
                 <p className="text-fine text-ink-3">{hoursText(o.hours)}, {o.meats.map((m) => MEATS.find((x) => x[0] === m)?.[1]).join(" and ")}</p>
-                <div className="mt-auto flex items-end justify-between gap-2 pt-1">
+                <div className="mt-auto flex flex-wrap items-end justify-between gap-x-2 gap-y-2 pt-1">
                   <span className="flex flex-col">
                     <span className="figures text-[1.25rem] leading-none">KES {plan.total.toLocaleString("en-KE")}</span>
                     <span className="text-fine text-ink-2">about KES {perHead(plan.total, o.guests).toLocaleString("en-KE")} a head</span>
                   </span>
-                  <Link href={`/party?occ=${o.id}`} className="h-10 shrink-0 rounded-full border-[1.5px] border-action px-3.5 leading-[2.3rem] font-semibold text-action">Plan it</Link>
+                  <Link href={`/party?occ=${o.id}`} className="h-10 shrink-0 rounded-full border-[1.5px] border-action px-3.5 leading-[2.3rem] font-semibold whitespace-nowrap text-action">Plan it</Link>
                 </div>
               </div>
             </li>

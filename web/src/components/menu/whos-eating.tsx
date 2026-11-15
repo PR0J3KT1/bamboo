@@ -55,7 +55,7 @@ export function WhosEating({ id, title, note }: { id: string; title: string; not
                     <li key={p.itemId}>{p.qty > 1 ? `${p.qty} × ` : ""}{p.item.name}</li>
                   ))}
                 </ul>
-                <div className="mt-auto flex items-center justify-between gap-2 pt-1">
+                <div className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-2 pt-1">
                   <Price amount={total} />
                   <button
                     type="button"
@@ -63,7 +63,7 @@ export function WhosEating({ id, title, note }: { id: string; title: string; not
                       for (const p of parts) basket.add(p.itemId, p.item.options?.[0] ?? null, p.qty);
                       toast(`${b.name} added`);
                     }}
-                    className="h-11 rounded-full bg-action px-4 font-semibold text-on-action"
+                    className="h-11 shrink-0 rounded-full bg-action px-4 font-semibold whitespace-nowrap text-on-action"
                   >
                     Add the plate
                   </button>
