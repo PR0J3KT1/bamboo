@@ -8,6 +8,7 @@ import { can } from "@/lib/permissions";
 import { NotAllowed, requirePermission } from "@/lib/session";
 import { normalizeKenyanPhone } from "@/lib/phone";
 import { worksAt } from "@/lib/scope";
+import { ExtrasSchema, RoomsSchema } from "@/lib/location-extras";
 
 export type LocationResult = { ok: true; message: string; id?: string } | { ok: false; error: string };
 
@@ -27,6 +28,8 @@ const Local = z.object({
     }),
   hours: opt(80),
   orderingOpen: z.boolean(),
+  rooms: RoomsSchema,
+  extras: ExtrasSchema,
 });
 
 /* and what only an admin may */
@@ -48,8 +51,8 @@ function firstError(e: z.ZodError) {
   return e.issues[0]?.message ?? "Something in the form isn't right.";
 }
 
-/** Save a location. Managers change their own location's phone, hours and online ordering;
-    admins change everything, anywhere. */
+/** Save a location. Managers change their own location's phone, hours, online ordering, rooms
+    and "More at" cards; admins change everything, anywhere. */
 export async function saveLocation(id: string, raw: LocationInput): Promise<LocationResult> {
   try {
     const me = await requirePermission({ location: ["edit"] });

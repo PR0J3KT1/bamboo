@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { bookingSms, bookingSummary, canMoveBooking, checkRoom, checkTable, tableWhen } from "./bookings";
 
 const TODAY = "2026-11-14";
-const terms = { std: { rate: 3500, maxGuests: 2 }, dlx: { rate: null, maxGuests: 3 } };
+const terms = { std: { offered: true, rate: 3500, maxGuests: 2 }, dlx: { offered: true, rate: null, maxGuests: 3 } };
 const tables = { open: true, from: "12:00", to: "23:00", maxPeople: 30 };
 
 test("a room request is checked", () => {
@@ -20,6 +20,8 @@ test("a room request is checked", () => {
     { room: "std", checkIn: "2026-11-20", nights: 1, guests: 3 },
     { room: "std", checkIn: "2026-11-20", nights: 1.5, guests: 1 },
   ]) assert.equal(checkRoom(bad, TODAY, terms).ok, false, JSON.stringify(bad));
+  const noDeluxe = { ...terms, dlx: { ...terms.dlx, offered: false } };
+  assert.equal(checkRoom({ room: "dlx", checkIn: TODAY, nights: 1, guests: 1 }, TODAY, noDeluxe).ok, false);
 });
 
 test("a table request is checked against the hours and the clock", () => {

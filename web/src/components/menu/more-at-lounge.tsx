@@ -6,27 +6,34 @@ import { whatsapp } from "@/lib/lounge";
 import { hereFacts } from "@/lib/locations";
 import { displayPhone } from "@/lib/phone";
 import { BarrelMark, WhatsAppIcon } from "@/components/brand";
+import { EXTRA_KEYS, EXTRAS, fromRate, roomsOffered } from "@/lib/location-extras";
 
 /* The rest of the place, from the old site: the sports bar, rooms, events and the car wash, each
-   with a photo and a WhatsApp message to ask about it. Then the footer: where, when, how to reach. */
+   with a photo and a WhatsApp message to ask about it. Each location shows only what it has, in
+   its own words where it wrote them (Admin, Settings, Locations). Then the footer: where, when,
+   how to reach. */
 
-const CARDS: { key: string; kicker: string; title: string; alt: string; body: string; ask: string; text: string; href?: string }[] = [
-  { key: "sports", kicker: "Match day", title: "Sports bar and lounge", alt: "The sports bar at Bamboo Cask", body: "Premier League, Champions League, Formula 1, rugby and boxing on big HD screens, with live bands on music nights.", ask: "Book a table", text: "", href: "/book" },
-  { key: "rooms", kicker: "Stay", title: "Rooms in Ngara", alt: "A room upstairs at Bamboo Cask", body: "Standard and Deluxe rooms upstairs, from KES 3,500 a night, close to the CBD, Parklands and Pangani. Room service from the kitchen, 24 hours.", ask: "See the rooms and book", text: "", href: "/rooms" },
-  { key: "events", kicker: "Gather", title: "Meetings and events", alt: "An event set up at Bamboo Cask", body: "Conference rooms for up to 200 people, and space for birthdays, showers, graduations and private parties, catered by the kitchen.", ask: "Plan an event", text: "Hello Bamboo Cask, I'm planning an event: " },
-  { key: "carwash", kicker: "Shine", title: "Car wash and carpets", alt: "The car wash at Bamboo Cask", body: "Leave the car with the wash team while you eat, and drive home in a clean one. Carpets from home or the office too.", ask: "Ask the wash team", text: "Hello Bamboo Cask, about the car wash: " },
-];
+type Card = { key: string; kicker: string; title: string; alt: string; body: string; ask: string; text: string; href?: string };
 
 export async function MoreAtLounge() {
-  const { phone, where } = await hereFacts();
+  const { loc, phone, name } = await hereFacts();
+  const cards: Card[] = EXTRA_KEYS.filter((k) => loc.extras[k].on).map((k) => ({ key: k, ...EXTRAS[k], body: loc.extras[k].body || EXTRAS[k].body }));
+  const rooms = roomsOffered(loc.rooms);
+  if (rooms.length) {
+    const from = fromRate(loc.rooms);
+    const which = rooms.length === 2 ? "Standard and Deluxe rooms" : rooms[0] === "std" ? "Standard rooms" : "Deluxe rooms";
+    const body = `${which} upstairs${from ? `, from KES ${from.toLocaleString("en-KE")} a night` : ""}${loc.rooms.nearby ? `. ${loc.rooms.nearby}` : ""}. Room service from the kitchen, 24 hours.`;
+    cards.splice(1, 0, { key: "rooms", kicker: "Stay", title: `Rooms in ${name}`, alt: "A room upstairs at Bamboo Cask", body, ask: "See the rooms and book", text: "", href: "/rooms" });
+  }
+  if (!cards.length) return null;
   return (
     <section aria-labelledby="more-h" className="flex flex-col gap-4">
       <div>
-        <h2 id="more-h" className="font-display text-h2 font-extrabold uppercase md:text-[2.5rem]">More at {where.split(",")[0]}</h2>
-        <p className="mt-1 font-serif text-lead text-ink-2 italic">Come for the choma. Stay for the match.</p>
+        <h2 id="more-h" className="font-display text-h2 font-extrabold uppercase md:text-[2.5rem]">More at {name}</h2>
+        <p className="mt-1 font-serif text-lead text-ink-2 italic">{loc.extras.sports.on ? "Come for the choma. Stay for the match." : "Come for the choma. Stay a while."}</p>
       </div>
       <ul className="grid gap-3 sm:grid-cols-2 md:gap-4">
-        {CARDS.map((c) => {
+        {cards.map((c) => {
           const ph = loungePhoto(c.key);
           return (
             <li key={c.key} className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-card">
@@ -44,7 +51,7 @@ export async function MoreAtLounge() {
                     {c.ask} <ChevronRight aria-hidden className="size-4" />
                   </Link>
                 ) : (
-                  <a href={whatsapp(phone, c.text)} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex h-11 items-center gap-2 self-start rounded-full border-[1.5px] border-action px-4 font-semibold text-action hover:bg-action-soft">
+                  <a href={whatsapp(phone, `Hello Bamboo Cask ${name}, ${c.text}`)} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex h-11 items-center gap-2 self-start rounded-full border-[1.5px] border-action px-4 font-semibold text-action hover:bg-action-soft">
                     <WhatsAppIcon className="size-4" /> {c.ask}
                   </a>
                 )}
@@ -58,7 +65,7 @@ export async function MoreAtLounge() {
 }
 
 export async function LoungeFooter() {
-  const { phone, hours, where, map } = await hereFacts();
+  const { loc, phone, hours, where, map } = await hereFacts();
   return (
     <footer className="grove-bg text-on-grove">
       <div className="mx-auto flex max-w-[1360px] flex-col gap-6 px-4 py-10 pb-32 md:flex-row md:items-start md:justify-between md:px-8 lg:pb-12">
@@ -69,7 +76,7 @@ export async function LoungeFooter() {
             <p className="mt-1.5 font-serif text-lead text-lime italic">Grill, bar and lounge on {where}.</p>
             <nav aria-label="More" className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-semibold">
               <Link href="/" className="underline-offset-2 hover:underline">Menu</Link>
-              <Link href="/rooms" className="underline-offset-2 hover:underline">Rooms</Link>
+              {roomsOffered(loc.rooms).length > 0 && <Link href="/rooms" className="underline-offset-2 hover:underline">Rooms</Link>}
               <Link href="/book" className="underline-offset-2 hover:underline">Book a table</Link>
             </nav>
           </div>

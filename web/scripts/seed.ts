@@ -2,6 +2,7 @@
    Only adds rows that aren't there yet, so running it again never overwrites prices or edits
    made in the admin. usage: pnpm db:seed */
 import { readFileSync } from "node:fs";
+import { DEFAULT_EXTRAS, DEFAULT_ROOMS } from "../src/lib/location-extras";
 import { sql as dsql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
@@ -60,7 +61,7 @@ async function main() {
     ).onConflictDoNothing();
     /* the first lounge; more are added in the admin. Every item goes on every location's menu at
        its listed price, leaving prices already set alone */
-    await tx.insert(schema.locations).values({ id: "ngara", name: "Ngara", area: "Keiyo Road, Ngara", lat: -1.2738, lng: 36.8245, mapUrl: "https://www.google.com/maps/search/?api=1&query=Bamboo+Cask+Lounge+Keiyo+Road+Ngara" }).onConflictDoNothing();
+    await tx.insert(schema.locations).values({ id: "ngara", name: "Ngara", area: "Keiyo Road, Ngara", lat: -1.2738, lng: 36.8245, mapUrl: "https://www.google.com/maps/search/?api=1&query=Bamboo+Cask+Lounge+Keiyo+Road+Ngara", rooms: { ...DEFAULT_ROOMS, nearby: "Close to the CBD, Parklands and Pangani" }, extras: DEFAULT_EXTRAS }).onConflictDoNothing();
     await tx.execute(dsql`insert into location_items (location_id, item_id, price) select l.id, i.id, i.price from locations l cross join items i on conflict do nothing`);
     await tx.insert(schema.bundles).values(
       menu.bundles.map((b, n) => ({ id: b.id, name: b.name, who: b.who, photoKey: b.photo, sort: n })),

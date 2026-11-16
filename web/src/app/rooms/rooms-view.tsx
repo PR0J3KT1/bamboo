@@ -23,15 +23,17 @@ function useToday() {
   return useSyncExternalStore(noop, () => todayInNairobi(), () => "");
 }
 
-export function RoomsView({ terms, phone, locationId, where }: { terms: RoomTerms; phone: string; locationId: string; where: string }) {
-  const [roomId, setRoomId] = useState<Room["id"]>("std");
-  const room = ROOMS.find((r) => r.id === roomId)!;
+/* The rooms one location offers (at least one; the page says so when there are none). */
+export function RoomsView({ terms, nearby, phone, locationId, name, where }: { terms: RoomTerms; nearby: string | null; phone: string; locationId: string; name: string; where: string }) {
+  const rooms = ROOMS.filter((r) => terms[r.id].offered);
+  const [roomId, setRoomId] = useState<Room["id"]>(rooms[0].id);
+  const room = rooms.find((r) => r.id === roomId) ?? rooms[0];
   const [open, setOpen] = useState<number | null>(null);
 
   return (
     <div className="flex flex-col gap-6">
       <div role="group" aria-label="Room" className="grid grid-cols-2 gap-2 self-start rounded-2xl bg-ground-2 p-1.5 sm:flex">
-        {ROOMS.map((r) => (
+        {rooms.map((r) => (
           <button
             key={r.id}
             type="button"
@@ -66,7 +68,7 @@ export function RoomsView({ terms, phone, locationId, where }: { terms: RoomTerm
             })}
           </ul>
           <div className="flex flex-wrap gap-2 text-fine">
-            {[where, "Close to the CBD, Parklands and Pangani", "Secure parking"].map((t) => (
+            {[where, nearby, "Secure parking"].filter((t): t is string => !!t).map((t) => (
               <span key={t} className="rounded-full border border-line bg-panel px-3 py-1.5">{t}</span>
             ))}
           </div>
@@ -75,7 +77,7 @@ export function RoomsView({ terms, phone, locationId, where }: { terms: RoomTerm
             <Link href="/" className="font-semibold text-action underline underline-offset-2">See the menu</Link>
           </p>
         </section>
-        <BookingCard room={room} terms={terms} phone={phone} locationId={locationId} />
+        <BookingCard room={room} terms={terms} phone={phone} locationId={locationId} place={name} />
       </div>
 
       {open !== null && <Lightbox room={room} start={open} onClose={() => setOpen(null)} />}
@@ -188,7 +190,7 @@ function Step({ label, value, words, min, max, onChange }: { label: string; valu
 /* Check-in date, nights and guests; what the stay comes to; who's asking. "Send the request"
    saves it for the lounge, who confirm or decline in the admin and text the answer. WhatsApp
    stays as the other way to ask. Nothing is paid on this page. */
-function BookingCard({ room, terms, phone, locationId }: { room: Room; terms: RoomTerms; phone: string; locationId: string }) {
+function BookingCard({ room, terms, phone, locationId, place }: { room: Room; terms: RoomTerms; phone: string; locationId: string; place: string }) {
   const router = useRouter();
   const today = useToday();
   const session = useSession();
@@ -267,7 +269,7 @@ function BookingCard({ room, terms, phone, locationId }: { room: Room; terms: Ro
       </button>
       <p className="relative text-center text-fine text-[#3c4a2c]">
         The lounge confirms by SMS. Or ask on{" "}
-        <a href={whatsapp(phone, checkIn ? bookingMessage(room, rate, checkIn, nights, people) : undefined)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-[#1a7f3f] underline underline-offset-2">
+        <a href={whatsapp(phone, checkIn ? bookingMessage(room, rate, checkIn, nights, people, undefined, place) : undefined)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-[#1a7f3f] underline underline-offset-2">
           <WhatsAppIcon className="size-3.5" />WhatsApp
         </a>{" "}
         or call <a href={`tel:${phone}`} className="font-semibold underline underline-offset-2">{displayPhone(phone)}</a>. Nothing is paid on this page.

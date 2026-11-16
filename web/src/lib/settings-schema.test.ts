@@ -4,9 +4,8 @@ import { DEFAULTS, SettingsSchema, withDefaults } from "./settings-schema";
 
 test("a new database gets the old site's facts", () => {
   assert.deepEqual(withDefaults(undefined), DEFAULTS);
-  assert.deepEqual(withDefaults({ hours: "Open from noon" }).rooms, DEFAULTS.rooms);
-  assert.equal(withDefaults({ rooms: { dlx: { rate: 6000 } } }).rooms.dlx.maxGuests, 2);
-  assert.equal(withDefaults({ rooms: { dlx: { rate: 6000 } } }).rooms.dlx.rate, 6000);
+  assert.deepEqual(withDefaults({ hours: "Open from noon" }).tables, DEFAULTS.tables);
+  assert.equal("rooms" in withDefaults({ rooms: { dlx: { rate: 6000 } } }), false); // rooms belong to each location now
   assert.deepEqual(withDefaults({ hours: "" }), DEFAULTS); // a broken saved value falls back whole
 });
 
@@ -21,6 +20,5 @@ test("saving checks every field in plain words", () => {
   assert.equal(msg({ rating: { stars: 9, reviews: 10 } }), "rating.stars: Stars are between 1 and 5, like 4.5.");
   assert.equal(msg({ rating: { stars: Number.NaN, reviews: 10 } }), "rating.stars: Stars are a number between 1 and 5, like 4.5.");
   assert.equal(msg({ phone: "12" }), "phone: That isn't a Kenyan mobile number.");
-  assert.equal(msg({ rooms: { ...DEFAULTS.rooms, dlx: { rate: 50, maxGuests: 2 } } }), "rooms.dlx.rate: A rate is at least KES 100, or blank for “on request”.");
   assert.equal(msg({ tables: { ...DEFAULTS.tables, from: "23:00", to: "12:00" } }), "tables.to: The first table has to be before the last.");
 });

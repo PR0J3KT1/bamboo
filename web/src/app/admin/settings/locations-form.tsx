@@ -9,6 +9,8 @@ import { useToast } from "@/components/ui/toast";
 import { displayPhone } from "@/lib/phone";
 import { cn } from "@/lib/utils";
 import { createLocation, saveLocation, type LocationInput } from "./location-actions";
+import { ROOMS } from "@/lib/rooms";
+import { EXTRA_KEYS, EXTRAS, NO_EXTRAS, NO_ROOMS, roomsOffered, type LocationExtras, type LocationRooms } from "@/lib/location-extras";
 
 export type LocationRow = {
   id: string;
@@ -22,6 +24,8 @@ export type LocationRow = {
   tumabodaLocationId: string | null;
   active: boolean;
   orderingOpen: boolean;
+  rooms: LocationRooms;
+  extras: LocationExtras;
 };
 export type Store = { id: string; name: string; address: string; latitude: number; longitude: number; isDefault: boolean };
 
@@ -82,6 +86,7 @@ export function LocationsPanel({ locations, stores, full, brand }: {
                   <span className="text-fine text-ink-2">
                     {displayPhone(l.phone || brand.phone)}{l.phone ? "" : " (the main number)"}. {l.hours || brand.hours}.
                   </span>
+                  <span className="text-fine text-ink-2">{offerLine(l)}</span>
                   {full && (
                     <span className="text-fine text-ink-2">
                       Riders collect from {l.tumabodaLocationId ? (stores.find((s) => s.id === l.tumabodaLocationId)?.name ?? "a TumaBoda store") : "your default TumaBoda store"}.
@@ -97,6 +102,19 @@ export function LocationsPanel({ locations, stores, full, brand }: {
     </section>
   );
 }
+
+/* "Rooms: Standard, Deluxe. Cards: sports bar, car wash." */
+function offerLine(l: LocationRow) {
+  const rooms = roomsOffered(l.rooms).map((id) => ROOMS.find((r) => r.id === id)!.short);
+  const cards = EXTRA_KEYS.filter((k) => l.extras[k].on).map((k) => EXTRAS[k].title.toLowerCase());
+  return `Rooms: ${rooms.length ? rooms.join(", ") : "none"}. More-at cards: ${cards.length ? cards.join(", ") : "none"}.`;
+}
+
+const roomFields = (r: LocationRooms) => ({
+  std: { offered: r.std.offered, rate: r.std.rate === null ? "" : String(r.std.rate), maxGuests: String(r.std.maxGuests) },
+  dlx: { offered: r.dlx.offered, rate: r.dlx.rate === null ? "" : String(r.dlx.rate), maxGuests: String(r.dlx.maxGuests) },
+});
+const shillings = (v: string) => (v.trim() === "" ? null : Number(v.replace(/[^\d.]/g, "")));
 
 function LocationForm({ location, stores, full, brand, locations, onDone }: {
   location?: LocationRow;
@@ -122,6 +140,9 @@ function LocationForm({ location, stores, full, brand, locations, onDone }: {
     active: location?.active ?? true,
     orderingOpen: location?.orderingOpen ?? true,
   });
+  const [rooms, setRooms] = useState(roomFields(location?.rooms ?? NO_ROOMS));
+  const [nearby, setNearby] = useState(location?.rooms.nearby ?? "");
+  const [extras, setExtras] = useState<LocationExtras>(location?.extras ?? NO_EXTRAS);
   const [copyFrom, setCopyFrom] = useState(locations[0]?.id ?? "");
   const set = (patch: Partial<typeof f>) => setF((x) => ({ ...x, ...patch }));
 
@@ -138,6 +159,12 @@ function LocationForm({ location, stores, full, brand, locations, onDone }: {
       tumabodaLocationId: f.tumabodaLocationId || null,
       active: f.active,
       orderingOpen: f.orderingOpen,
+      rooms: {
+        std: { offered: rooms.std.offered, rate: shillings(rooms.std.rate), maxGuests: Number(rooms.std.maxGuests) },
+        dlx: { offered: rooms.dlx.offered, rate: shillings(rooms.dlx.rate), maxGuests: Number(rooms.dlx.maxGuests) },
+        nearby: nearby || null,
+      },
+      extras,
     };
     if (full && (f.lat.trim() === "" || f.lng.trim() === "" || !Number.isFinite(data.lat) || !Number.isFinite(data.lng))) {
       setError("Give the map position: latitude and longitude, or pick its TumaBoda store.");
@@ -226,6 +253,57 @@ function LocationForm({ location, stores, full, brand, locations, onDone }: {
           </label>
         )}
       </div>
+      <fieldset className="flex flex-col gap-3 rounded-xl border border-line p-3.5">
+        <legend className="px-1 font-semibold">Rooms</legend>
+        {ROOMS.map((r) => {
+          const v = rooms[r.id];
+          const put = (patch: Partial<typeof v>) => setRooms((x) => ({ ...x, [r.id]: { ...x[r.id], ...patch } }));
+          return (
+            <div key={r.id} className="flex flex-col gap-2.5">
+              <label className="flex items-center gap-3 font-semibold">
+                <Switch checked={v.offered} onCheckedChange={(on) => put({ offered: !!on })} />
+                {v.offered ? `${r.short} rooms here` : `No ${r.short} rooms`}
+              </label>
+              {v.offered && (
+                <div className="grid grid-cols-2 gap-3 pl-0 sm:pl-14">
+                  <Field label="KES a night" hint="Blank: “Rate on request”.">
+                    <input className={input} inputMode="numeric" value={v.rate} onChange={(e) => put({ rate: e.target.value })} placeholder="On request" />
+                  </Field>
+                  <Field label="Most guests">
+                    <input className={input} inputMode="numeric" value={v.maxGuests} onChange={(e) => put({ maxGuests: e.target.value })} />
+                  </Field>
+                </div>
+              )}
+            </div>
+          );
+        })}
+        {(rooms.std.offered || rooms.dlx.offered) && (
+          <Field label="What's near, for guests (optional)">
+            <input className={input} value={nearby} maxLength={80} onChange={(e) => setNearby(e.target.value)} placeholder="Close to the CBD, Parklands and Pangani" />
+          </Field>
+        )}
+      </fieldset>
+      <fieldset className="flex flex-col gap-3 rounded-xl border border-line p-3.5">
+        <legend className="px-1 font-semibold">“More at” cards on the menu</legend>
+        {EXTRA_KEYS.map((k) => {
+          const v = extras[k];
+          const put = (patch: Partial<typeof v>) => setExtras((x) => ({ ...x, [k]: { ...x[k], ...patch } }));
+          return (
+            <div key={k} className="flex flex-col gap-2.5">
+              <label className="flex items-center gap-3 font-semibold">
+                <Switch checked={v.on} onCheckedChange={(on) => put({ on: !!on })} />
+                {v.on ? EXTRAS[k].title : `No ${EXTRAS[k].title.toLowerCase()} card`}
+              </label>
+              {v.on && (
+                <Field label="What the card says" hint="Blank: the standard words, shown here." className="sm:pl-14">
+                  <textarea rows={2} maxLength={240} className="w-full resize-none rounded-xl border-[1.5px] border-line bg-card px-3 py-2" value={v.body ?? ""} onChange={(e) => put({ body: e.target.value })} placeholder={EXTRAS[k].body} />
+                </Field>
+              )}
+            </div>
+          );
+        })}
+        <p className="text-fine text-ink-2">The rooms card shows on its own when the location has rooms.</p>
+      </fieldset>
       {!location && locations.length > 0 && (
         <Field label="Start its menu from" hint="Same dishes, prices and sold-out switches; its manager then changes them.">
           <select className={input} value={copyFrom} onChange={(e) => setCopyFrom(e.target.value)}>

@@ -1,7 +1,7 @@
 /* The rooms upstairs, from the old site. Photos are the lounge's own (public/rooms): each is
    [file, width at 760px tall, what it shows], with an -xl copy for full screen (1600 on its long
-   side). Rates and how many can stay are in Settings (src/lib/settings.ts): a room with no rate
-   asks for it instead of showing a total. */
+   side). Which rooms each location has, their rates and how many can stay are on the location
+   (src/lib/location-extras.ts): a room with no rate asks for it instead of showing a total. */
 
 export type Amenity = "bed" | "sofa" | "tv" | "cup" | "door" | "wifi" | "desk";
 export type RoomPhoto = { file: string; width: number; height: number; alt: string };
@@ -70,7 +70,7 @@ export const ROOMS: Room[] = [
 ];
 
 export const MAX_NIGHTS = 30;
-export type RoomTerms = Record<Room["id"], { rate: number | null; maxGuests: number }>;
+export type RoomTerms = Record<Room["id"], { offered: boolean; rate: number | null; maxGuests: number }>;
 export const isRoomId = (x: string): x is Room["id"] => x === "std" || x === "dlx";
 
 /** The full-screen copy of a photo and its size. */
@@ -95,11 +95,11 @@ export const nightsWord = (n: number) => `${n} ${n === 1 ? "night" : "nights"}`;
 export const guestsWord = (n: number) => `${n} ${n === 1 ? "guest" : "guests"}`;
 
 /** The WhatsApp message asking for the room: dates, nights, guests, and the total or the rate question. */
-export function bookingMessage(room: Room, rate: number | null, checkIn: string, nights: number, guests: number, code?: string) {
+export function bookingMessage(room: Room, rate: number | null, checkIn: string, nights: number, guests: number, code?: string, place?: string) {
   const out = addDays(checkIn, nights);
   const kes = (n: number) => `KES ${n.toLocaleString("en-KE")}`;
   return (
-    `Hello Bamboo Cask, ${code ? `about my request ${code}: ` : ""}I'd like to book a ${room.name}: check in ${dayName(checkIn)}, check out ${dayName(out)} ` +
+    `Hello Bamboo Cask${place ? ` ${place}` : ""}, ${code ? `about my request ${code}: ` : ""}I'd like to book a ${room.name}: check in ${dayName(checkIn)}, check out ${dayName(out)} ` +
     `(${nightsWord(nights)}), ${guestsWord(guests)}. ` +
     (rate ? `That's ${kes(rate * nights)} at ${kes(rate)} a night. Is it free?` : `What is the ${room.short} rate for those nights?`)
   );

@@ -30,7 +30,7 @@ async function Settings() {
         <p className="text-ink-2">What customers see about the lounge, and what&rsquo;s open online.{brand ? ` ${last}` : ""}</p>
       </div>
       <LocationsPanel
-        locations={mine.map((l) => ({ id: l.id, name: l.name, area: l.area, lat: l.lat, lng: l.lng, phone: l.phone, hours: l.hours, mapUrl: l.mapUrl, tumabodaLocationId: l.tumabodaLocationId, active: l.active, orderingOpen: l.orderingOpen }))}
+        locations={mine.map((l) => ({ id: l.id, name: l.name, area: l.area, lat: l.lat, lng: l.lng, phone: l.phone, hours: l.hours, mapUrl: l.mapUrl, tumabodaLocationId: l.tumabodaLocationId, active: l.active, orderingOpen: l.orderingOpen, rooms: l.rooms, extras: l.extras }))}
         stores={stores.map((s) => ({ id: s.id, name: s.name, address: s.address, latitude: s.latitude, longitude: s.longitude, isDefault: s.is_default }))}
         full={full}
         brand={{ phone: settings.phone, hours: settings.hours }}

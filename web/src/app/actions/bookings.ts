@@ -62,12 +62,12 @@ async function insert(values: Omit<typeof schema.bookings.$inferInsert, "code">)
 export async function requestRoom(raw: z.input<typeof RoomInput>): Promise<BookingResult> {
   const p = RoomInput.safeParse(raw);
   if (!p.success) return { ok: false, error: firstIssue(p.error) };
-  const settings = await getSettings();
-  const room = checkRoom(p.data, todayInNairobi(), settings.rooms);
-  if (!room.ok) return room;
-  const [who, location] = await Promise.all([checkWho(p.data), openLocation(p.data.locationId)]);
-  if (!who.ok) return who;
+  const location = await openLocation(p.data.locationId);
   if (!location) return { ok: false, error: "That lounge isn't taking bookings just now. Choose another, or call us." };
+  const room = checkRoom(p.data, todayInNairobi(), location.rooms);
+  if (!room.ok) return room;
+  const who = await checkWho(p.data);
+  if (!who.ok) return who;
   const b = await insert({
     locationId: location.id,
     kind: "room",

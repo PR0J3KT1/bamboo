@@ -6,10 +6,6 @@ import { normalizeKenyanPhone } from "@/lib/phone";
    value. */
 
 const hhmm = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Use a time like 18:30.");
-const room = z.object({
-  rate: z.number({ error: "The rate is a number of shillings, or blank." }).int("The rate is whole shillings.").min(100, "A rate is at least KES 100, or blank for “on request”.").max(1_000_000, "That rate looks too high.").nullable(),
-  maxGuests: z.number({ error: "Most guests: a whole number." }).int("Most guests: a whole number.").min(1, "At least 1 guest.").max(10, "Up to 10 guests."),
-});
 
 export const SettingsSchema = z.object({
   hours: z.string().trim().min(3, "Say when the lounge is open.").max(80),
@@ -27,10 +23,6 @@ export const SettingsSchema = z.object({
       reviews: z.number({ error: "Reviews are a whole number, like 1462." }).int("Reviews are a whole number, like 1462.").min(1, "Reviews are a whole number, like 1462.").max(1_000_000, "That's more reviews than seems likely."),
     })
     .nullable(),
-  rooms: z.object({
-    std: room,
-    dlx: room,
-  }),
   ordering: z.object({ open: z.boolean(), note: z.string().trim().max(200, "Keep the note to 200 characters.") }),
   rewards: z.object({
     open: z.boolean(),
@@ -52,7 +44,6 @@ export const DEFAULTS: LoungeSettings = {
   hours: "Open daily, 8am till late",
   phone: "+254754346559",
   rating: null, // not shown until someone confirms a current figure
-  rooms: { std: { rate: 3500, maxGuests: 2 }, dlx: { rate: null, maxGuests: 2 } },
   ordering: { open: true, note: "" },
   rewards: { open: true, percent: 5 },
   tables: { open: true, from: "12:00", to: "23:00", maxPeople: 30 },
@@ -64,7 +55,6 @@ export function withDefaults(saved: unknown): LoungeSettings {
   const merged = {
     ...DEFAULTS,
     ...s,
-    rooms: { std: { ...DEFAULTS.rooms.std, ...s.rooms?.std }, dlx: { ...DEFAULTS.rooms.dlx, ...s.rooms?.dlx } },
     ordering: { ...DEFAULTS.ordering, ...s.ordering },
     rewards: { ...DEFAULTS.rewards, ...s.rewards },
     tables: { ...DEFAULTS.tables, ...s.tables },

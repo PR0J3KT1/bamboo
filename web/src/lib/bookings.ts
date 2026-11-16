@@ -47,6 +47,7 @@ export function checkRoom(
   if (input.checkIn > addDays(today, MAX_AHEAD_DAYS.room)) return { ok: false, error: "Rooms can be asked for up to a year ahead." };
   if (!Number.isInteger(input.nights) || input.nights < 1 || input.nights > MAX_NIGHTS) return { ok: false, error: `Stay between 1 and ${MAX_NIGHTS} nights. For longer, call the lounge.` };
   const t = terms[input.room];
+  if (!t.offered) return { ok: false, error: `This lounge has no ${ROOMS.find((r) => r.id === input.room)!.short} rooms. Pick another room or lounge.` };
   if (!Number.isInteger(input.guests) || input.guests < 1 || input.guests > t.maxGuests) return { ok: false, error: `The ${ROOMS.find((r) => r.id === input.room)!.short} room takes up to ${t.maxGuests} ${t.maxGuests === 1 ? "guest" : "guests"}.` };
   return { ok: true, data: { room: input.room, checkIn: input.checkIn, nights: input.nights, guests: input.guests, rate: t.rate } };
 }

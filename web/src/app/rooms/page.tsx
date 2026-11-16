@@ -5,32 +5,48 @@ import { Suspense } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Brand } from "@/components/brand";
 import { LoungeFooter } from "@/components/menu/more-at-lounge";
-import { getSettings, type LoungeSettings } from "@/lib/settings";
-import { hereFacts } from "@/lib/locations";
+import { getOpenLocations, hereFacts } from "@/lib/locations";
+import { fromRate, roomsOffered } from "@/lib/location-extras";
 import { LocationPicker } from "@/components/location/here";
 import { Loader } from "@/components/ui/loader";
-import { ROOMS } from "@/lib/rooms";
 import { RoomsView } from "./rooms-view";
 
 export const metadata: Metadata = {
   title: "Rooms",
-  description: "Standard and Deluxe rooms upstairs at Bamboo Cask, Keiyo Road, Ngara. From KES 3,500 a night, with room service from the kitchen, 24 hours.",
+  description: "Standard and Deluxe rooms upstairs at Bamboo Cask, with room service from the kitchen, 24 hours.",
 };
 
 async function UpstairsAt() {
   const f = await hereFacts();
-  return <>Upstairs at {f.where}</>;
+  const from = fromRate(f.loc.rooms);
+  if (!roomsOffered(f.loc.rooms).length) return <p className="font-semibold text-lime">No rooms at Bamboo Cask {f.name}</p>;
+  return (
+    <>
+      <p className="font-semibold text-lime">Upstairs at {f.where}</p>
+      {from && <p className="order-last mt-1 font-semibold">From KES {from.toLocaleString("en-KE")} a night</p>}
+    </>
+  );
 }
 
-async function RoomsHere({ terms }: { terms: LoungeSettings["rooms"] }) {
-  const f = await hereFacts();
-  return <RoomsView key={f.loc.id} terms={terms} phone={f.phone} locationId={f.loc.id} where={f.where} />;
+async function RoomsHere() {
+  const [f, open] = await Promise.all([hereFacts(), getOpenLocations()]);
+  if (!roomsOffered(f.loc.rooms).length) {
+    const withRooms = open.filter((l) => roomsOffered(l.rooms).length);
+    return (
+      <div className="flex max-w-xl flex-col gap-2 rounded-2xl border border-line bg-panel p-5">
+        <h2 className="font-display text-h3 font-extrabold uppercase">No rooms at {f.name}</h2>
+        <p className="text-ink-2">
+          {withRooms.length
+            ? `Rooms are at ${withRooms.map((l) => `Bamboo Cask ${l.name}`).join(" and ")}. Choose it above to see them and book.`
+            : "None of the lounges has rooms to book just now."}
+        </p>
+      </div>
+    );
+  }
+  return <RoomsView key={f.loc.id} terms={f.loc.rooms} nearby={f.loc.rooms.nearby} phone={f.phone} locationId={f.loc.id} name={f.name} where={f.where} />;
 }
 
-export default async function RoomsPage() {
-  const settings = await getSettings();
-  const rates = ROOMS.map((r) => settings.rooms[r.id].rate).filter((r): r is number => r !== null);
-  const from = rates.length ? Math.min(...rates) : null;
+export default function RoomsPage() {
   return (
     <>
       <header className="relative isolate overflow-hidden bg-grove text-on-grove">
@@ -43,22 +59,21 @@ export default async function RoomsPage() {
           </Link>
         </div>
         <div className="mx-auto flex max-w-[1200px] flex-col gap-3 px-4 pt-12 pb-10 md:px-8 md:pt-20 md:pb-16">
-          <p className="font-semibold text-lime">
-            <Suspense fallback={<>Upstairs at the lounge</>}>
-              <UpstairsAt />
-            </Suspense>
-          </p>
-          <h1 className="font-stencil text-h1 font-black md:text-[5rem]">ROOMS UPSTAIRS</h1>
-          <p className="max-w-md font-serif text-lead italic md:text-[1.25rem]">Sleep upstairs from the grill. Order dinner to the room, and breakfast in the morning.</p>
-          {from && <p className="mt-1 font-semibold">From KES {from.toLocaleString("en-KE")} a night</p>}
-          <Suspense fallback={null}>
-            <LocationPicker label="Rooms at" />
+          <h1 className="order-1 font-stencil text-h1 font-black md:text-[5rem]">ROOMS UPSTAIRS</h1>
+          <p className="order-2 max-w-md font-serif text-lead italic md:text-[1.25rem]">Sleep upstairs from the grill. Order dinner to the room, and breakfast in the morning.</p>
+          <Suspense fallback={<p className="font-semibold text-lime">Upstairs at the lounge</p>}>
+            <UpstairsAt />
           </Suspense>
+          <div className="order-last">
+            <Suspense fallback={null}>
+              <LocationPicker label="Rooms at" />
+            </Suspense>
+          </div>
         </div>
       </header>
       <main id="main" tabIndex={-1} className="mx-auto w-full max-w-[1200px] flex-1 px-4 py-6 md:px-8 md:py-10">
         <Suspense fallback={<Loader label="Opening the rooms" />}>
-          <RoomsHere terms={settings.rooms} />
+          <RoomsHere />
         </Suspense>
       </main>
       <Suspense fallback={<div className="grove-bg h-64" />}>

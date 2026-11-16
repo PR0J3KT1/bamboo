@@ -5,7 +5,6 @@ import { Switch } from "@/components/admin/switch";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
 import { displayPhone } from "@/lib/phone";
-import { ROOMS } from "@/lib/rooms";
 import type { LoungeSettings } from "@/lib/settings";
 import { saveSettings } from "./actions";
 import { cn } from "@/lib/utils";
@@ -23,10 +22,9 @@ function Field({ label, hint, error, children, className }: { label: string; hin
   );
 }
 
-const num = (v: string) => (v.trim() === "" ? null : Number(v.replace(/[^\d.]/g, "")));
 
 /* Every setting on one page, saved together. Numbers are typed as text so a blank stays blank
-   (a blank room rate means "on request"). */
+   (a blank stays blank). Rooms and the "More at" cards are on each location, above. */
 export function SettingsForm({ initial }: { initial: LoungeSettings }) {
   const router = useRouter();
   const toast = useToast();
@@ -36,10 +34,6 @@ export function SettingsForm({ initial }: { initial: LoungeSettings }) {
     showRating: !!initial.rating,
     stars: String(initial.rating?.stars ?? ""),
     reviews: String(initial.rating?.reviews ?? ""),
-    stdRate: String(initial.rooms.std.rate ?? ""),
-    stdGuests: String(initial.rooms.std.maxGuests),
-    dlxRate: String(initial.rooms.dlx.rate ?? ""),
-    dlxGuests: String(initial.rooms.dlx.maxGuests),
     orderingOpen: initial.ordering.open,
     orderingNote: initial.ordering.note,
     rewardsOpen: initial.rewards.open,
@@ -60,10 +54,6 @@ export function SettingsForm({ initial }: { initial: LoungeSettings }) {
       hours: s.hours,
       phone: s.phone,
       rating: s.showRating ? { stars: Number(s.stars), reviews: Number(s.reviews.replace(/\D/g, "")) } : null,
-      rooms: {
-        std: { rate: num(s.stdRate), maxGuests: Number(s.stdGuests) },
-        dlx: { rate: num(s.dlxRate), maxGuests: Number(s.dlxGuests) },
-      },
       ordering: { open: s.orderingOpen, note: s.orderingNote },
       rewards: { open: s.rewardsOpen, percent: Number(s.rewardPct) },
       tables: { open: s.tablesOpen, from: s.from, to: s.to, maxPeople: Number(s.maxPeople) },
@@ -163,25 +153,6 @@ export function SettingsForm({ initial }: { initial: LoungeSettings }) {
             </Field>
           </div>
         )}
-      </section>
-
-      <section className={card} aria-labelledby="s-rooms">
-        <h2 id="s-rooms" className="font-display text-[1.5rem] font-extrabold uppercase">Rooms</h2>
-        {ROOMS.map((r) => {
-          const rate = r.id === "std" ? "stdRate" : "dlxRate";
-          const guests = r.id === "std" ? "stdGuests" : "dlxGuests";
-          return (
-            <div key={r.id} className="grid gap-3 sm:grid-cols-[10rem_1fr_1fr] sm:items-start">
-              <p className="pt-2 font-display text-[1.25rem] font-extrabold uppercase">{r.short}</p>
-              <Field label="KES a night" hint={isBad(`rooms.${r.id}.rate`) ? bad!.error : "Blank shows “Rate on request”."} error={isBad(`rooms.${r.id}.rate`)}>
-                <input inputMode="numeric" className={input} aria-invalid={isBad(`rooms.${r.id}.rate`) || undefined} value={s[rate]} onChange={(e) => set(rate, e.target.value)} placeholder="On request" />
-              </Field>
-              <Field label="Most guests" hint={isBad(`rooms.${r.id}.maxGuests`) ? bad!.error : undefined} error={isBad(`rooms.${r.id}.maxGuests`)}>
-                <input inputMode="numeric" className={input} aria-invalid={isBad(`rooms.${r.id}.maxGuests`) || undefined} value={s[guests]} onChange={(e) => set(guests, e.target.value)} />
-              </Field>
-            </div>
-          );
-        })}
       </section>
 
       {bad && <p role="alert" className="rounded-xl bg-danger-soft p-3 font-semibold text-danger-ink">{bad.error}</p>}

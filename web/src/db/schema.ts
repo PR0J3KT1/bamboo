@@ -15,6 +15,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { NO_EXTRAS, NO_ROOMS, type LocationExtras, type LocationRooms } from "../lib/location-extras";
 
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -120,6 +121,9 @@ export const locations = pgTable("locations", {
   active: boolean("active").default(true).notNull(),
   /* the kitchen here isn't taking online orders just now */
   orderingOpen: boolean("ordering_open").default(true).notNull(),
+  /* its rooms and "More at …" cards (src/lib/location-extras.ts) */
+  rooms: jsonb("rooms").$type<LocationRooms>().default(NO_ROOMS).notNull(),
+  extras: jsonb("extras").$type<LocationExtras>().default(NO_EXTRAS).notNull(),
   sort: integer("sort").default(0).notNull(),
   ...timestamps,
 });

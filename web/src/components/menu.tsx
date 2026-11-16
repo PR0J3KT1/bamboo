@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { menuHere, toCatalog, type MenuItem } from "@/db/queries/menu";
+import { getMenu, toCatalog, type MenuItem } from "@/db/queries/menu";
+import { customerLocation } from "@/lib/locations";
+import { fromRate, roomsOffered } from "@/lib/location-extras";
 import { getViewer } from "@/lib/session";
 import { getSettings } from "@/lib/settings";
 import { eighteenthBirthday } from "@/lib/age";
@@ -24,7 +26,10 @@ const SHORT: Record<string, string> = { who: "Who's eating?", party: "Parties", 
    order beside it. Alcohol never leaves the server for a guest or an account under 18; they get
    the closed Cask Room instead. */
 export async function Menu() {
-  const [menu, viewer, settings] = await Promise.all([menuHere(), getViewer(), getSettings()]);
+  const here = await customerLocation();
+  const [menu, viewer, settings] = await Promise.all([getMenu(here.id), getViewer(), getSettings()]);
+  const hasRooms = roomsOffered(here.rooms).length > 0;
+  const roomsFrom = fromRate(here.rooms);
 
   const visible = menu.items.filter((i) => !i.alcohol || viewer.adult);
   const families = new Map(menu.families.map((f) => [f.id, f]));
@@ -39,7 +44,7 @@ export async function Menu() {
   const bottles = menu.items.filter((i) => i.alcohol).length;
 
   const hasPlates = menu.bundles.length > 0;
-  const sections = menu.categories.filter((c) => (c.kind === "items" && (c.adultOnly || byCategory.get(c.id)?.length)) || (c.kind === "bundles" && hasPlates) || c.kind === "party" || c.kind === "games" || c.kind === "rooms");
+  const sections = menu.categories.filter((c) => (c.kind === "items" && (c.adultOnly || byCategory.get(c.id)?.length)) || (c.kind === "bundles" && hasPlates) || c.kind === "party" || c.kind === "games" || (c.kind === "rooms" && hasRooms));
   const nav: NavSection[] = sections.map((c) => ({ id: c.id, name: c.adultOnly ? "The Cask Room" : c.name, short: SHORT[c.id] ?? (c.adultOnly ? "Cask Room" : c.name) }));
   const firstFood = sections.find((c) => !c.adultOnly)?.id;
 
@@ -59,7 +64,7 @@ export async function Menu() {
             if (c.kind === "bundles") return <WhosEating key={c.id} id={c.id} title={c.name} note={c.note} />;
             if (c.kind === "party") return <PartyCards key={c.id} id={c.id} title={c.name} note={null} />;
             if (c.kind === "games") return <Teaser key={c.id} id={c.id} title="Cheza!" line="Quizzes, party games and skill games for the table. Solo, or in teams on one phone." badge={settings.rewards.open ? `Win ${settings.rewards.percent}% off the food` : null} href="/games" go="Play a game" photo="/games/headsup.webp" />;
-            if (c.kind === "rooms") return <Teaser key={c.id} id={c.id} title="Rooms upstairs" line="Standard and Deluxe rooms above the lounge, with room service from the kitchen, 24 hours." badge={settings.rooms.std.rate ? `From KES ${settings.rooms.std.rate.toLocaleString("en-KE")} a night` : null} href="/rooms" go="See the rooms" photo="/rooms/dlx-2-xl.webp" />;
+            if (c.kind === "rooms") return <Teaser key={c.id} id={c.id} title="Rooms upstairs" line={`${roomsOffered(here.rooms).map((id) => (id === "std" ? "Standard" : "Deluxe")).join(" and ")} rooms above the lounge, with room service from the kitchen, 24 hours.`} badge={roomsFrom ? `From KES ${roomsFrom.toLocaleString("en-KE")} a night` : null} href="/rooms" go="See the rooms" photo="/rooms/dlx-2-xl.webp" />;
             if (c.adultOnly) {
               if (viewer.adult) return <CaskRoom key={c.id} id={c.id} title={c.name} />;
               return (

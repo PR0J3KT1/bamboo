@@ -6,21 +6,45 @@ import { ViewerBar } from "@/components/viewer-bar";
 import { ModeSwitch } from "@/components/order/mode-switch";
 import { Brand } from "@/components/brand";
 import { WhatsAppButton } from "@/components/whatsapp-button";
-import { getSettings } from "@/lib/settings";
+import { getSettings, type LoungeSettings } from "@/lib/settings";
+import { hereFacts } from "@/lib/locations";
+import { roomsOffered } from "@/lib/location-extras";
 import { HereLine, LocationPicker } from "@/components/location/here";
 import { LoungeFooter } from "@/components/menu/more-at-lounge";
 import { loungePhoto } from "@/lib/pictures";
 import { MenuSkeleton } from "@/components/ui/loader";
 
+const rated = (s: LoungeSettings) => s.rating && `${s.rating.stars} stars from ${s.rating.reviews.toLocaleString("en-KE")} Google reviews`;
+
+/* What this lounge has, under the hero: only what it offers. Reads the location cookie. */
+async function HeroFacts({ settings }: { settings: LoungeSettings }) {
+  const { loc } = await hereFacts();
+  const x = loc.extras;
+  const facts: React.ReactNode[] = [rated(settings)];
+  if (x.sports.on) facts.push(<Link href="/book" className="underline underline-offset-2 hover:text-on-grove">Live sport on big screens: book a table</Link>);
+  if (roomsOffered(loc.rooms).length) facts.push(<Link href="/rooms" className="underline underline-offset-2 hover:text-on-grove">Rooms upstairs</Link>);
+  if (x.events.on || x.carwash.on) facts.push(x.events.on && x.carwash.on ? "Events and a car wash" : x.events.on ? "Meetings and events" : "A car wash");
+  return <FactList facts={facts} />;
+}
+
+function FactList({ facts }: { facts: React.ReactNode[] }) {
+  const shown = facts.filter(Boolean);
+  if (!shown.length) return null;
+  return (
+    <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 border-t border-on-grove/15 pt-4 text-[0.875rem] text-on-grove-2">
+      {shown.map((f, i) => (
+        <li key={i} className="flex items-center gap-2">
+          <span aria-hidden className="size-1.5 rounded-full bg-lime" />
+          {f}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default async function Home() {
   const settings = await getSettings();
   const hero = loungePhoto("hero");
-  const facts = [
-    settings.rating && `${settings.rating.stars} stars from ${settings.rating.reviews.toLocaleString("en-KE")} Google reviews`,
-    "Live sport on big screens",
-    "Rooms upstairs",
-    "Events and a car wash",
-  ].filter(Boolean) as string[];
   return (
     <>
       <header className="relative isolate overflow-hidden bg-grove text-on-grove">
@@ -53,14 +77,9 @@ export default async function Home() {
               <LocationPicker />
             </Suspense>
           </div>
-          <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 border-t border-on-grove/15 pt-4 text-[0.875rem] text-on-grove-2">
-            {facts.map((f) => (
-              <li key={f} className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-lime" />
-                {f === "Rooms upstairs" ? <Link href="/rooms" className="underline underline-offset-2 hover:text-on-grove">{f}</Link> : f === "Live sport on big screens" ? <Link href="/book" className="underline underline-offset-2 hover:text-on-grove">{f}: book a table</Link> : f}
-              </li>
-            ))}
-          </ul>
+          <Suspense fallback={<FactList facts={[rated(settings)]} />}>
+            <HeroFacts settings={settings} />
+          </Suspense>
         </div>
       </header>
       <Suspense fallback={<MenuSkeleton />}>
